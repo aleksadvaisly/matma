@@ -9,6 +9,7 @@ import { InfoBox } from '@/components/ui/info-box';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { NumberLine } from '@/components/ui/number-line';
+import { HintHighlightGroup } from '@/components/ui/hint-highlight';
 import { useExerciseStore, Exercise } from '@/lib/store';
 import { CheckCircle, Circle, ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
@@ -189,28 +190,28 @@ export function ComparisonSection() {
             </div>
             
             <div className="flex justify-center gap-4">
-              {['<', '=', '>'].map((symbol) => {
-                const isCorrect = showFeedback && currentExercise.answer === symbol;
-                const shouldHighlight = showHints && currentExercise.answer === symbol;
-                
-                return (
-                  <Button
-                    key={symbol}
-                    variant={selectedAnswer === symbol ? "default" : "outline"}
-                    size="lg"
-                    onClick={() => setSelectedAnswer(symbol)}
-                    className={`text-xl w-16 h-16 ${
-                      shouldHighlight
-                        ? "bg-yellow-200 border-yellow-400 hover:bg-yellow-300" 
-                        : isCorrect
-                        ? "border-green-500 bg-green-50 dark:bg-green-950"
-                        : ""
-                    }`}
-                  >
-                    {symbol}
-                  </Button>
-                );
-              })}
+              <HintHighlightGroup showHints={showHints} correctAnswer={currentExercise.answer}>
+                {['<', '=', '>'].map((symbol) => {
+                  const isCorrect = showFeedback && currentExercise.answer === symbol;
+                  
+                  return (
+                    <Button
+                      key={symbol}
+                      value={symbol}
+                      variant={selectedAnswer === symbol ? "default" : "outline"}
+                      size="lg"
+                      onClick={() => setSelectedAnswer(symbol)}
+                      className={`text-xl w-16 h-16 ${
+                        isCorrect
+                          ? "border-green-500 bg-green-50 dark:bg-green-950"
+                          : ""
+                      }`}
+                    >
+                      {symbol}
+                    </Button>
+                  );
+                })}
+              </HintHighlightGroup>
             </div>
           </div>
         </div>

@@ -30,6 +30,7 @@ export function AbsoluteValueSection() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  const [clickedNumbers, setClickedNumbers] = useState<number[]>([]);
   
   const { 
     sectionProgress, 
@@ -63,11 +64,19 @@ export function AbsoluteValueSection() {
     }
   };
 
+  const handleNumberClick = (value: number) => {
+    if (!clickedNumbers.includes(value)) {
+      setClickedNumbers([...clickedNumbers, value]);
+    }
+    setUserAnswer(Math.abs(value).toString());
+  };
+
   const nextExercise = () => {
     if (currentIndex < exercises.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setUserAnswer('');
       setShowFeedback(false);
+      setClickedNumbers([]);
     }
   };
 
@@ -75,6 +84,7 @@ export function AbsoluteValueSection() {
     setCurrentIndex(0);
     setUserAnswer('');
     setShowFeedback(false);
+    setClickedNumbers([]);
     updateSectionProgress('1-4', { completed: 0, total: exercises.length });
   };
 
@@ -125,6 +135,9 @@ export function AbsoluteValueSection() {
               { value: currentExercise.number, color: 'hsl(var(--primary))' },
               { value: 0, color: 'black' }
             ]}
+            onNumberClick={handleNumberClick}
+            enableAllClicks={true}
+            clickedNumbers={clickedNumbers}
           />
           <div className="text-center">
             <div className="text-2xl font-bold">
@@ -145,7 +158,7 @@ export function AbsoluteValueSection() {
             onChange={(e) => setUserAnswer(e.target.value)}
             placeholder="Wpisz wartość bezwzględną"
             className={`flex-1 text-center text-lg ${
-              showHints && !showFeedback ? "bg-yellow-50 border-yellow-300" : ""
+              showHints && !showFeedback ? "bg-yellow-50 border-yellow-300 animate-pulse" : ""
             }`}
             onKeyPress={(e) => e.key === 'Enter' && !showFeedback && checkAnswer()}
           />

@@ -11,6 +11,8 @@ interface NumberLineProps {
   correctAnswer?: number;
   step?: number;
   markedNumbers?: { value: number; color: string; label?: string }[];
+  enableAllClicks?: boolean;
+  clickedNumbers?: number[];
 }
 
 export function NumberLine({ 
@@ -20,7 +22,9 @@ export function NumberLine({
   onNumberClick,
   showHints = false,
   correctAnswer,
-  markedNumbers = []
+  markedNumbers = [],
+  enableAllClicks = false,
+  clickedNumbers = []
 }: NumberLineProps) {
   const range = max - min;
   const step = range > 30 ? 5 : range > 15 ? 2 : 1;
@@ -45,7 +49,55 @@ export function NumberLine({
         {/* Arrow end - only right */}
         <polygon points={`${range * 40 + 50},60 ${range * 40 + 40},55 ${range * 40 + 40},65`} fill="black" />
         
-        {/* Ticks and numbers */}
+        {/* Render all clickable units if enabled */}
+        {enableAllClicks && onNumberClick && Array.from({ length: range + 1 }, (_, i) => {
+          const value = min + i;
+          if (value < displayMin || value > displayMax) return null;
+          
+          const x = 40 + ((value - min) / range) * (range * 40);
+          const hasLabel = value % step === 0;
+          const isClicked = clickedNumbers.includes(value);
+          
+          return (
+            <g key={`click-${value}`}>
+              {/* Clickable invisible area for each unit */}
+              <rect
+                x={x - 10}
+                y={40}
+                width={20}
+                height={40}
+                fill="transparent"
+                style={{ cursor: 'pointer' }}
+                onClick={() => onNumberClick(value)}
+              />
+              {/* Show label if clicked but not normally labeled */}
+              {isClicked && !hasLabel && (
+                <>
+                  <line 
+                    x1={x} 
+                    y1="58" 
+                    x2={x} 
+                    y2="62" 
+                    stroke="gray" 
+                    strokeWidth="1"
+                  />
+                  <text 
+                    x={x} 
+                    y={90} 
+                    textAnchor="middle" 
+                    fontSize="12"
+                    fill="gray"
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    {value}
+                  </text>
+                </>
+              )}
+            </g>
+          );
+        })}
+        
+        {/* Regular ticks and numbers */}
         {Array.from({ length: Math.floor(range/step) + 1 }, (_, i) => {
           const value = min + i * step;
           // Skip first and last values

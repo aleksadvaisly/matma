@@ -10,6 +10,7 @@ import { InfoBox } from '@/components/ui/info-box';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { NumberLine } from '@/components/ui/number-line';
+import { HintHighlight } from '@/components/ui/hint-highlight';
 import { useExerciseStore } from '@/lib/store';
 import { ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
@@ -174,7 +175,7 @@ export function OppositeSection() {
             onChange={(e) => setUserAnswer(e.target.value)}
             placeholder={isReciprocal ? "Wpisz odpowiedź (np. 1/2 lub 0.5)" : "Wpisz liczbę przeciwną"}
             className={`flex-1 text-center text-lg ${
-              showHints && !showFeedback ? "bg-yellow-50 border-yellow-300" : ""
+              showHints && !showFeedback ? "bg-yellow-50 border-yellow-300 animate-pulse" : ""
             }`}
             onKeyPress={(e) => e.key === 'Enter' && !showFeedback && checkAnswer()}
           />
