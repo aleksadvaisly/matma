@@ -4,113 +4,21 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
+import { ProgressDisplay } from '@/components/ui/progress-display';
+import { InfoBox } from '@/components/ui/info-box';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { NumberLine } from '@/components/ui/number-line';
 import { useExerciseStore, Exercise } from '@/lib/store';
-import { CheckCircle, Circle, ArrowRight, RefreshCw } from 'lucide-react';
+import { CheckCircle, Circle, ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
-// Simple number line component that works
-function NumberLine({ 
-  min = -10, 
-  max = 10, 
-  selectedNumber, 
-  onNumberClick,
-  highlightNumbers = [] 
-}: {
-  min?: number;
-  max?: number;
-  selectedNumber?: number;
-  onNumberClick?: (number: number) => void;
-  highlightNumbers?: number[];
-}) {
-  const range = max - min;
-  const step = range > 30 ? 5 : range > 15 ? 2 : 1;
-  
-  return (
-    <div className="w-full overflow-x-auto pb-4">
-      <svg width={Math.max(800, range * 40)} height="120" className="min-w-full">
-        {/* Main line */}
-        <line 
-          x1="40" 
-          y1="60" 
-          x2={range * 40 + 40} 
-          y2="60" 
-          stroke="black" 
-          strokeWidth="2"
-        />
-        
-        {/* Arrow ends */}
-        <polygon points="30,60 40,55 40,65" fill="black" />
-        <polygon points={`${range * 40 + 50},60 ${range * 40 + 40},55 ${range * 40 + 40},65`} fill="black" />
-        
-        {/* Ticks and numbers */}
-        {Array.from({ length: Math.floor(range/step) + 1 }, (_, i) => {
-          const value = min + i * step;
-          const x = 40 + ((value - min) / range) * (range * 40);
-          const isHighlighted = highlightNumbers.includes(value);
-          const isSelected = selectedNumber === value;
-          
-          return (
-            <g key={value}>
-              {/* Tick mark */}
-              <line 
-                x1={x} 
-                y1="55" 
-                x2={x} 
-                y2="65" 
-                stroke="black" 
-                strokeWidth="2"
-              />
-              
-              {/* Clickable area and number */}
-              {onNumberClick ? (
-                <g
-                  onClick={() => onNumberClick(value)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <circle
-                    cx={x}
-                    cy={60}
-                    r="15"
-                    fill={isSelected ? 'blue' : isHighlighted ? 'yellow' : 'transparent'}
-                    fillOpacity={isSelected ? 0.3 : isHighlighted ? 0.3 : 0}
-                  />
-                  <text 
-                    x={x} 
-                    y={90} 
-                    textAnchor="middle" 
-                    fontSize="14"
-                    fontWeight={isSelected || isHighlighted ? 'bold' : 'normal'}
-                    fill={isSelected ? 'blue' : isHighlighted ? 'orange' : 'black'}
-                  >
-                    {value}
-                  </text>
-                </g>
-              ) : (
-                <text 
-                  x={x} 
-                  y={90} 
-                  textAnchor="middle" 
-                  fontSize="14"
-                  fontWeight={isHighlighted ? 'bold' : 'normal'}
-                  fill={isHighlighted ? 'orange' : 'black'}
-                >
-                  {value}
-                </text>
-              )}
-            </g>
-          );
-        })}
-      </svg>
-    </div>
-  );
-}
 
 export function NumberLineSection() {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [showHints, setShowHints] = useState(false);
   
   const { 
     sectionProgress, 
@@ -164,7 +72,7 @@ export function NumberLineSection() {
   ];
 
   const currentExercise = exercises[currentExerciseIndex];
-  const progress = ((sectionProgress['1-1']?.completed || 0) / exercises.length) * 100;
+  const completedCount = exercises.filter((_, idx) => idx < currentExerciseIndex).length;
 
   // Extract numbers from question to determine range
   const extractNumbers = (text: string): number[] => {
@@ -201,7 +109,7 @@ export function NumberLineSection() {
     if (correct) {
       completeExercise(currentExercise.id);
       updateSectionProgress('1-1', { 
-        completed: (sectionProgress['1-1']?.completedExercises || 0) + 1,
+        completed: completedCount + 1,
         total: exercises.length 
       });
     }
@@ -224,113 +132,95 @@ export function NumberLineSection() {
 
   useEffect(() => {
     updateSectionProgress('1-1', { 
-      completed: sectionProgress['1-1']?.completed || 0,
+      completed: completedCount,
       total: exercises.length 
     });
-  }, []);
+  }, [completedCount, updateSectionProgress]);
+
+  const hints = [
+    'Oś liczbowa to linia, na której liczby są uporządkowane od najmniejszej do największej',
+    'Liczby ujemne znajdują się po lewej stronie zera',
+    'Liczby dodatnie znajdują się po prawej stronie zera',
+    'Im dalej na prawo, tym liczba jest większa',
+    'Zero jest większe od wszystkich liczb ujemnych i mniejsze od wszystkich dodatnich'
+  ];
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>1.1 Liczby na osi liczbowej</span>
-          <Badge variant="outline">
-            {sectionProgress['1-1']?.completedExercises || 0}/{exercises.length}
-          </Badge>
-        </CardTitle>
-        <CardDescription>
-          Naucz się umieszczać liczby całkowite na osi liczbowej
-        </CardDescription>
-        <Progress value={progress} className="mt-2" />
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>1.1 Liczby na osi liczbowej</CardTitle>
+            <CardDescription>
+              Naucz się umieszczać liczby całkowite na osi liczbowej
+            </CardDescription>
+          </div>
+          <div className="flex items-center gap-4">
+            <ProgressDisplay current={completedCount} total={exercises.length} />
+            <div className="flex items-center gap-2">
+              <Label htmlFor="show-hints" className="text-sm">
+                <Sparkles className="h-4 w-4" />
+              </Label>
+              <Switch
+                id="show-hints"
+                checked={showHints}
+                onCheckedChange={setShowHints}
+              />
+            </div>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="bg-blue-50 p-6 rounded-lg">
-          <h3 className="font-semibold text-lg mb-2">
-            Zadanie {currentExerciseIndex + 1} z {exercises.length}
-          </h3>
-          <p className="text-gray-700 mb-4">{currentExercise.question}</p>
-          
-          <NumberLine
-            min={minNum - padding}
-            max={maxNum + padding}
-            selectedNumber={selectedAnswer}
-            onNumberClick={handleNumberClick}
-            highlightNumbers={highlightNumbers}
-          />
-          
-          {selectedAnswer !== null && (
-            <div className="mt-4">
-              <p className="text-sm text-gray-600">
-                Wybrana liczba: <span className="font-bold">{selectedAnswer}</span>
-              </p>
-            </div>
-          )}
+        <div className="text-lg font-medium text-center">
+          {currentExercise.question}
         </div>
 
-        {!showFeedback && (
-          <div className="flex gap-4">
+        <NumberLine
+          min={minNum - padding}
+          max={maxNum + padding}
+          selectedNumber={selectedAnswer}
+          onNumberClick={handleNumberClick}
+          showHints={showHints}
+          correctAnswer={parseInt(currentExercise.answer)}
+        />
+
+        {showFeedback && (
+          <Alert className={isCorrect ? "border-green-500" : "border-red-500"}>
+            <AlertDescription>
+              {isCorrect 
+                ? "Świetnie! Prawidłowa odpowiedź!" 
+                : `Nieprawidłowo. Prawidłowa odpowiedź to ${currentExercise.answer}.`}
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <div className="flex gap-2">
+          {!showFeedback ? (
             <Button 
               onClick={checkAnswer}
-              disabled={selectedAnswer === null}
+              disabled={!selectedAnswer}
+              className="flex-1"
             >
               Sprawdź odpowiedź
             </Button>
-            {currentExerciseIndex > 0 && (
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setCurrentExerciseIndex(currentExerciseIndex - 1);
-                  setSelectedAnswer(null);
-                  setShowFeedback(false);
-                }}
-              >
-                Poprzednie zadanie
-              </Button>
-            )}
-          </div>
-        )}
-
-        {showFeedback && (
-          <>
-            <Alert className={isCorrect ? "border-green-500" : "border-red-500"}>
-              <AlertDescription>
-                {isCorrect ? (
-                  <span className="flex items-center gap-2 text-green-700">
-                    <CheckCircle className="h-5 w-5" />
-                    Brawo! To poprawna odpowiedź.
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2 text-red-700">
-                    <Circle className="h-5 w-5" />
-                    Spróbuj ponownie. Poprawna odpowiedź to {currentExercise.answer}.
-                  </span>
-                )}
-              </AlertDescription>
-            </Alert>
-
-            <div className="flex gap-4">
+          ) : (
+            <>
               {currentExerciseIndex < exercises.length - 1 ? (
-                <Button onClick={nextExercise}>
-                  Następne zadanie <ArrowRight className="ml-2 h-4 w-4" />
+                <Button onClick={nextExercise} className="flex-1 gap-2">
+                  Następne zadanie
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               ) : (
-                <Button onClick={resetExercises} variant="outline">
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                  Zacznij od nowa
+                <Button onClick={resetExercises} className="flex-1 gap-2">
+                  <RefreshCw className="h-4 w-4" />
+                  Rozpocznij od nowa
                 </Button>
               )}
-            </div>
-          </>
-        )}
-
-        <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-          <h4 className="font-semibold mb-2">💡 Wskazówka</h4>
-          <p className="text-sm text-gray-600">
-            Oś liczbowa to linia, na której liczby są uporządkowane od najmniejszej do największej.
-            Liczby ujemne znajdują się po lewej stronie zera, a dodatnie po prawej.
-            Im dalej na prawo, tym liczba jest większa.
-          </p>
+            </>
+          )}
         </div>
+
+        <InfoBox title="Wskazówki" items={hints} />
       </CardContent>
     </Card>
   );

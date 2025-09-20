@@ -9,131 +9,10 @@ import { ProgressDisplay } from '@/components/ui/progress-display';
 import { InfoBox } from '@/components/ui/info-box';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { NumberLine } from '@/components/ui/number-line';
 import { useExerciseStore } from '@/lib/store';
-import { ArrowRight, RefreshCw, Lightbulb } from 'lucide-react';
+import { ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
-interface OppositeVisualizationProps {
-  number: number;
-  showOpposite: boolean;
-  highlightAnswer?: boolean;
-}
-
-function OppositeVisualization({ number, showOpposite, highlightAnswer = false }: OppositeVisualizationProps) {
-  const width = 600;
-  const height = 120;
-  const padding = 40;
-  const lineY = height / 2;
-  
-  const absValue = Math.abs(number);
-  const min = -Math.max(absValue + 2, 5);
-  const max = Math.max(absValue + 2, 5);
-  const range = max - min;
-  
-  const getX = (value: number) => padding + ((value - min) / range) * (width - 2 * padding);
-  
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-center">
-        <svg width={width} height={height} className="border rounded-lg bg-background">
-          <line
-            x1={padding}
-            y1={lineY}
-            x2={width - padding}
-            y2={lineY}
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2"
-          />
-          
-          <polygon
-            points={`${width - padding},${lineY} ${width - padding - 10},${lineY - 5} ${width - padding - 10},${lineY + 5}`}
-            fill="hsl(var(--foreground))"
-          />
-          
-          {Array.from({ length: Math.ceil(range) + 1 }, (_, i) => {
-            const value = Math.round(min + i);
-            if (value < min || value > max) return null;
-            
-            const x = getX(value);
-            const isOriginal = value === number;
-            const isOpposite = value === -number;
-            const isZero = value === 0;
-            
-            return (
-              <g key={value}>
-                <line
-                  x1={x}
-                  y1={lineY - (isZero ? 15 : 10)}
-                  x2={x}
-                  y2={lineY + (isZero ? 15 : 10)}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth={isZero ? "3" : "1"}
-                />
-                
-                {isOriginal && (
-                  <circle
-                    cx={x}
-                    cy={lineY}
-                    r="8"
-                    fill="hsl(var(--primary))"
-                    className={highlightAnswer && !showOpposite ? "animate-pulse" : ""}
-                  />
-                )}
-                
-                {isOpposite && showOpposite && (
-                  <circle
-                    cx={x}
-                    cy={lineY}
-                    r="8"
-                    fill={highlightAnswer ? "rgb(250 204 21)" : "hsl(var(--destructive))"}
-                    className={highlightAnswer ? "animate-pulse" : ""}
-                  />
-                )}
-                
-                <text
-                  x={x}
-                  y={lineY + 35}
-                  textAnchor="middle"
-                  fontSize="14"
-                  fill={(isOriginal || (isOpposite && showOpposite)) ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))"}
-                  fontWeight={(isOriginal || (isOpposite && showOpposite)) ? "bold" : "normal"}
-                >
-                  {value}
-                </text>
-              </g>
-            );
-          })}
-          
-          {showOpposite && number !== 0 && (
-            <path
-              d={`M ${getX(number)} ${lineY - 20} Q ${getX(0)} ${lineY - 40} ${getX(-number)} ${lineY - 20}`}
-              stroke="hsl(var(--destructive))"
-              strokeWidth="2"
-              fill="none"
-              strokeDasharray="5,5"
-              markerEnd="url(#arrowhead)"
-            />
-          )}
-          
-          <defs>
-            <marker
-              id="arrowhead"
-              markerWidth="10"
-              markerHeight="7"
-              refX="9"
-              refY="3.5"
-              orient="auto"
-            >
-              <polygon
-                points="0 0, 10 3.5, 0 7"
-                fill="hsl(var(--destructive))"
-              />
-            </marker>
-          </defs>
-        </svg>
-      </div>
-    </div>
-  );
-}
 
 const exercises = [
   { id: '1-3-1', question: 'Znajdź liczbę przeciwną do 5', answer: '-5', number: 5 },
@@ -151,6 +30,7 @@ export function OppositeSection() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
   
   const { 
     sectionProgress, 
@@ -190,11 +70,17 @@ export function OppositeSection() {
     }
   };
 
+  const handleNumberClick = (value: number) => {
+    setSelectedNumber(value);
+    setUserAnswer(value.toString());
+  };
+
   const nextExercise = () => {
     if (currentIndex < exercises.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setUserAnswer('');
       setShowFeedback(false);
+      setSelectedNumber(null);
     }
   };
 
@@ -202,6 +88,7 @@ export function OppositeSection() {
     setCurrentIndex(0);
     setUserAnswer('');
     setShowFeedback(false);
+    setSelectedNumber(null);
     updateSectionProgress('1-3', { completed: 0, total: exercises.length });
   };
 
@@ -230,7 +117,7 @@ export function OppositeSection() {
             <ProgressDisplay current={completedCount} total={exercises.length} />
             <div className="flex items-center gap-2">
               <Label htmlFor="show-hints" className="text-sm">
-                <Lightbulb className="h-4 w-4" />
+                <Sparkles className="h-4 w-4" />
               </Label>
               <Switch
                 id="show-hints"
@@ -247,11 +134,26 @@ export function OppositeSection() {
         </div>
 
         {!isReciprocal && (
-          <OppositeVisualization
-            number={currentExercise.number}
-            showOpposite={showFeedback && isCorrect}
-            highlightAnswer={showHints}
-          />
+          <>
+            <NumberLine
+              min={-Math.max(Math.abs(currentExercise.number) + 2, 5)}
+              max={Math.max(Math.abs(currentExercise.number) + 2, 5)}
+              onNumberClick={handleNumberClick}
+              selectedNumber={selectedNumber}
+              showHints={showHints}
+              correctAnswer={-currentExercise.number}
+              markedNumbers={[
+                { value: currentExercise.number, color: 'hsl(var(--primary))', label: 'Original' },
+                ...(showFeedback && isCorrect ? [{ value: -currentExercise.number, color: 'hsl(var(--destructive))', label: 'Opposite' }] : []),
+                ...(userAnswer && !showFeedback && !isNaN(parseInt(userAnswer)) ? [{ value: parseInt(userAnswer), color: 'blue', label: 'Your answer' }] : [])
+              ]}
+            />
+            {showFeedback && isCorrect && currentExercise.number !== 0 && (
+              <div className="text-center text-sm text-muted-foreground">
+                Liczba przeciwna: {currentExercise.number} → {-currentExercise.number}
+              </div>
+            )}
+          </>
         )}
 
         {isReciprocal && (
@@ -314,20 +216,6 @@ export function OppositeSection() {
           )}
         </div>
 
-        <div className="grid grid-cols-7 gap-2">
-          {exercises.map((_, index) => (
-            <div
-              key={index}
-              className={`h-2 rounded-full ${
-                index < completedCount
-                  ? 'bg-green-500'
-                  : index === currentIndex
-                  ? 'bg-blue-500'
-                  : 'bg-gray-200'
-              }`}
-            />
-          ))}
-        </div>
 
         <InfoBox title="Definicje" items={definitions} />
       </CardContent>

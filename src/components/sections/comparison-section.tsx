@@ -8,140 +8,10 @@ import { ProgressDisplay } from '@/components/ui/progress-display';
 import { InfoBox } from '@/components/ui/info-box';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { NumberLine } from '@/components/ui/number-line';
 import { useExerciseStore, Exercise } from '@/lib/store';
-import { CheckCircle, Circle, ArrowRight, RefreshCw, Lightbulb } from 'lucide-react';
+import { CheckCircle, Circle, ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
-interface ComparisonVisualizationProps {
-  leftNumber: number;
-  rightNumber: number;
-  selectedAnswer?: string;
-  onAnswerClick?: (answer: string) => void;
-  showCorrectAnswer?: boolean;
-  correctAnswer?: string;
-  highlightAnswer?: boolean;
-}
-
-function ComparisonVisualization({
-  leftNumber,
-  rightNumber,
-  selectedAnswer,
-  onAnswerClick,
-  showCorrectAnswer,
-  correctAnswer,
-  highlightAnswer = false
-}: ComparisonVisualizationProps) {
-  const width = 600;
-  const height = 120;
-  const padding = 40;
-  const lineY = height / 2;
-  
-  const min = Math.min(leftNumber, rightNumber) - 2;
-  const max = Math.max(leftNumber, rightNumber) + 2;
-  const range = max - min;
-  
-  const getX = (value: number) => padding + ((value - min) / range) * (width - 2 * padding);
-  
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-center">
-        <svg width={width} height={height} className="border rounded-lg bg-background">
-          {/* Main line */}
-          <line
-            x1={padding}
-            y1={lineY}
-            x2={width - padding}
-            y2={lineY}
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2"
-          />
-          
-          {/* Arrow */}
-          <polygon
-            points={`${width - padding},${lineY} ${width - padding - 10},${lineY - 5} ${width - padding - 10},${lineY + 5}`}
-            fill="hsl(var(--foreground))"
-          />
-          
-          {/* Tick marks and numbers */}
-          {Array.from({ length: range + 1 }, (_, i) => {
-            const value = min + i;
-            const x = getX(value);
-            const isHighlighted = value === leftNumber || value === rightNumber;
-            const isZero = value === 0;
-            
-            return (
-              <g key={value}>
-                {/* Tick mark */}
-                <line
-                  x1={x}
-                  y1={lineY - (isZero ? 15 : 10)}
-                  x2={x}
-                  y2={lineY + (isZero ? 15 : 10)}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth={isZero ? "3" : "1"}
-                />
-                
-                {/* Highlighted points */}
-                {isHighlighted && (
-                  <circle
-                    cx={x}
-                    cy={lineY}
-                    r="8"
-                    fill={value === leftNumber ? "hsl(var(--destructive))" : "hsl(var(--primary))"}
-                  />
-                )}
-                
-                {/* Number label */}
-                <text
-                  x={x}
-                  y={lineY + 35}
-                  textAnchor="middle"
-                  fontSize="14"
-                  fill={isHighlighted ? (value === leftNumber ? "hsl(var(--destructive))" : "hsl(var(--primary))") : "hsl(var(--foreground))"}
-                  fontWeight={isHighlighted ? "bold" : "normal"}
-                >
-                  {value}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-      
-      <div className="text-center space-y-4">
-        <div className="text-2xl font-bold">
-          <span className="text-destructive">{leftNumber}</span>
-          <span className="mx-4">?</span>
-          <span className="text-primary">{rightNumber}</span>
-        </div>
-        
-        <div className="flex justify-center gap-4">
-          {['<', '=', '>'].map((symbol) => {
-            const isCorrect = showCorrectAnswer && correctAnswer === symbol;
-            const shouldHighlight = highlightAnswer && isCorrect;
-            
-            return (
-              <Button
-                key={symbol}
-                variant={selectedAnswer === symbol ? "default" : "outline"}
-                size="lg"
-                onClick={() => onAnswerClick?.(symbol)}
-                className={`text-xl w-16 h-16 ${
-                  shouldHighlight
-                    ? "bg-yellow-200 border-yellow-400 hover:bg-yellow-300" 
-                    : isCorrect
-                    ? "border-green-500 bg-green-50 dark:bg-green-950"
-                    : ""
-                }`}
-              >
-                {symbol}
-              </Button>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 const exercises: Array<{ 
   id: string; 
@@ -285,7 +155,7 @@ export function ComparisonSection() {
             <ProgressDisplay current={completedCount} total={exercises.length} />
             <div className="flex items-center gap-2">
               <Label htmlFor="show-hints" className="text-sm">
-                <Lightbulb className="h-4 w-4" />
+                <Sparkles className="h-4 w-4" />
               </Label>
               <Switch
                 id="show-hints"
@@ -301,15 +171,49 @@ export function ComparisonSection() {
           {currentExercise.question}
         </div>
 
-        <ComparisonVisualization
-          leftNumber={currentExercise.leftNumber}
-          rightNumber={currentExercise.rightNumber}
-          selectedAnswer={selectedAnswer}
-          onAnswerClick={setSelectedAnswer}
-          showCorrectAnswer={showFeedback}
-          correctAnswer={currentExercise.answer}
-          highlightAnswer={showHints}
-        />
+        <div className="space-y-4">
+          <NumberLine
+            min={Math.min(currentExercise.leftNumber, currentExercise.rightNumber, -5) - 2}
+            max={Math.max(currentExercise.leftNumber, currentExercise.rightNumber, 5) + 2}
+            markedNumbers={[
+              { value: currentExercise.leftNumber, color: 'hsl(var(--primary))' },
+              { value: currentExercise.rightNumber, color: 'hsl(var(--primary))' }
+            ]}
+          />
+          
+          <div className="text-center space-y-4">
+            <div className="text-2xl font-bold">
+              <span className="text-primary">{currentExercise.leftNumber}</span>
+              <span className="mx-4">?</span>
+              <span className="text-primary">{currentExercise.rightNumber}</span>
+            </div>
+            
+            <div className="flex justify-center gap-4">
+              {['<', '=', '>'].map((symbol) => {
+                const isCorrect = showFeedback && currentExercise.answer === symbol;
+                const shouldHighlight = showHints && currentExercise.answer === symbol;
+                
+                return (
+                  <Button
+                    key={symbol}
+                    variant={selectedAnswer === symbol ? "default" : "outline"}
+                    size="lg"
+                    onClick={() => setSelectedAnswer(symbol)}
+                    className={`text-xl w-16 h-16 ${
+                      shouldHighlight
+                        ? "bg-yellow-200 border-yellow-400 hover:bg-yellow-300" 
+                        : isCorrect
+                        ? "border-green-500 bg-green-50 dark:bg-green-950"
+                        : ""
+                    }`}
+                  >
+                    {symbol}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
         {showFeedback && (
           <Alert className={isCorrect ? "border-green-500" : "border-red-500"}>
@@ -347,20 +251,6 @@ export function ComparisonSection() {
           )}
         </div>
 
-        <div className="grid grid-cols-7 gap-2">
-          {exercises.map((_, index) => (
-            <div
-              key={index}
-              className={`h-2 rounded-full ${
-                index < completedCount
-                  ? 'bg-green-500'
-                  : index === currentIndex
-                  ? 'bg-blue-500'
-                  : 'bg-gray-200'
-              }`}
-            />
-          ))}
-        </div>
 
         <InfoBox title="Zasady porównywania" items={rules} />
       </CardContent>
