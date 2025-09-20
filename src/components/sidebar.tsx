@@ -26,37 +26,37 @@ interface Chapter {
 const chapters: Chapter[] = [
   {
     id: 'chapter-1',
-    title: 'Liczby dodatnie i ujemne',
+    title: '1. Liczby dodatnie i ujemne',
     icon: <Target className="h-4 w-4" />,
     totalProgress: 0,
     sections: [
       {
         id: '1-1',
-        title: 'Liczby na osi liczbowej',
+        title: '1.1 Liczby na osi liczbowej',
         completed: false,
         progress: 0
       },
       {
         id: '1-2', 
-        title: 'Porównywanie liczb',
+        title: '1.2 Porównywanie liczb',
         completed: false,
         progress: 0
       },
       {
         id: '1-3',
-        title: 'Liczby przeciwne i odwrotne',
+        title: '1.3 Liczby przeciwne i odwrotne',
         completed: false,
         progress: 0
       },
       {
         id: '1-4',
-        title: 'Wartość bezwzględna',
+        title: '1.4 Wartość bezwzględna',
         completed: false,
         progress: 0
       },
       {
         id: '1-5',
-        title: 'Zbiór liczb całkowitych',
+        title: '1.5 Zbiór liczb całkowitych',
         completed: false,
         progress: 0
       }
@@ -64,25 +64,25 @@ const chapters: Chapter[] = [
   },
   {
     id: 'chapter-2',
-    title: 'Dodawanie liczb całkowitych',
+    title: '2. Dodawanie liczb całkowitych',
     icon: <Calculator className="h-4 w-4" />,
     totalProgress: 0,
     sections: [
       {
         id: '2-1',
-        title: 'Zasady dodawania',
+        title: '2.1 Zasady dodawania',
         completed: false,
         progress: 0
       },
       {
         id: '2-2',
-        title: 'Techniki obliczeniowe',
+        title: '2.2 Techniki obliczeniowe',
         completed: false,
         progress: 0
       },
       {
         id: '2-3',
-        title: 'Zadania z treścią',
+        title: '2.3 Zadania z treścią',
         completed: false,
         progress: 0
       }
@@ -90,31 +90,31 @@ const chapters: Chapter[] = [
   },
   {
     id: 'chapter-3',
-    title: 'Mnożenie i dzielenie liczb całkowitych',
+    title: '3. Mnożenie i dzielenie liczb całkowitych',
     icon: <Calculator className="h-4 w-4" />,
     totalProgress: 0,
     sections: [
       {
         id: '3-1',
-        title: 'Zasady znaków',
+        title: '3.1 Zasady znaków',
         completed: false,
         progress: 0
       },
       {
         id: '3-2',
-        title: 'Mnożenie',
+        title: '3.2 Mnożenie',
         completed: false,
         progress: 0
       },
       {
         id: '3-3',
-        title: 'Dzielenie',
+        title: '3.3 Dzielenie',
         completed: false,
         progress: 0
       },
       {
         id: '3-4',
-        title: 'Techniki algebraiczne',
+        title: '3.4 Techniki algebraiczne',
         completed: false,
         progress: 0
       }
@@ -122,25 +122,25 @@ const chapters: Chapter[] = [
   },
   {
     id: 'chapter-4',
-    title: 'Odejmowanie liczb całkowitych',
+    title: '4. Odejmowanie liczb całkowitych',
     icon: <Calculator className="h-4 w-4" />,
     totalProgress: 0,
     sections: [
       {
         id: '4-1',
-        title: 'Odejmowanie jako dodawanie liczby przeciwnej',
+        title: '4.1 Odejmowanie jako dodawanie liczby przeciwnej',
         completed: false,
         progress: 0
       },
       {
         id: '4-2',
-        title: 'Interpretacje odejmowania',
+        title: '4.2 Interpretacje odejmowania',
         completed: false,
         progress: 0
       },
       {
         id: '4-3',
-        title: 'Zadania praktyczne',
+        title: '4.3 Zadania praktyczne',
         completed: false,
         progress: 0
       }
@@ -148,31 +148,31 @@ const chapters: Chapter[] = [
   },
   {
     id: 'chapter-5',
-    title: 'Własności działań na liczbach całkowitych',
+    title: '5. Własności działań na liczbach całkowitych',
     icon: <BookOpen className="h-4 w-4" />,
     totalProgress: 0,
     sections: [
       {
         id: '5-1',
-        title: 'Przemienność i łączność',
+        title: '5.1 Przemienność i łączność',
         completed: false,
         progress: 0
       },
       {
         id: '5-2',
-        title: 'Rozdzielność mnożenia',
+        title: '5.2 Rozdzielność mnożenia',
         completed: false,
         progress: 0
       },
       {
         id: '5-3',
-        title: 'Kolejność wykonywania działań',
+        title: '5.3 Kolejność wykonywania działań',
         completed: false,
         progress: 0
       },
       {
         id: '5-4',
-        title: 'Techniki obliczeniowe',
+        title: '5.4 Techniki obliczeniowe',
         completed: false,
         progress: 0
       }
@@ -180,37 +180,37 @@ const chapters: Chapter[] = [
   },
   {
     id: 'chapter-6',
-    title: 'Powtórzenie przed klasówką',
+    title: '6. Powtórzenie przed klasówką',
     icon: <Users className="h-4 w-4" />,
     totalProgress: 0,
     sections: [
       {
         id: '6-1',
-        title: 'Zadania z treścią - konteksty życiowe',
+        title: '6.1 Zadania z treścią - konteksty życiowe',
         completed: false,
         progress: 0
       },
       {
         id: '6-2',
-        title: 'Zadania praktyczne',
+        title: '6.2 Zadania praktyczne',
         completed: false,
         progress: 0
       },
       {
         id: '6-3',
-        title: 'Zadania z humorem',
+        title: '6.3 Zadania z humorem',
         completed: false,
         progress: 0
       },
       {
         id: '6-4',
-        title: 'Zadania tematyczne',
+        title: '6.4 Zadania tematyczne',
         completed: false,
         progress: 0
       },
       {
         id: '6-5',
-        title: 'Zadania kompleksowe',
+        title: '6.5 Zadania kompleksowe',
         completed: false,
         progress: 0
       }
@@ -226,7 +226,7 @@ export function Sidebar() {
       <div className="p-6">
         <div className="mb-6">
           <h2 className="text-2xl font-bold">Matematyka</h2>
-          <p className="text-sm text-muted-foreground">Klasa 6 - Liczby całkowite</p>
+          <p className="text-sm text-muted-foreground">Klasa 6 - Dział I: Liczby całkowite</p>
         </div>
 
         <Accordion type="single" collapsible className="space-y-2">
