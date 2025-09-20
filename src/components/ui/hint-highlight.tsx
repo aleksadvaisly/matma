@@ -19,14 +19,23 @@ export function HintHighlight({
         if (!React.isValidElement(child)) return child;
         
         // Check if this child's value should be highlighted
-        const childValue = child.props.value || child.props.children;
-        const shouldHighlight = showHints && hintValues.includes(childValue);
+        // Primarily use children text for buttons
+        const childValue = (typeof child.props.children === 'string' ? child.props.children : null) ||
+                          child.props.value || 
+                          child.props['data-value'] ||
+                          child.key;
+        
+        const shouldHighlight = showHints && childValue && hintValues.includes(childValue);
         
         if (!shouldHighlight) return child;
         
-        // Clone element with additional hint classes
+        // Clone element with additional hint classes - green pulsing
+        const existingClassName = child.props.className || '';
+        const newClassName = `${existingClassName} bg-green-200 border-green-200 hover:bg-green-300 hover:border-green-300 animate-pulse`.trim();
+        
         return React.cloneElement(child as React.ReactElement<any>, {
-          className: `${child.props.className || ''} bg-yellow-200 border-yellow-200 hover:bg-yellow-300 hover:border-yellow-300 animate-pulse`.trim()
+          ...child.props,
+          className: newClassName
         });
       })}
     </>

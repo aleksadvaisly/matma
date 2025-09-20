@@ -197,7 +197,7 @@ export function ComparisonSection() {
                   return (
                     <Button
                       key={symbol}
-                      value={symbol}
+                      data-value={symbol}
                       variant={selectedAnswer === symbol ? "default" : "outline"}
                       size="lg"
                       onClick={() => setSelectedAnswer(symbol)}

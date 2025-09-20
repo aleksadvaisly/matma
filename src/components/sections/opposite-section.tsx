@@ -175,7 +175,7 @@ export function OppositeSection() {
             onChange={(e) => setUserAnswer(e.target.value)}
             placeholder={isReciprocal ? "Wpisz odpowiedź (np. 1/2 lub 0.5)" : "Wpisz liczbę przeciwną"}
             className={`flex-1 text-center text-lg ${
-              showHints && !showFeedback ? "bg-yellow-50 border-yellow-300 animate-pulse" : ""
+              showHints && !showFeedback ? "bg-green-100 border-green-300 animate-pulse" : ""
             }`}
             onKeyPress={(e) => e.key === 'Enter' && !showFeedback && checkAnswer()}
           />

@@ -60,16 +60,29 @@ export function NumberLine({
           
           return (
             <g key={`click-${value}`}>
-              {/* Clickable invisible area for each unit */}
-              <rect
-                x={x - 10}
-                y={40}
-                width={20}
-                height={40}
-                fill="transparent"
-                style={{ cursor: 'pointer' }}
+              {/* Clickable area for each unit */}
+              <g
                 onClick={() => onNumberClick(value)}
-              />
+                style={{ cursor: 'pointer' }}
+              >
+                <rect
+                  x={x - 10}
+                  y={40}
+                  width={20}
+                  height={40}
+                  fill="transparent"
+                />
+                {/* Yellow circle when clicked */}
+                {isClicked && (
+                  <circle
+                    cx={x}
+                    cy={60}
+                    r="15"
+                    fill="rgb(250 204 21)"
+                    fillOpacity="0.3"
+                  />
+                )}
+              </g>
               {/* Show label if clicked but not normally labeled */}
               {isClicked && !hasLabel && (
                 <>
@@ -125,22 +138,22 @@ export function NumberLine({
                   onClick={() => onNumberClick(value)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {/* Yellow hint dot when showHints is on and this is the correct answer */}
+                  {/* Green hint dot when showHints is on and this is the correct answer */}
                   {showHints && correctAnswer === value && (
                     <circle
                       cx={x}
                       cy={60}
                       r="8"
-                      fill="rgb(250 204 21)"
+                      fill="rgb(34 197 94)"
                       className="animate-pulse"
                     />
                   )}
-                  {/* Selection highlight */}
+                  {/* Selection highlight - yellow */}
                   <circle
                     cx={x}
                     cy={60}
                     r="15"
-                    fill={isSelected ? 'blue' : 'transparent'}
+                    fill={isSelected ? 'rgb(250 204 21)' : 'transparent'}
                     fillOpacity={isSelected ? 0.3 : 0}
                   />
                 </g>
@@ -152,7 +165,7 @@ export function NumberLine({
                       cx={x}
                       cy={60}
                       r="8"
-                      fill="rgb(250 204 21)"
+                      fill="rgb(34 197 94)"
                       className="animate-pulse"
                     />
                   )}
@@ -179,7 +192,7 @@ export function NumberLine({
                 fontWeight={isSelected || markedNumber ? 'bold' : 'normal'}
                 fill={
                   markedNumber ? markedNumber.color :
-                  isSelected ? 'blue' : 
+                  isSelected ? 'rgb(250 204 21)' : 
                   'black'
                 }
                 style={{ pointerEvents: 'none' }}

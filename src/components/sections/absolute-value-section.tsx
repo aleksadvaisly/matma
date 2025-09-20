@@ -158,7 +158,7 @@ export function AbsoluteValueSection() {
             onChange={(e) => setUserAnswer(e.target.value)}
             placeholder="Wpisz wartość bezwzględną"
             className={`flex-1 text-center text-lg ${
-              showHints && !showFeedback ? "bg-yellow-50 border-yellow-300 animate-pulse" : ""
+              showHints && !showFeedback ? "bg-green-100 border-green-300 animate-pulse" : ""
             }`}
             onKeyPress={(e) => e.key === 'Enter' && !showFeedback && checkAnswer()}
           />
