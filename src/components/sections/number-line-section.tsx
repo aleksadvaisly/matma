@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
 import { useExerciseStore, Exercise } from '@/lib/store';
 import { CheckCircle, Circle, ArrowRight, RefreshCw } from 'lucide-react';
 
@@ -105,7 +106,7 @@ function NumberLine({
   );
 }
 
-export default function NumberLineSection() {
+export function NumberLineSection() {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -198,9 +199,9 @@ export default function NumberLineSection() {
     setShowFeedback(true);
     
     if (correct) {
-      completeExercise('1-1', currentExercise.id);
+      completeExercise(currentExercise.id);
       updateSectionProgress('1-1', { 
-        completed: (sectionProgress['1-1']?.completed || 0) + 1,
+        completed: (sectionProgress['1-1']?.completedExercises || 0) + 1,
         total: exercises.length 
       });
     }
@@ -234,7 +235,7 @@ export default function NumberLineSection() {
         <CardTitle className="flex items-center justify-between">
           <span>1.1 Liczby na osi liczbowej</span>
           <Badge variant="outline">
-            {sectionProgress['1-1']?.completed || 0}/{exercises.length}
+            {sectionProgress['1-1']?.completedExercises || 0}/{exercises.length}
           </Badge>
         </CardTitle>
         <CardDescription>

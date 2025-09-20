@@ -37,6 +37,7 @@ export interface ExerciseState {
   completeSection: (sectionId: string) => void;
   resetSection: (sectionId: string) => void;
   updateTimeSpent: (exerciseId: string, timeSpent: number) => void;
+  updateSectionProgress: (sectionId: string, progress: { completed: number; total: number }) => void;
   
   // Getters
   getSectionProgress: (sectionId: string) => SectionProgress | undefined;
@@ -232,6 +233,20 @@ export const useExerciseStore = create<ExerciseState>()(
             sectionProgress: newSectionProgress,
           };
         });
+      },
+
+      updateSectionProgress: (sectionId: string, progress: { completed: number; total: number }) => {
+        set((state) => ({
+          ...state,
+          sectionProgress: {
+            ...state.sectionProgress,
+            [sectionId]: {
+              ...state.sectionProgress[sectionId],
+              completedExercises: progress.completed,
+              totalExercises: progress.total,
+            },
+          },
+        }));
       },
 
       getSectionProgress: (sectionId: string) => {
