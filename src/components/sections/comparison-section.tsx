@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
+import { ProgressDisplay } from '@/components/ui/progress-display';
+import { InfoBox } from '@/components/ui/info-box';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { useExerciseStore, Exercise } from '@/lib/store';
-import { CheckCircle, Circle, ArrowRight, RefreshCw } from 'lucide-react';
+import { CheckCircle, Circle, ArrowRight, RefreshCw, Lightbulb } from 'lucide-react';
 
 interface ComparisonVisualizationProps {
   leftNumber: number;
@@ -16,6 +18,7 @@ interface ComparisonVisualizationProps {
   onAnswerClick?: (answer: string) => void;
   showCorrectAnswer?: boolean;
   correctAnswer?: string;
+  highlightAnswer?: boolean;
 }
 
 function ComparisonVisualization({
@@ -24,7 +27,8 @@ function ComparisonVisualization({
   selectedAnswer,
   onAnswerClick,
   showCorrectAnswer,
-  correctAnswer
+  correctAnswer,
+  highlightAnswer = false
 }: ComparisonVisualizationProps) {
   const width = 600;
   const height = 120;
@@ -111,331 +115,255 @@ function ComparisonVisualization({
         </div>
         
         <div className="flex justify-center gap-4">
-          {['<', '=', '>'].map((symbol) => (
-            <Button
-              key={symbol}
-              variant={selectedAnswer === symbol ? "default" : "outline"}
-              size="lg"
-              onClick={() => onAnswerClick?.(symbol)}
-              className={`text-xl w-16 h-16 ${
-                showCorrectAnswer && correctAnswer === symbol 
-                  ? "border-green-500 bg-green-50 dark:bg-green-950" 
-                  : ""
-              }`}
-            >
-              {symbol}
-            </Button>
-          ))}
+          {['<', '=', '>'].map((symbol) => {
+            const isCorrect = showCorrectAnswer && correctAnswer === symbol;
+            const shouldHighlight = highlightAnswer && isCorrect;
+            
+            return (
+              <Button
+                key={symbol}
+                variant={selectedAnswer === symbol ? "default" : "outline"}
+                size="lg"
+                onClick={() => onAnswerClick?.(symbol)}
+                className={`text-xl w-16 h-16 ${
+                  shouldHighlight
+                    ? "bg-yellow-200 border-yellow-400 hover:bg-yellow-300" 
+                    : isCorrect
+                    ? "border-green-500 bg-green-50 dark:bg-green-950"
+                    : ""
+                }`}
+              >
+                {symbol}
+              </Button>
+            );
+          })}
         </div>
       </div>
     </div>
   );
 }
 
-const generateExercises = (): Exercise[] => [
+const exercises: Array<{ 
+  id: string; 
+  question: string; 
+  answer: string;
+  leftNumber: number;
+  rightNumber: number;
+  hint: string;
+}> = [
   {
     id: '1-2-1',
     question: 'Porównaj liczby: -3 ? 2',
-    correctAnswer: '<',
-    completed: false,
-    attempts: 0,
-    timeSpent: 0,
+    answer: '<',
+    leftNumber: -3,
+    rightNumber: 2,
+    hint: 'Każda liczba ujemna jest mniejsza od każdej liczby dodatniej.'
   },
   {
     id: '1-2-2',
     question: 'Porównaj liczby: 5 ? -1',
-    correctAnswer: '>',
-    completed: false,
-    attempts: 0,
-    timeSpent: 0,
+    answer: '>',
+    leftNumber: 5,
+    rightNumber: -1,
+    hint: 'Liczby dodatnie są zawsze większe od ujemnych.'
   },
   {
     id: '1-2-3',
     question: 'Porównaj liczby: -7 ? -4',
-    correctAnswer: '<',
-    completed: false,
-    attempts: 0,
-    timeSpent: 0,
+    answer: '<',
+    leftNumber: -7,
+    rightNumber: -4,
+    hint: 'Z dwóch liczb ujemnych większa jest ta, która jest bliżej zera.'
   },
   {
     id: '1-2-4',
     question: 'Porównaj liczby: -2 ? -8',
-    correctAnswer: '>',
-    completed: false,
-    attempts: 0,
-    timeSpent: 0,
+    answer: '>',
+    leftNumber: -2,
+    rightNumber: -8,
+    hint: '-2 jest bliżej zera niż -8, więc jest większe.'
   },
   {
     id: '1-2-5',
     question: 'Porównaj liczby: 0 ? -5',
-    correctAnswer: '>',
-    completed: false,
-    attempts: 0,
-    timeSpent: 0,
+    answer: '>',
+    leftNumber: 0,
+    rightNumber: -5,
+    hint: 'Zero jest większe od każdej liczby ujemnej.'
   },
   {
     id: '1-2-6',
     question: 'Porównaj liczby: -3 ? -3',
-    correctAnswer: '=',
-    completed: false,
-    attempts: 0,
-    timeSpent: 0,
+    answer: '=',
+    leftNumber: -3,
+    rightNumber: -3,
+    hint: 'To ta sama liczba, więc są sobie równe.'
   },
+  {
+    id: '1-2-7',
+    question: 'Porównaj liczby: 4 ? 7',
+    answer: '<',
+    leftNumber: 4,
+    rightNumber: 7,
+    hint: 'Na osi liczbowej 4 znajduje się po lewej stronie od 7.'
+  }
 ];
 
 export function ComparisonSection() {
-  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
-  const [feedback, setFeedback] = useState<string>('');
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [startTime, setStartTime] = useState<number>(Date.now());
-
-  const {
-    initializeSection,
-    getSectionProgress,
-    submitAnswer,
-    completeExercise,
-    completeSection,
-    updateTimeSpent,
-    resetSection,
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [showHints, setShowHints] = useState(false);
+  
+  const { 
+    sectionProgress, 
+    updateSectionProgress,
+    completeExercise 
   } = useExerciseStore();
 
-  const sectionId = '1-2';
-  const exercises = generateExercises();
-  const sectionProgress = getSectionProgress(sectionId);
-  const currentExercise = exercises[currentExerciseIndex];
-
-  // Parse numbers from exercise question
-  const parseExercise = (question: string) => {
-    const match = question.match(/(-?\d+)\s*\?\s*(-?\d+)/);
-    if (match) {
-      return {
-        leftNumber: parseInt(match[1]),
-        rightNumber: parseInt(match[2])
-      };
-    }
-    return { leftNumber: 0, rightNumber: 0 };
-  };
-
-  const { leftNumber, rightNumber } = parseExercise(currentExercise.question);
+  const currentExercise = exercises[currentIndex];
+  const completedCount = exercises.filter((_, idx) => idx < currentIndex && showFeedback).length;
 
   useEffect(() => {
-    initializeSection(sectionId, exercises);
-  }, [initializeSection]);
+    updateSectionProgress('1-2', { 
+      completed: completedCount,
+      total: exercises.length 
+    });
+  }, [completedCount, updateSectionProgress]);
 
-  useEffect(() => {
-    setStartTime(Date.now());
-    setSelectedAnswer(undefined);
-    setFeedback('');
-    setShowAnswer(false);
-  }, [currentExerciseIndex]);
-
-  const handleAnswerClick = (answer: string) => {
-    setSelectedAnswer(answer);
-  };
-
-  const handleSubmit = () => {
-    if (!selectedAnswer) {
-      setFeedback('Wybierz znak porównania!');
-      return;
-    }
-
-    const timeSpent = Math.round((Date.now() - startTime) / 1000);
-    updateTimeSpent(currentExercise.id, timeSpent);
-    submitAnswer(currentExercise.id, selectedAnswer);
-
-    const isCorrect = selectedAnswer === currentExercise.correctAnswer;
+  const checkAnswer = () => {
+    if (!selectedAnswer) return;
     
-    if (isCorrect) {
-      setFeedback('Świetnie! Prawidłowa odpowiedź!');
+    const correct = selectedAnswer === currentExercise.answer;
+    setIsCorrect(correct);
+    setShowFeedback(true);
+    
+    if (correct) {
       completeExercise(currentExercise.id);
-      setShowAnswer(true);
-    } else {
-      let explanation = '';
-      if (leftNumber > rightNumber) {
-        explanation = `${leftNumber} > ${rightNumber} bo ${leftNumber} znajduje się po prawej stronie ${rightNumber} na osi liczbowej.`;
-      } else if (leftNumber < rightNumber) {
-        explanation = `${leftNumber} < ${rightNumber} bo ${leftNumber} znajduje się po lewej stronie ${rightNumber} na osi liczbowej.`;
-      } else {
-        explanation = `${leftNumber} = ${rightNumber} bo to są te same liczby.`;
-      }
-      setFeedback(`Nieprawidłowo. ${explanation}`);
+      updateSectionProgress('1-2', { 
+        completed: completedCount + 1,
+        total: exercises.length 
+      });
     }
   };
 
-  const handleNext = () => {
-    if (currentExerciseIndex < exercises.length - 1) {
-      setCurrentExerciseIndex(currentExerciseIndex + 1);
-    } else {
-      completeSection(sectionId);
+  const nextExercise = () => {
+    if (currentIndex < exercises.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setSelectedAnswer(null);
+      setShowFeedback(false);
     }
   };
 
-  const handleReset = () => {
-    resetSection(sectionId);
-    setCurrentExerciseIndex(0);
-    setSelectedAnswer(undefined);
-    setFeedback('');
-    setShowAnswer(false);
+  const reset = () => {
+    setCurrentIndex(0);
+    setSelectedAnswer(null);
+    setShowFeedback(false);
+    updateSectionProgress('1-2', { completed: 0, total: exercises.length });
   };
 
-  const progress = sectionProgress ? (sectionProgress.completedExercises / sectionProgress.totalExercises) * 100 : 0;
-  const isCompleted = sectionProgress?.completed || false;
+  const rules = [
+    'Im bardziej na prawo na osi, tym liczba większa',
+    'Liczby dodatnie są zawsze większe od liczb ujemnych',
+    'Zero jest większe od wszystkich liczb ujemnych',
+    'Z dwóch liczb ujemnych większa jest ta bliższa zeru',
+    'Przykład: -2 > -5 bo -2 jest bliżej zera'
+  ];
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">1.2 Porównywanie liczb</h1>
-        <p className="text-muted-foreground">
-          Naucz się porównywać liczby całkowite używając znaków &lt;, = i &gt;.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Zadanie {currentExerciseIndex + 1}</CardTitle>
-                <Badge variant="outline">
-                  {currentExerciseIndex + 1} / {exercises.length}
-                </Badge>
-              </div>
-              <CardDescription>
-                Wybierz odpowiedni znak porównania
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ComparisonVisualization
-                leftNumber={leftNumber}
-                rightNumber={rightNumber}
-                selectedAnswer={selectedAnswer}
-                onAnswerClick={handleAnswerClick}
-                showCorrectAnswer={showAnswer}
-                correctAnswer={currentExercise.correctAnswer as string}
+    <Card className="w-full max-w-4xl mx-auto">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>1.2 Porównywanie liczb</CardTitle>
+            <CardDescription>
+              Naucz się porównywać liczby całkowite używając znaków &lt;, = i &gt;
+            </CardDescription>
+          </div>
+          <div className="flex items-center gap-4">
+            <ProgressDisplay current={completedCount} total={exercises.length} />
+            <div className="flex items-center gap-2">
+              <Label htmlFor="show-hints" className="text-sm">
+                <Lightbulb className="h-4 w-4" />
+              </Label>
+              <Switch
+                id="show-hints"
+                checked={showHints}
+                onCheckedChange={setShowHints}
               />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="space-y-4 pt-6">
-              <p className="text-lg">{currentExercise.question}</p>
-              
-              {selectedAnswer && (
-                <div className="p-3 bg-muted rounded-lg">
-                  <p>Wybrana odpowiedź: <strong>{leftNumber} {selectedAnswer} {rightNumber}</strong></p>
-                </div>
-              )}
-
-              {feedback && (
-                <Alert className={showAnswer ? "border-green-500" : "border-orange-500"}>
-                  <AlertDescription>{feedback}</AlertDescription>
-                </Alert>
-              )}
-
-              <div className="flex gap-3">
-                {!showAnswer ? (
-                  <Button onClick={handleSubmit} disabled={!selectedAnswer}>
-                    Sprawdź odpowiedź
-                  </Button>
-                ) : (
-                  <Button onClick={handleNext} className="flex items-center gap-2">
-                    {currentExerciseIndex < exercises.length - 1 ? (
-                      <>
-                        Następne zadanie
-                        <ArrowRight className="h-4 w-4" />
-                      </>
-                    ) : (
-                      'Zakończ sekcję'
-                    )}
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="text-lg font-medium text-center">
+          {currentExercise.question}
         </div>
 
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Postęp</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Ukończone zadania</span>
-                  <span>{sectionProgress?.completedExercises || 0}/{exercises.length}</span>
-                </div>
-                <Progress value={progress} />
-              </div>
-              
-              {sectionProgress && (
-                <div className="text-sm text-muted-foreground">
-                  <p>Wynik: {sectionProgress.score}%</p>
-                  <p>Czas: {Math.round(sectionProgress.timeSpent / 60)} min</p>
-                </div>
-              )}
+        <ComparisonVisualization
+          leftNumber={currentExercise.leftNumber}
+          rightNumber={currentExercise.rightNumber}
+          selectedAnswer={selectedAnswer}
+          onAnswerClick={setSelectedAnswer}
+          showCorrectAnswer={showFeedback}
+          correctAnswer={currentExercise.answer}
+          highlightAnswer={showHints}
+        />
 
-              {isCompleted && (
-                <Button
-                  variant="outline"
-                  onClick={handleReset}
-                  className="w-full flex items-center gap-2"
-                >
+        {showFeedback && (
+          <Alert className={isCorrect ? "border-green-500" : "border-red-500"}>
+            <AlertDescription>
+              {isCorrect 
+                ? "Świetnie! Prawidłowa odpowiedź!" 
+                : `Nieprawidłowo. Prawidłowa odpowiedź to ${currentExercise.leftNumber} ${currentExercise.answer} ${currentExercise.rightNumber}.`}
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <div className="flex gap-2">
+          {!showFeedback ? (
+            <Button 
+              onClick={checkAnswer}
+              disabled={!selectedAnswer}
+              className="flex-1"
+            >
+              Sprawdź odpowiedź
+            </Button>
+          ) : (
+            <>
+              {currentIndex < exercises.length - 1 ? (
+                <Button onClick={nextExercise} className="flex-1 gap-2">
+                  Następne zadanie
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button onClick={reset} className="flex-1 gap-2">
                   <RefreshCw className="h-4 w-4" />
-                  Zacznij od nowa
+                  Rozpocznij od nowa
                 </Button>
               )}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Lista zadań</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {exercises.map((exercise, index) => {
-                  const isCurrentExercise = index === currentExerciseIndex;
-                  const exerciseProgress = sectionProgress?.exercises.find(ex => ex.id === exercise.id);
-                  const isCompleted = exerciseProgress?.completed || false;
-                  
-                  return (
-                    <div
-                      key={exercise.id}
-                      className={`flex items-center gap-3 p-2 rounded-lg ${
-                        isCurrentExercise ? 'bg-accent' : ''
-                      }`}
-                    >
-                      {isCompleted ? (
-                        <CheckCircle className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <Circle className="h-4 w-4 text-muted-foreground" />
-                      )}
-                      <span className={`text-sm ${isCurrentExercise ? 'font-medium' : ''}`}>
-                        Zadanie {index + 1}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Zasady porównywania</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm space-y-2">
-              <p>• Im bardziej na prawo na osi, tym liczba większa</p>
-              <p>• Liczby dodatnie są większe od ujemnych</p>
-              <p>• Zero jest większe od liczb ujemnych</p>
-              <p>• Z liczb ujemnych większa jest ta bliższa zeru</p>
-              <p>• Przykład: -2 &gt; -5 bo -2 jest bliżej zera</p>
-            </CardContent>
-          </Card>
+            </>
+          )}
         </div>
-      </div>
-    </div>
+
+        <div className="grid grid-cols-7 gap-2">
+          {exercises.map((_, index) => (
+            <div
+              key={index}
+              className={`h-2 rounded-full ${
+                index < completedCount
+                  ? 'bg-green-500'
+                  : index === currentIndex
+                  ? 'bg-blue-500'
+                  : 'bg-gray-200'
+              }`}
+            />
+          ))}
+        </div>
+
+        <InfoBox title="Zasady porównywania" items={rules} />
+      </CardContent>
+    </Card>
   );
 }
