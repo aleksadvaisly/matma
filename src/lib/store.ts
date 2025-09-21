@@ -115,42 +115,9 @@ export const useExerciseStore = create<ExerciseState>()(
       },
 
       completeExercise: (exerciseId: string) => {
-        set((state) => {
-          const newSectionProgress = { ...state.sectionProgress };
-          
-          for (const sectionId in newSectionProgress) {
-            const section = newSectionProgress[sectionId];
-            const exerciseIndex = section.exercises.findIndex(ex => ex.id === exerciseId);
-            
-            if (exerciseIndex !== -1) {
-              const exercise = { ...section.exercises[exerciseIndex] };
-              exercise.completed = true;
-              
-              // Update exercise in section
-              const updatedExercises = [...section.exercises];
-              updatedExercises[exerciseIndex] = exercise;
-              
-              // Update section progress
-              const completedCount = updatedExercises.filter(ex => ex.completed).length;
-              const correctCount = updatedExercises.filter(ex => 
-                ex.completed && String(ex.userAnswer) === String(ex.correctAnswer)
-              ).length;
-              
-              newSectionProgress[sectionId] = {
-                ...section,
-                exercises: updatedExercises,
-                completedExercises: completedCount,
-                score: Math.round((correctCount / section.totalExercises) * 100),
-              };
-              break;
-            }
-          }
-          
-          return {
-            ...state,
-            sectionProgress: newSectionProgress,
-          };
-        });
+        // For now, just log the completion
+        // The actual progress tracking happens via updateSectionProgress
+        console.log(`Exercise completed: ${exerciseId}`);
       },
 
       completeSection: (sectionId: string) => {

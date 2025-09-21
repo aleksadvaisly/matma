@@ -3,6 +3,7 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, RefreshCw } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface FeedbackSystemProps {
   showFeedback: boolean;
@@ -12,6 +13,7 @@ interface FeedbackSystemProps {
   selectedAnswer?: string | number | null;
   canSubmit?: boolean;
   isLastExercise?: boolean;
+  nextSectionUrl?: string;
   onCheck: () => void;
   onNext: () => void;
   onReset: () => void;
@@ -25,10 +27,12 @@ export function FeedbackSystem({
   selectedAnswer,
   canSubmit = true,
   isLastExercise = false,
+  nextSectionUrl,
   onCheck,
   onNext,
   onReset
 }: FeedbackSystemProps) {
+  const router = useRouter();
   return (
     <>
       {showFeedback && (
@@ -57,6 +61,14 @@ export function FeedbackSystem({
             {!isLastExercise ? (
               <Button onClick={onNext} className="flex-1 gap-2">
                 Następne zadanie
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            ) : nextSectionUrl ? (
+              <Button 
+                onClick={() => router.push(nextSectionUrl)} 
+                className="flex-1 gap-2"
+              >
+                Przejdź do następnego tematu
                 <ArrowRight className="h-4 w-4" />
               </Button>
             ) : (

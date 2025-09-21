@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ExerciseHeader } from './exercise-header';
 import { UniversalAnswerInput } from './universal-answer-input';
@@ -43,6 +44,34 @@ interface ExerciseCardProps {
   onExerciseComplete?: (exercise: Exercise, isCorrect: boolean) => void;
 }
 
+// Navigation mapping between sections
+const SECTION_NAVIGATION: Record<string, string> = {
+  '1-1': '1-2',
+  '1-2': '1-3',
+  '1-3': '1-4',
+  '1-4': '1-5',
+  '1-5': '2-1',
+  '2-1': '2-2',
+  '2-2': '2-3',
+  '2-3': '3-1',
+  '3-1': '3-2',
+  '3-2': '3-3',
+  '3-3': '3-4',
+  '3-4': '4-1',
+  '4-1': '4-2',
+  '4-2': '4-3',
+  '4-3': '5-1',
+  '5-1': '5-2',
+  '5-2': '5-3',
+  '5-3': '5-4',
+  '5-4': '6-1',
+  '6-1': '6-2',
+  '6-2': '6-3',
+  '6-3': '6-4',
+  '6-4': '6-5',
+  '6-5': null // Last section
+};
+
 export function ExerciseCard({
   title,
   description,
@@ -57,12 +86,26 @@ export function ExerciseCard({
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
-
+  
+  const pathname = usePathname();
   const { updateSectionProgress, completeExercise } = useExerciseStore();
 
   const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
   const displayedProgress = currentIndex + 1;
+  
+  // Calculate next section URL
+  const getNextSectionUrl = () => {
+    const currentSectionId = pathname?.split('/').pop();
+    if (!currentSectionId) return undefined;
+    
+    const nextSectionId = SECTION_NAVIGATION[currentSectionId];
+    if (!nextSectionId) return undefined;
+    
+    // Extract chapter from next section ID (e.g., '2-1' -> 'chapter-2')
+    const chapterId = `chapter-${nextSectionId.split('-')[0]}`;
+    return `/dashboard/chapters/${chapterId}/sections/${nextSectionId}`;
+  };
 
   useEffect(() => {
     updateSectionProgress(sectionId, {
@@ -181,6 +224,7 @@ export function ExerciseCard({
           }
           selectedAnswer={selectedAnswer}
           isLastExercise={currentIndex === TOTAL_EXERCISES - 1}
+          nextSectionUrl={getNextSectionUrl()}
           onCheck={checkAnswer}
           onNext={nextExercise}
           onReset={resetExercises}
