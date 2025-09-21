@@ -1,207 +1,147 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Input } from '@/components/ui/input';
-import { ProgressDisplay } from '@/components/ui/progress-display';
-import { InfoBox } from '@/components/ui/info-box';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+import { useState } from 'react';
+import { ExerciseCard, type Exercise } from '@/components/exercise/exercise-card';
 import { NumberLine } from '@/components/ui/number-line';
-import { useExerciseStore } from '@/lib/store';
-import { ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
+const exercises: Exercise[] = [
+  { 
+    id: '1-4-1', 
+    question: 'Znajdź wartość bezwzględną liczby -7', 
+    answer: '7',
+    inputType: 'text'
+  },
+  { 
+    id: '1-4-2', 
+    question: 'Ile wynosi |5|?', 
+    answer: '5',
+    inputType: 'text'
+  },
+  { 
+    id: '1-4-3', 
+    question: 'Oblicz |-12|', 
+    answer: '12',
+    inputType: 'text'
+  },
+  { 
+    id: '1-4-4', 
+    question: 'Która liczba ma większą wartość bezwzględną: -8 czy 6?', 
+    answer: '-8',
+    inputType: 'text'
+  },
+  { 
+    id: '1-4-5', 
+    question: 'Ile wynosi |0|?', 
+    answer: '0',
+    inputType: 'text'
+  },
+  { 
+    id: '1-4-6', 
+    question: 'Znajdź liczbę, której wartość bezwzględna wynosi 15', 
+    answer: '15',
+    inputType: 'text'
+  },
+  { 
+    id: '1-4-7', 
+    question: 'Która liczba jest dalej od zera: -10 czy 9?', 
+    answer: '-10',
+    inputType: 'text'
+  }
+];
 
-const exercises = [
-  { id: '1-4-1', question: 'Oblicz wartość bezwzględną: |7|', answer: '7', number: 7 },
-  { id: '1-4-2', question: 'Oblicz wartość bezwzględną: |-5|', answer: '5', number: -5 },
-  { id: '1-4-3', question: 'Oblicz wartość bezwzględną: |-12|', answer: '12', number: -12 },
-  { id: '1-4-4', question: 'Oblicz wartość bezwzględną: |0|', answer: '0', number: 0 },
-  { id: '1-4-5', question: 'Oblicz wartość bezwzględną: |15|', answer: '15', number: 15 },
-  { id: '1-4-6', question: 'Oblicz wartość bezwzględną: |-3|', answer: '3', number: -3 },
-  { id: '1-4-7', question: 'Oblicz wartość bezwzględną: |-20|', answer: '20', number: -20 },
+const hints = [
+  'Wartość bezwzględna to odległość liczby od zera na osi liczbowej',
+  'Wartość bezwzględna jest zawsze nieujemna',
+  '|a| = a dla a ≥ 0, |a| = -a dla a < 0',
+  'Liczby przeciwne mają tę samą wartość bezwzględną',
+  'Im większa wartość bezwzględna, tym liczba jest dalej od zera'
 ];
 
 export function AbsoluteValueSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [userAnswer, setUserAnswer] = useState('');
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [showHints, setShowHints] = useState(false);
-  const [clickedNumbers, setClickedNumbers] = useState<number[]>([]);
-  
-  const {
-    updateSectionProgress,
-    completeExercise
-  } = useExerciseStore();
-
-  const TOTAL_EXERCISES = exercises.length;
-  const currentExercise = exercises[currentIndex];
-  const completedCount = currentIndex;
-  const displayedProgress = Math.min(
-    TOTAL_EXERCISES,
-    completedCount + (showFeedback && isCorrect ? 1 : 0)
-  );
-
-  useEffect(() => {
-    updateSectionProgress('1-4', {
-      completed: displayedProgress,
-      total: TOTAL_EXERCISES
-    });
-  }, [displayedProgress, TOTAL_EXERCISES, updateSectionProgress]);
-
-  const checkAnswer = () => {
-    if (!userAnswer.trim()) return;
-    
-    const correct = userAnswer.trim() === currentExercise.answer;
-    setIsCorrect(correct);
-    setShowFeedback(true);
-    
-    if (correct) {
-      completeExercise(currentExercise.id);
-    }
-  };
-
-  const handleNumberClick = (value: number) => {
-    if (!clickedNumbers.includes(value)) {
-      setClickedNumbers([...clickedNumbers, value]);
-    }
-    setUserAnswer(Math.abs(value).toString());
-  };
-
-  const nextExercise = () => {
-    if (currentIndex < TOTAL_EXERCISES - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setUserAnswer('');
-      setShowFeedback(false);
-      setClickedNumbers([]);
-    }
-  };
-
-  const reset = () => {
-    setCurrentIndex(0);
-    setUserAnswer('');
-    setShowFeedback(false);
-    setClickedNumbers([]);
-  };
-
-  const properties = [
-    'Wartość bezwzględna liczby to jej odległość od zera na osi liczbowej',
-    'Wartość bezwzględna jest zawsze nieujemna (≥ 0)',
-    'Dla liczb dodatnich: |a| = a',
-    'Dla liczb ujemnych: |a| = -a (zmiana znaku)',
-    'Dla zera: |0| = 0',
-    'Przykład: |-5| = 5, bo odległość -5 od zera wynosi 5'
-  ];
-
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>1.4 Wartość bezwzględna</CardTitle>
-            <CardDescription>
-              Naucz się obliczać wartość bezwzględną liczb całkowitych
-            </CardDescription>
-          </div>
-          <div className="flex items-center gap-4">
-            <ProgressDisplay current={displayedProgress} total={TOTAL_EXERCISES} />
-            <div className="flex items-center gap-2">
-              <Label htmlFor="show-hints" className="text-sm">
-                <Sparkles className="h-4 w-4" />
-              </Label>
-              <Switch
-                id="show-hints"
-                checked={showHints}
-                onCheckedChange={setShowHints}
+    <ExerciseCard
+      title="1.4 Wartość bezwzględna"
+      description="Naucz się obliczać wartość bezwzględną liczb"
+      sectionId="1-4"
+      exercises={exercises}
+      hints={hints}
+      customContent={(exercise, props) => {
+        const [clickedNumbers, setClickedNumbers] = useState<number[]>([]);
+        
+        const extractNumbers = () => {
+          const matches = exercise.question?.match(/-?\d+/g) || [];
+          return matches.map(m => parseInt(m));
+        };
+
+        const numbers = extractNumbers();
+        const min = Math.min(...numbers, -10);
+        const max = Math.max(...numbers, 10);
+
+        const handleNumberClick = (value: number) => {
+          if (!clickedNumbers.includes(value)) {
+            setClickedNumbers([...clickedNumbers, value]);
+          }
+          const absValue = Math.abs(value);
+          
+          if (exercise.question?.includes('większą wartość') || exercise.question?.includes('dalej od zera')) {
+            props.setSelectedAnswer(String(value));
+          } else if (exercise.question?.includes('której wartość bezwzględna')) {
+            props.setSelectedAnswer(String(absValue));
+          } else {
+            props.setSelectedAnswer(String(absValue));
+          }
+        };
+
+        return (
+          <>
+            <div className="text-lg font-medium text-center">
+              {exercise.question}
+            </div>
+
+            <NumberLine
+              min={min - 2}
+              max={max + 2}
+              markedNumbers={numbers.map(n => ({ 
+                value: n, 
+                color: 'hsl(var(--primary))' 
+              }))}
+              selectedNumber={props.selectedAnswer ? parseInt(String(props.selectedAnswer)) : null}
+              onNumberClick={handleNumberClick}
+              showHints={props.showHints}
+              correctAnswer={parseInt(String(exercise.answer))}
+              feedbackState={props.showFeedback 
+                ? (props.isCorrect ? 'correct' : 'incorrect') 
+                : 'idle'}
+              enableAllClicks={true}
+            />
+
+            <div className="space-y-2">
+              {clickedNumbers.map(num => (
+                <div key={num} className="text-center text-sm text-muted-foreground">
+                  |{num}| = {Math.abs(num)}
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 max-w-sm mx-auto">
+              <span className="text-lg font-medium">Odpowiedź:</span>
+              <Input
+                type="text"
+                value={props.selectedAnswer || ''}
+                onChange={(e) => props.setSelectedAnswer(e.target.value)}
+                placeholder="Wpisz odpowiedź"
+                disabled={props.showFeedback}
+                className={`${
+                  props.showHints && !props.showFeedback 
+                    ? 'bg-green-100 border-green-300 animate-pulse' 
+                    : ''
+                }`}
               />
             </div>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="text-lg font-medium text-center">
-          {currentExercise.question}
-        </div>
-
-        <div className="space-y-4">
-          <NumberLine
-            min={-Math.max(Math.abs(currentExercise.number) + 2, 5)}
-            max={Math.max(Math.abs(currentExercise.number) + 2, 5)}
-            markedNumbers={[
-              { value: currentExercise.number, color: 'hsl(var(--primary))' },
-              { value: 0, color: 'black' }
-            ]}
-            onNumberClick={handleNumberClick}
-            enableAllClicks={true}
-            clickedNumbers={clickedNumbers}
-          />
-          <div className="text-center">
-            <div className="text-2xl font-bold">
-              |{currentExercise.number}| = {showFeedback && isCorrect ? <span className={showHints ? "text-yellow-500" : "text-destructive"}>{Math.abs(currentExercise.number)}</span> : '?'}
-            </div>
-            {showFeedback && isCorrect && currentExercise.number !== 0 && (
-              <div className="text-sm text-muted-foreground mt-2">
-                Odległość od zera: {Math.abs(currentExercise.number)} jednostek
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-            placeholder="Wpisz wartość bezwzględną"
-            className={`flex-1 text-center text-lg ${
-              showHints && !showFeedback ? "bg-green-100 border-green-300 animate-pulse" : ""
-            }`}
-            onKeyPress={(e) => e.key === 'Enter' && !showFeedback && checkAnswer()}
-          />
-        </div>
-
-        {showFeedback && (
-          <Alert className={isCorrect ? "border-green-500" : "border-red-500"}>
-            <AlertDescription>
-              {isCorrect 
-                ? "Świetnie! Prawidłowa odpowiedź!" 
-                : `Nieprawidłowo. |${currentExercise.number}| = ${currentExercise.answer}`}
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <div className="flex gap-2">
-          {!showFeedback ? (
-            <Button 
-              onClick={checkAnswer}
-              disabled={!userAnswer.trim()}
-              className="flex-1"
-            >
-              Sprawdź odpowiedź
-            </Button>
-          ) : (
-            <>
-              {currentIndex < TOTAL_EXERCISES - 1 ? (
-                <Button onClick={nextExercise} className="flex-1 gap-2">
-                  Następne zadanie
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              ) : (
-                <Button onClick={reset} className="flex-1 gap-2">
-                  <RefreshCw className="h-4 w-4" />
-                  Rozpocznij od nowa
-                </Button>
-              )}
-            </>
-          )}
-        </div>
-
-
-        <InfoBox title="Własności wartości bezwzględnej" items={properties} />
-      </CardContent>
-    </Card>
+          </>
+        );
+      }}
+    />
   );
 }
