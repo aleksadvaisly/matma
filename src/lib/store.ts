@@ -124,7 +124,6 @@ export const useExerciseStore = create<ExerciseState>()(
             
             if (exerciseIndex !== -1) {
               const exercise = { ...section.exercises[exerciseIndex] };
-              const wasCompleted = exercise.completed;
               exercise.completed = true;
               
               // Update exercise in section

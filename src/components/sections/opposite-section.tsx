@@ -10,7 +10,6 @@ import { InfoBox } from '@/components/ui/info-box';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { NumberLine } from '@/components/ui/number-line';
-import { HintHighlight } from '@/components/ui/hint-highlight';
 import { useExerciseStore } from '@/lib/store';
 import { ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
@@ -33,21 +32,25 @@ export function OppositeSection() {
   const [showHints, setShowHints] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
   
-  const { 
-    sectionProgress, 
+  const {
     updateSectionProgress,
-    completeExercise 
+    completeExercise
   } = useExerciseStore();
 
+  const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
-  const completedCount = exercises.filter((_, idx) => idx < currentIndex).length;
+  const completedCount = currentIndex;
+  const displayedProgress = Math.min(
+    TOTAL_EXERCISES,
+    completedCount + (showFeedback && isCorrect ? 1 : 0)
+  );
 
   useEffect(() => {
-    updateSectionProgress('1-3', { 
-      completed: completedCount,
-      total: exercises.length 
+    updateSectionProgress('1-3', {
+      completed: displayedProgress,
+      total: TOTAL_EXERCISES
     });
-  }, [completedCount, updateSectionProgress]);
+  }, [displayedProgress, TOTAL_EXERCISES, updateSectionProgress]);
 
   const checkAnswer = () => {
     if (!userAnswer.trim()) return;
@@ -64,10 +67,6 @@ export function OppositeSection() {
     
     if (correct) {
       completeExercise(currentExercise.id);
-      updateSectionProgress('1-3', { 
-        completed: completedCount + 1,
-        total: exercises.length 
-      });
     }
   };
 
@@ -77,7 +76,7 @@ export function OppositeSection() {
   };
 
   const nextExercise = () => {
-    if (currentIndex < exercises.length - 1) {
+    if (currentIndex < TOTAL_EXERCISES - 1) {
       setCurrentIndex(currentIndex + 1);
       setUserAnswer('');
       setShowFeedback(false);
@@ -90,7 +89,6 @@ export function OppositeSection() {
     setUserAnswer('');
     setShowFeedback(false);
     setSelectedNumber(null);
-    updateSectionProgress('1-3', { completed: 0, total: exercises.length });
   };
 
   const definitions = [
@@ -115,7 +113,7 @@ export function OppositeSection() {
             </CardDescription>
           </div>
           <div className="flex items-center gap-4">
-            <ProgressDisplay current={completedCount} total={exercises.length} />
+            <ProgressDisplay current={displayedProgress} total={TOTAL_EXERCISES} />
             <div className="flex items-center gap-2">
               <Label htmlFor="show-hints" className="text-sm">
                 <Sparkles className="h-4 w-4" />
@@ -148,6 +146,7 @@ export function OppositeSection() {
                 ...(showFeedback && isCorrect ? [{ value: -currentExercise.number, color: 'hsl(var(--destructive))', label: 'Opposite' }] : []),
                 ...(userAnswer && !showFeedback && !isNaN(parseInt(userAnswer)) ? [{ value: parseInt(userAnswer), color: 'blue', label: 'Your answer' }] : [])
               ]}
+              feedbackState={showFeedback ? (isCorrect ? 'correct' : 'incorrect') : 'idle'}
             />
             {showFeedback && isCorrect && currentExercise.number !== 0 && (
               <div className="text-center text-sm text-muted-foreground">
@@ -202,7 +201,7 @@ export function OppositeSection() {
             </Button>
           ) : (
             <>
-              {currentIndex < exercises.length - 1 ? (
+              {currentIndex < TOTAL_EXERCISES - 1 ? (
                 <Button onClick={nextExercise} className="flex-1 gap-2">
                   Następne zadanie
                   <ArrowRight className="h-4 w-4" />

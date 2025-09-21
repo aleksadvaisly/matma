@@ -33,7 +33,7 @@ export function HintHighlight({
         const existingClassName = child.props.className || '';
         const newClassName = `${existingClassName} bg-green-200 border-green-200 hover:bg-green-300 hover:border-green-300 animate-pulse`.trim();
         
-        return React.cloneElement(child as React.ReactElement<any>, {
+        return React.cloneElement(child as React.ReactElement, {
           ...child.props,
           className: newClassName
         });

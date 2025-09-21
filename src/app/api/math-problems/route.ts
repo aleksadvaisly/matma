@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const problems = await prisma.mathProblem.findMany()
     return NextResponse.json(problems)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
   }
 }
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json(problem)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create problem' }, { status: 500 })
   }
 }

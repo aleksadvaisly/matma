@@ -10,8 +10,9 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { NumberLine } from '@/components/ui/number-line';
 import { HintHighlightGroup } from '@/components/ui/hint-highlight';
-import { useExerciseStore, Exercise } from '@/lib/store';
-import { CheckCircle, Circle, ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
+import { ChoiceButton, type ChoiceFeedbackState } from '@/components/ui/choice-button';
+import { useExerciseStore } from '@/lib/store';
+import { ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
 
 const exercises: Array<{ 
@@ -87,21 +88,25 @@ export function ComparisonSection() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
   
-  const { 
-    sectionProgress, 
+  const {
     updateSectionProgress,
-    completeExercise 
+    completeExercise
   } = useExerciseStore();
 
+  const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
-  const completedCount = exercises.filter((_, idx) => idx < currentIndex && showFeedback).length;
+  const completedCount = currentIndex;
+  const displayedProgress = Math.min(
+    TOTAL_EXERCISES,
+    completedCount + (showFeedback && isCorrect ? 1 : 0)
+  );
 
   useEffect(() => {
-    updateSectionProgress('1-2', { 
-      completed: completedCount,
-      total: exercises.length 
+    updateSectionProgress('1-2', {
+      completed: displayedProgress,
+      total: TOTAL_EXERCISES
     });
-  }, [completedCount, updateSectionProgress]);
+  }, [displayedProgress, TOTAL_EXERCISES, updateSectionProgress]);
 
   const checkAnswer = () => {
     if (!selectedAnswer) return;
@@ -112,15 +117,11 @@ export function ComparisonSection() {
     
     if (correct) {
       completeExercise(currentExercise.id);
-      updateSectionProgress('1-2', { 
-        completed: completedCount + 1,
-        total: exercises.length 
-      });
     }
   };
 
   const nextExercise = () => {
-    if (currentIndex < exercises.length - 1) {
+    if (currentIndex < TOTAL_EXERCISES - 1) {
       setCurrentIndex(currentIndex + 1);
       setSelectedAnswer(null);
       setShowFeedback(false);
@@ -131,7 +132,6 @@ export function ComparisonSection() {
     setCurrentIndex(0);
     setSelectedAnswer(null);
     setShowFeedback(false);
-    updateSectionProgress('1-2', { completed: 0, total: exercises.length });
   };
 
   const rules = [
@@ -153,7 +153,7 @@ export function ComparisonSection() {
             </CardDescription>
           </div>
           <div className="flex items-center gap-4">
-            <ProgressDisplay current={completedCount} total={exercises.length} />
+            <ProgressDisplay current={displayedProgress} total={TOTAL_EXERCISES} />
             <div className="flex items-center gap-2">
               <Label htmlFor="show-hints" className="text-sm">
                 <Sparkles className="h-4 w-4" />
@@ -192,23 +192,26 @@ export function ComparisonSection() {
             <div className="flex justify-center gap-4">
               <HintHighlightGroup showHints={showHints} correctAnswer={currentExercise.answer}>
                 {['<', '=', '>'].map((symbol) => {
-                  const isCorrect = showFeedback && currentExercise.answer === symbol;
-                  
+                  const selected = selectedAnswer === symbol;
+                  const isCorrectChoice = currentExercise.answer === symbol;
+                  const state: ChoiceFeedbackState = showFeedback && selected
+                    ? (isCorrect ? 'correct' : 'incorrect')
+                    : 'idle';
+
                   return (
-                    <Button
+                    <ChoiceButton
                       key={symbol}
                       data-value={symbol}
-                      variant={selectedAnswer === symbol ? "default" : "outline"}
                       size="lg"
+                      selected={selected}
+                      state={state}
+                      revealCorrect={showFeedback}
+                      isCorrectChoice={isCorrectChoice}
                       onClick={() => setSelectedAnswer(symbol)}
-                      className={`text-xl w-16 h-16 ${
-                        isCorrect
-                          ? "border-green-500 bg-green-50 dark:bg-green-950"
-                          : ""
-                      }`}
+                      className="w-16 h-16"
                     >
                       {symbol}
-                    </Button>
+                    </ChoiceButton>
                   );
                 })}
               </HintHighlightGroup>
@@ -237,7 +240,7 @@ export function ComparisonSection() {
             </Button>
           ) : (
             <>
-              {currentIndex < exercises.length - 1 ? (
+              {currentIndex < TOTAL_EXERCISES - 1 ? (
                 <Button onClick={nextExercise} className="flex-1 gap-2">
                   Następne zadanie
                   <ArrowRight className="h-4 w-4" />

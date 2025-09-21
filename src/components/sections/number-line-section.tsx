@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { NumberLine } from '@/components/ui/number-line';
 import { useExerciseStore, Exercise } from '@/lib/store';
-import { CheckCircle, Circle, ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
+import { ArrowRight, RefreshCw, Sparkles } from 'lucide-react';
 
 
 export function NumberLineSection() {
@@ -20,10 +20,9 @@ export function NumberLineSection() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
   
-  const { 
-    sectionProgress, 
+  const {
     updateSectionProgress,
-    completeExercise 
+    completeExercise
   } = useExerciseStore();
 
   const exercises: Exercise[] = [
@@ -71,8 +70,14 @@ export function NumberLineSection() {
     }
   ];
 
+  const TOTAL_EXERCISES = exercises.length;
+
   const currentExercise = exercises[currentExerciseIndex];
-  const completedCount = exercises.filter((_, idx) => idx < currentExerciseIndex).length;
+  const completedCount = currentExerciseIndex;
+  const displayedProgress = Math.min(
+    TOTAL_EXERCISES,
+    completedCount + (showFeedback && isCorrect ? 1 : 0)
+  );
 
   // Extract numbers from question to determine range
   const extractNumbers = (text: string): number[] => {
@@ -108,15 +113,11 @@ export function NumberLineSection() {
     
     if (correct) {
       completeExercise(currentExercise.id);
-      updateSectionProgress('1-1', { 
-        completed: completedCount + 1,
-        total: exercises.length 
-      });
     }
   };
 
   const nextExercise = () => {
-    if (currentExerciseIndex < exercises.length - 1) {
+    if (currentExerciseIndex < TOTAL_EXERCISES - 1) {
       setCurrentExerciseIndex(currentExerciseIndex + 1);
       setSelectedAnswer(null);
       setShowFeedback(false);
@@ -127,15 +128,14 @@ export function NumberLineSection() {
     setCurrentExerciseIndex(0);
     setSelectedAnswer(null);
     setShowFeedback(false);
-    updateSectionProgress('1-1', { completed: 0, total: exercises.length });
   };
 
   useEffect(() => {
-    updateSectionProgress('1-1', { 
-      completed: completedCount,
-      total: exercises.length 
+    updateSectionProgress('1-1', {
+      completed: displayedProgress,
+      total: TOTAL_EXERCISES
     });
-  }, [completedCount, updateSectionProgress]);
+  }, [displayedProgress, TOTAL_EXERCISES, updateSectionProgress]);
 
   const hints = [
     'Oś liczbowa to linia, na której liczby są uporządkowane od najmniejszej do największej',
@@ -156,7 +156,7 @@ export function NumberLineSection() {
             </CardDescription>
           </div>
           <div className="flex items-center gap-4">
-            <ProgressDisplay current={completedCount} total={exercises.length} />
+            <ProgressDisplay current={displayedProgress} total={TOTAL_EXERCISES} />
             <div className="flex items-center gap-2">
               <Label htmlFor="show-hints" className="text-sm">
                 <Sparkles className="h-4 w-4" />
@@ -182,6 +182,7 @@ export function NumberLineSection() {
           onNumberClick={handleNumberClick}
           showHints={showHints}
           correctAnswer={parseInt(currentExercise.answer)}
+          feedbackState={showFeedback ? (isCorrect ? 'correct' : 'incorrect') : 'idle'}
         />
 
         {showFeedback && (
@@ -205,8 +206,8 @@ export function NumberLineSection() {
             </Button>
           ) : (
             <>
-              {currentExerciseIndex < exercises.length - 1 ? (
-                <Button onClick={nextExercise} className="flex-1 gap-2">
+                  {currentExerciseIndex < TOTAL_EXERCISES - 1 ? (
+                    <Button onClick={nextExercise} className="flex-1 gap-2">
                   Następne zadanie
                   <ArrowRight className="h-4 w-4" />
                 </Button>

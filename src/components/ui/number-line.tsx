@@ -13,6 +13,7 @@ interface NumberLineProps {
   markedNumbers?: { value: number; color: string; label?: string }[];
   enableAllClicks?: boolean;
   clickedNumbers?: number[];
+  feedbackState?: 'idle' | 'correct' | 'incorrect';
 }
 
 export function NumberLine({ 
@@ -24,7 +25,8 @@ export function NumberLine({
   correctAnswer,
   markedNumbers = [],
   enableAllClicks = false,
-  clickedNumbers = []
+  clickedNumbers = [],
+  feedbackState = 'idle'
 }: NumberLineProps) {
   const range = max - min;
   const step = range > 30 ? 5 : range > 15 ? 2 : 1;
@@ -153,8 +155,14 @@ export function NumberLine({
                     cx={x}
                     cy={60}
                     r="15"
-                    fill={isSelected ? 'rgb(250 204 21)' : 'transparent'}
-                    fillOpacity={isSelected ? 0.3 : 0}
+                    fill={isSelected
+                      ? feedbackState === 'correct'
+                        ? 'rgb(34 197 94)'
+                        : feedbackState === 'incorrect'
+                          ? 'rgb(239 68 68)'
+                          : 'rgb(250 204 21)'
+                      : 'transparent'}
+                    fillOpacity={isSelected ? 0.25 : 0}
                   />
                 </g>
               ) : (
@@ -192,7 +200,13 @@ export function NumberLine({
                 fontWeight={isSelected || markedNumber ? 'bold' : 'normal'}
                 fill={
                   markedNumber ? markedNumber.color :
-                  isSelected ? 'rgb(250 204 21)' : 
+                  isSelected ? (
+                    feedbackState === 'correct'
+                      ? 'rgb(34 197 94)'
+                      : feedbackState === 'incorrect'
+                        ? 'rgb(239 68 68)'
+                        : 'rgb(250 204 21)'
+                  ) : 
                   'black'
                 }
                 style={{ pointerEvents: 'none' }}
