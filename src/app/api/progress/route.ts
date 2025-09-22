@@ -47,6 +47,7 @@ export async function POST(request: Request) {
       lastExerciseId 
     } = body;
 
+
     if (!sectionId || exercisesCompleted === undefined || !totalExercises) {
       return NextResponse.json(
         { error: 'Missing required fields: sectionId, exercisesCompleted, totalExercises' },

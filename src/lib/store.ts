@@ -129,6 +129,9 @@ export const useExerciseStore = create<ExerciseState>()(
       completeExercise: (exerciseId: string) => {
         console.log(`Exercise completed: ${exerciseId}`);
         
+        let sectionToSave: string | null = null;
+        let updatedCompletedCount: number = 0;
+        
         // Update the exercise as completed in local store
         set((state) => {
           const newSectionProgress = { ...state.sectionProgress };
@@ -157,8 +160,11 @@ export const useExerciseStore = create<ExerciseState>()(
                 completedExercises: completedCount,
               };
               
-              // Save to database asynchronously
-              get().saveProgressToDatabase(sectionId, exerciseId).catch(console.error);
+              // Store values for database save
+              sectionToSave = sectionId;
+              updatedCompletedCount = completedCount;
+              
+              console.log(`Exercise ${exerciseId} completed in section ${sectionId}. New count: ${completedCount}`);
               break;
             }
           }
@@ -168,6 +174,50 @@ export const useExerciseStore = create<ExerciseState>()(
             sectionProgress: newSectionProgress,
           };
         });
+        
+        // Save to database with the calculated values (avoid race condition)
+        if (sectionToSave) {
+          const saveToDatabase = async () => {
+            try {
+              const userId = typeof window !== 'undefined' 
+                ? localStorage.getItem('userId') || 'default-user'
+                : 'default-user';
+
+              const payload = {
+                userId,
+                sectionId: sectionToSave,
+                exercisesCompleted: updatedCompletedCount,
+                totalExercises: get().sectionProgress[sectionToSave]?.totalExercises || 8,
+                lastExerciseId: exerciseId
+              };
+
+              console.log('completeExercise sending to database:', payload);
+
+              const response = await fetch('/api/progress', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+              });
+
+              if (!response.ok) {
+                throw new Error('Failed to save progress');
+              }
+
+              console.log(`Progress saved for section ${sectionToSave}: ${updatedCompletedCount} exercises`);
+              
+              // Trigger sidebar refresh
+              if (typeof window !== 'undefined') {
+                useNavigationStore.getState().refreshNavigation();
+              }
+            } catch (error) {
+              console.error('Error saving progress to database:', error);
+            }
+          };
+          
+          saveToDatabase();
+        }
       },
 
       completeSection: (sectionId: string) => {
@@ -267,6 +317,7 @@ export const useExerciseStore = create<ExerciseState>()(
         }));
         
         // Save progress to database when section progress is updated
+        // Note: Individual exercise completions are handled in completeExercise method
         const state = get();
         state.saveProgressToDatabase(sectionId).catch(console.error);
       },
@@ -308,18 +359,21 @@ export const useExerciseStore = create<ExerciseState>()(
             ? localStorage.getItem('userId') || 'default-user'
             : 'default-user';
 
+          const payload = {
+            userId,
+            sectionId,
+            exercisesCompleted: section.completedExercises,
+            totalExercises: section.totalExercises,
+            lastExerciseId
+          };
+
+
           const response = await fetch('/api/progress', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              userId,
-              sectionId,
-              exercisesCompleted: section.completedExercises,
-              totalExercises: section.totalExercises,
-              lastExerciseId
-            }),
+            body: JSON.stringify(payload),
           });
 
           if (!response.ok) {
@@ -352,6 +406,7 @@ export const useExerciseStore = create<ExerciseState>()(
           const sectionProgress = data.progress.find((p: any) => p.section_id === sectionId);
           
           if (sectionProgress) {
+            
             set((state) => {
               const currentSection = state.sectionProgress[sectionId];
               if (!currentSection) return state; // Section not initialized yet

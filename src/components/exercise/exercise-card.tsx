@@ -196,10 +196,31 @@ export function ExerciseCard({
     const sectionProgress = getSectionProgress(sectionId);
     const currentExerciseId = exercises[currentIndex]?.id;
     const nextExerciseId = exercises[currentIndex + 1]?.id;
+    
+    // FAIL-FAST: Detect critical navigation errors
+    if (!currentExerciseId) {
+      console.error(`CRITICAL: Missing exercise ID at index ${currentIndex} in section ${sectionId}`);
+      return false;
+    }
+    
     const isCurrentExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === currentExerciseId)?.completed || false;
     const isNextExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === nextExerciseId)?.completed || false;
     
-    return (showFeedback && isCorrect) || isCurrentExerciseCompleted || isNextExerciseCompleted;
+    const canProgress = (showFeedback && isCorrect) || isCurrentExerciseCompleted || isNextExerciseCompleted;
+    
+    // LOG: Debug progress blocking for troubleshooting
+    if (!canProgress && process.env.NODE_ENV === 'development') {
+      console.log(`Progress blocked at exercise ${currentIndex + 1} (${currentExerciseId}):`, {
+        showFeedback,
+        isCorrect,
+        isCurrentExerciseCompleted,
+        isNextExerciseCompleted,
+        currentIndex,
+        totalExercises: TOTAL_EXERCISES
+      });
+    }
+    
+    return canProgress;
   };
 
   const canGoPrevious = () => {
