@@ -412,6 +412,7 @@ export const useExerciseStore = create<ExerciseState>()(
               if (!currentSection) return state; // Section not initialized yet
               
               // Mark first N exercises as completed based on database progress
+              // CRITICAL: Maintain ID-based completion tracking for navigation
               const updatedExercises = currentSection.exercises.map((exercise, index) => ({
                 ...exercise,
                 completed: index < sectionProgress.exercises_completed,
