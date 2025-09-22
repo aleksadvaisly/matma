@@ -203,8 +203,11 @@ export function ExerciseCard({
       return false;
     }
     
-    const isCurrentExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === currentExerciseId)?.completed || false;
-    const isNextExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === nextExerciseId)?.completed || false;
+    // Check completion by ID (primary) and by index (fallback) to handle sync issues
+    const isCurrentExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === currentExerciseId)?.completed 
+      || currentIndex < (sectionProgress?.completedExercises || 0);
+    const isNextExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === nextExerciseId)?.completed 
+      || (currentIndex + 1) < (sectionProgress?.completedExercises || 0);
     
     const canProgress = (showFeedback && isCorrect) || isCurrentExerciseCompleted || isNextExerciseCompleted;
     
@@ -231,7 +234,8 @@ export function ExerciseCard({
     
     const sectionProgress = getSectionProgress(sectionId);
     const prevExerciseId = exercises[currentIndex - 1]?.id;
-    const isPrevExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === prevExerciseId)?.completed || false;
+    const isPrevExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === prevExerciseId)?.completed 
+      || (currentIndex - 1) < (sectionProgress?.completedExercises || 0);
     
     return isPrevExerciseCompleted;
   };
