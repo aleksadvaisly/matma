@@ -86,9 +86,10 @@ export function ExerciseCard({
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
   
   const pathname = usePathname();
-  const { updateSectionProgress, completeExercise } = useExerciseStore();
+  const { updateSectionProgress, completeExercise, initializeSection } = useExerciseStore();
 
   const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
@@ -107,12 +108,39 @@ export function ExerciseCard({
     return `/dashboard/chapters/${chapterId}/sections/${nextSectionId}`;
   };
 
+  // Initialize section with exercises when component mounts
   useEffect(() => {
-    updateSectionProgress(sectionId, {
-      completed: currentIndex + (showFeedback && isCorrect ? 1 : 0),
-      total: TOTAL_EXERCISES
-    });
-  }, [currentIndex, showFeedback, isCorrect, TOTAL_EXERCISES, updateSectionProgress, sectionId]);
+    if (exercises.length > 0) {
+      setIsInitializing(true);
+      // Convert exercises to store format
+      const storeExercises = exercises.map(ex => ({
+        id: ex.id,
+        question: ex.question || '',
+        options: ex.options,
+        correctAnswer: ex.answer,
+        userAnswer: undefined,
+        completed: false,
+        attempts: 0,
+        timeSpent: 0,
+      }));
+      
+      // First initialize, then let loadProgressFromDatabase override with saved state
+      initializeSection(sectionId, storeExercises);
+      
+      // Allow time for loadProgressFromDatabase to complete before enabling progress updates
+      setTimeout(() => setIsInitializing(false), 500);
+    }
+  }, [sectionId, exercises.length, initializeSection]); // Only depend on length, not exercises array
+
+  useEffect(() => {
+    // Don't update progress during initialization to avoid race condition
+    if (!isInitializing) {
+      updateSectionProgress(sectionId, {
+        completed: currentIndex + (showFeedback && isCorrect ? 1 : 0),
+        total: TOTAL_EXERCISES
+      });
+    }
+  }, [currentIndex, showFeedback, isCorrect, TOTAL_EXERCISES, updateSectionProgress, sectionId]); // Remove isInitializing from deps to fix warning
 
   const checkAnswer = () => {
     if (!selectedAnswer) return;

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useNavigationStore } from './navigation-store';
 
 export interface Exercise {
   id: string;
@@ -38,6 +39,8 @@ export interface ExerciseState {
   resetSection: (sectionId: string) => void;
   updateTimeSpent: (exerciseId: string, timeSpent: number) => void;
   updateSectionProgress: (sectionId: string, progress: { completed: number; total: number }) => void;
+  saveProgressToDatabase: (sectionId: string, exerciseId?: string) => Promise<void>;
+  loadProgressFromDatabase: (sectionId: string) => Promise<void>;
   
   // Getters
   getSectionProgress: (sectionId: string) => SectionProgress | undefined;
@@ -54,28 +57,35 @@ export const useExerciseStore = create<ExerciseState>()(
       currentExercise: null,
 
       initializeSection: (sectionId: string, exercises: Exercise[]) => {
-        set((state) => {
-          if (state.sectionProgress[sectionId]) {
-            return state; // Section already initialized
-          }
-          
-          return {
-            ...state,
-            sectionProgress: {
-              ...state.sectionProgress,
-              [sectionId]: {
-                sectionId,
-                exercises,
-                completed: false,
-                score: 0,
-                totalExercises: exercises.length,
-                completedExercises: 0,
-                timeSpent: 0,
-                startedAt: new Date(),
-              },
+        const existingSection = get().sectionProgress[sectionId];
+        
+        // If section exists and has exercises, don't reinitialize
+        if (existingSection && existingSection.exercises && existingSection.exercises.length > 0) {
+          // Just load latest progress from database
+          get().loadProgressFromDatabase(sectionId).catch(console.error);
+          return;
+        }
+        
+        // Initialize new section
+        set((state) => ({
+          ...state,
+          sectionProgress: {
+            ...state.sectionProgress,
+            [sectionId]: {
+              sectionId,
+              exercises,
+              completed: false,
+              score: 0,
+              totalExercises: exercises.length,
+              completedExercises: 0,
+              timeSpent: 0,
+              startedAt: new Date(),
             },
-          };
-        });
+          },
+        }));
+        
+        // Load progress from database to override initial state
+        get().loadProgressFromDatabase(sectionId).catch(console.error);
       },
 
       setCurrentExercise: (exercise: Exercise) => {
@@ -88,6 +98,8 @@ export const useExerciseStore = create<ExerciseState>()(
           
           for (const sectionId in newSectionProgress) {
             const section = newSectionProgress[sectionId];
+            if (!section.exercises) continue;
+            
             const exerciseIndex = section.exercises.findIndex(ex => ex.id === exerciseId);
             
             if (exerciseIndex !== -1) {
@@ -115,9 +127,18 @@ export const useExerciseStore = create<ExerciseState>()(
       },
 
       completeExercise: (exerciseId: string) => {
-        // For now, just log the completion
-        // The actual progress tracking happens via updateSectionProgress
         console.log(`Exercise completed: ${exerciseId}`);
+        
+        // Find which section this exercise belongs to and save progress
+        const state = get();
+        for (const sectionId in state.sectionProgress) {
+          const section = state.sectionProgress[sectionId];
+          if (section.exercises && section.exercises.some(ex => ex.id === exerciseId)) {
+            // Save to database asynchronously
+            state.saveProgressToDatabase(sectionId, exerciseId).catch(console.error);
+            break;
+          }
+        }
       },
 
       completeSection: (sectionId: string) => {
@@ -137,7 +158,7 @@ export const useExerciseStore = create<ExerciseState>()(
       resetSection: (sectionId: string) => {
         set((state) => {
           const section = state.sectionProgress[sectionId];
-          if (!section) return state;
+          if (!section || !section.exercises) return state;
           
           const resetExercises = section.exercises.map(exercise => ({
             ...exercise,
@@ -172,6 +193,8 @@ export const useExerciseStore = create<ExerciseState>()(
           
           for (const sectionId in newSectionProgress) {
             const section = newSectionProgress[sectionId];
+            if (!section.exercises) continue;
+            
             const exerciseIndex = section.exercises.findIndex(ex => ex.id === exerciseId);
             
             if (exerciseIndex !== -1) {
@@ -213,6 +236,10 @@ export const useExerciseStore = create<ExerciseState>()(
             },
           },
         }));
+        
+        // Save progress to database when section progress is updated
+        const state = get();
+        state.saveProgressToDatabase(sectionId).catch(console.error);
       },
 
       getSectionProgress: (sectionId: string) => {
@@ -221,7 +248,7 @@ export const useExerciseStore = create<ExerciseState>()(
 
       getExercise: (exerciseId: string, sectionId: string) => {
         const section = get().sectionProgress[sectionId];
-        return section?.exercises.find(ex => ex.id === exerciseId);
+        return section?.exercises?.find(ex => ex.id === exerciseId);
       },
 
       isExerciseCompleted: (exerciseId: string, sectionId: string) => {
@@ -240,6 +267,99 @@ export const useExerciseStore = create<ExerciseState>()(
         
         const totalCompleted = sections.filter(s => s.completed).length;
         return Math.round((totalCompleted / sections.length) * 100);
+      },
+
+      saveProgressToDatabase: async (sectionId: string, lastExerciseId?: string) => {
+        try {
+          const state = get();
+          const section = state.sectionProgress[sectionId];
+          if (!section) return;
+
+          const userId = typeof window !== 'undefined' 
+            ? localStorage.getItem('userId') || 'default-user'
+            : 'default-user';
+
+          const response = await fetch('/api/progress', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              sectionId,
+              exercisesCompleted: section.completedExercises,
+              totalExercises: section.totalExercises,
+              lastExerciseId
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to save progress');
+          }
+
+          console.log(`Progress saved for section ${sectionId}`);
+          
+          // Trigger sidebar refresh
+          if (typeof window !== 'undefined') {
+            useNavigationStore.getState().refreshNavigation();
+          }
+        } catch (error) {
+          console.error('Error saving progress to database:', error);
+        }
+      },
+
+      loadProgressFromDatabase: async (sectionId: string) => {
+        try {
+          const userId = typeof window !== 'undefined' 
+            ? localStorage.getItem('userId') || 'default-user'
+            : 'default-user';
+
+          const response = await fetch(`/api/progress?userId=${userId}`);
+          if (!response.ok) {
+            throw new Error('Failed to load progress');
+          }
+
+          const data = await response.json();
+          const sectionProgress = data.progress.find((p: any) => p.section_id === sectionId);
+          
+          if (sectionProgress) {
+            set((state) => {
+              const currentSection = state.sectionProgress[sectionId];
+              if (!currentSection) return state; // Section not initialized yet
+              
+              // Mark first N exercises as completed based on database progress
+              const updatedExercises = currentSection.exercises.map((exercise, index) => ({
+                ...exercise,
+                completed: index < sectionProgress.exercises_completed,
+                userAnswer: index < sectionProgress.exercises_completed ? exercise.correctAnswer : exercise.userAnswer,
+              }));
+              
+              return {
+                ...state,
+                sectionProgress: {
+                  ...state.sectionProgress,
+                  [sectionId]: {
+                    ...currentSection,
+                    exercises: updatedExercises,
+                    completedExercises: sectionProgress.exercises_completed,
+                    totalExercises: sectionProgress.total_exercises,
+                    completed: !!sectionProgress.completed_at,
+                    score: Math.round((sectionProgress.exercises_completed / sectionProgress.total_exercises) * 100),
+                  },
+                },
+              };
+            });
+
+            console.log(`Progress loaded for section ${sectionId}: ${sectionProgress.exercises_completed}/${sectionProgress.total_exercises}`);
+            
+            // Trigger sidebar refresh to show updated progress
+            if (typeof window !== 'undefined') {
+              useNavigationStore.getState().refreshNavigation();
+            }
+          }
+        } catch (error) {
+          console.error('Error loading progress from database:', error);
+        }
       },
     }),
     {
