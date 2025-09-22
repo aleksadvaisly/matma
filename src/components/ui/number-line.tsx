@@ -36,8 +36,9 @@ export function NumberLine({
   const displayMax = max - step;
   
   return (
-    <div className="w-full overflow-x-auto pb-4">
-      <svg width={Math.max(800, range * 40)} height="120" className="min-w-full">
+    <div className="w-full flex justify-center pb-4">
+      <div className="overflow-x-auto">
+        <svg width={Math.max(800, range * 40)} height="120" className="block mx-auto">
         {/* Main line */}
         <line 
           x1="40" 
@@ -216,7 +217,8 @@ export function NumberLine({
             </g>
           );
         })}
-      </svg>
+        </svg>
+      </div>
     </div>
   );
 }

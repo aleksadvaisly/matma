@@ -53,13 +53,14 @@ export function FeedbackSystem({
             onClick={onCheck}
             disabled={!canSubmit || selectedAnswer === null || selectedAnswer === ''}
             className="flex-1"
+            style={{ cursor: (!canSubmit || selectedAnswer === null || selectedAnswer === '') ? 'not-allowed' : 'pointer' }}
           >
             Sprawdź odpowiedź
           </Button>
         ) : (
           <>
             {!isLastExercise ? (
-              <Button onClick={onNext} className="flex-1 gap-2">
+              <Button onClick={onNext} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
                 Następne zadanie
                 <ArrowRight className="h-4 w-4" />
               </Button>
@@ -67,12 +68,13 @@ export function FeedbackSystem({
               <Button 
                 onClick={() => router.push(nextSectionUrl)} 
                 className="flex-1 gap-2"
+                style={{ cursor: 'pointer' }}
               >
                 Przejdź do następnego tematu
                 <ArrowRight className="h-4 w-4" />
               </Button>
             ) : (
-              <Button onClick={onReset} className="flex-1 gap-2">
+              <Button onClick={onReset} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
                 <RefreshCw className="h-4 w-4" />
                 Rozpocznij od nowa
               </Button>

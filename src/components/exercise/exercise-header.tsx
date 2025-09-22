@@ -14,6 +14,10 @@ interface ExerciseHeaderProps {
   total: number;
   showHints: boolean;
   onHintsToggle: (checked: boolean) => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  canGoPrevious?: boolean;
+  canGoNext?: boolean;
 }
 
 export function ExerciseHeader({ 
@@ -22,7 +26,11 @@ export function ExerciseHeader({
   current, 
   total, 
   showHints, 
-  onHintsToggle 
+  onHintsToggle,
+  onPrevious,
+  onNext,
+  canGoPrevious,
+  canGoNext
 }: ExerciseHeaderProps) {
   return (
     <div className="flex items-center justify-between">
@@ -31,7 +39,14 @@ export function ExerciseHeader({
         <CardDescription>{description}</CardDescription>
       </div>
       <div className="flex items-center gap-4">
-        <ProgressDisplay current={current} total={total} />
+        <ProgressDisplay 
+          current={current} 
+          total={total}
+          onPrevious={onPrevious}
+          onNext={onNext}
+          canGoPrevious={canGoPrevious}
+          canGoNext={canGoNext}
+        />
         <div className="flex items-center gap-2">
           <Label htmlFor="show-hints" className="text-sm">
             <Sparkles className="h-4 w-4" />
@@ -40,6 +55,7 @@ export function ExerciseHeader({
             id="show-hints"
             checked={showHints}
             onCheckedChange={onHintsToggle}
+            style={{ cursor: 'pointer' }}
           />
         </div>
       </div>

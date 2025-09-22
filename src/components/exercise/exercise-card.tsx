@@ -89,7 +89,7 @@ export function ExerciseCard({
   const [isInitializing, setIsInitializing] = useState(true);
   
   const pathname = usePathname();
-  const { updateSectionProgress, completeExercise, initializeSection } = useExerciseStore();
+  const { updateSectionProgress, completeExercise, initializeSection, getSectionProgress } = useExerciseStore();
 
   const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
@@ -131,6 +131,8 @@ export function ExerciseCard({
       setTimeout(() => setIsInitializing(false), 500);
     }
   }, [sectionId, exercises.length, initializeSection]); // Only depend on length, not exercises array
+  
+  // Removed auto-showing completed state - users can re-solve exercises when revisiting
 
   useEffect(() => {
     // Don't update progress during initialization to avoid race condition
@@ -160,11 +162,57 @@ export function ExerciseCard({
   };
 
   const nextExercise = () => {
-    if (currentIndex < TOTAL_EXERCISES - 1) {
-      setCurrentIndex(currentIndex + 1);
+    if (canGoNext()) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      
+      // Always reset state when navigating - allow re-solving
       setSelectedAnswer(null);
       setShowFeedback(false);
+      setIsCorrect(false);
     }
+  };
+
+  const previousExercise = () => {
+    if (canGoPrevious()) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      
+      // Always reset state when navigating - allow re-solving
+      setSelectedAnswer(null);
+      setShowFeedback(false);
+      setIsCorrect(false);
+    }
+  };
+
+  const canGoNext = () => {
+    // Can go to next exercise if:
+    // 1. Not on the last exercise
+    // 2. EITHER the current exercise was just completed (answered correctly)
+    //    OR the current exercise is already completed from previous session (can skip)
+    //    OR the next exercise is already completed from previous session
+    if (currentIndex >= TOTAL_EXERCISES - 1) return false;
+    
+    const sectionProgress = getSectionProgress(sectionId);
+    const currentExerciseId = exercises[currentIndex]?.id;
+    const nextExerciseId = exercises[currentIndex + 1]?.id;
+    const isCurrentExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === currentExerciseId)?.completed || false;
+    const isNextExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === nextExerciseId)?.completed || false;
+    
+    return (showFeedback && isCorrect) || isCurrentExerciseCompleted || isNextExerciseCompleted;
+  };
+
+  const canGoPrevious = () => {
+    // Can go to previous exercise if:
+    // 1. Not on the first exercise  
+    // 2. The previous exercise is completed (from store)
+    if (currentIndex <= 0) return false;
+    
+    const sectionProgress = getSectionProgress(sectionId);
+    const prevExerciseId = exercises[currentIndex - 1]?.id;
+    const isPrevExerciseCompleted = sectionProgress?.exercises?.find(ex => ex.id === prevExerciseId)?.completed || false;
+    
+    return isPrevExerciseCompleted;
   };
 
   const resetExercises = () => {
@@ -234,6 +282,10 @@ export function ExerciseCard({
           total={TOTAL_EXERCISES}
           showHints={showHints}
           onHintsToggle={setShowHints}
+          onPrevious={previousExercise}
+          onNext={nextExercise}
+          canGoPrevious={canGoPrevious()}
+          canGoNext={canGoNext()}
         />
       </CardHeader>
       <CardContent className="space-y-6">

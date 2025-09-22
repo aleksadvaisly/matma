@@ -129,16 +129,45 @@ export const useExerciseStore = create<ExerciseState>()(
       completeExercise: (exerciseId: string) => {
         console.log(`Exercise completed: ${exerciseId}`);
         
-        // Find which section this exercise belongs to and save progress
-        const state = get();
-        for (const sectionId in state.sectionProgress) {
-          const section = state.sectionProgress[sectionId];
-          if (section.exercises && section.exercises.some(ex => ex.id === exerciseId)) {
-            // Save to database asynchronously
-            state.saveProgressToDatabase(sectionId, exerciseId).catch(console.error);
-            break;
+        // Update the exercise as completed in local store
+        set((state) => {
+          const newSectionProgress = { ...state.sectionProgress };
+          
+          for (const sectionId in newSectionProgress) {
+            const section = newSectionProgress[sectionId];
+            if (!section.exercises) continue;
+            
+            const exerciseIndex = section.exercises.findIndex(ex => ex.id === exerciseId);
+            
+            if (exerciseIndex !== -1) {
+              const exercise = { ...section.exercises[exerciseIndex] };
+              exercise.completed = true;
+              exercise.userAnswer = exercise.correctAnswer;
+              
+              // Update exercise in section
+              const updatedExercises = [...section.exercises];
+              updatedExercises[exerciseIndex] = exercise;
+              
+              // Update completed count
+              const completedCount = updatedExercises.filter(ex => ex.completed).length;
+              
+              newSectionProgress[sectionId] = {
+                ...section,
+                exercises: updatedExercises,
+                completedExercises: completedCount,
+              };
+              
+              // Save to database asynchronously
+              get().saveProgressToDatabase(sectionId, exerciseId).catch(console.error);
+              break;
+            }
           }
-        }
+          
+          return {
+            ...state,
+            sectionProgress: newSectionProgress,
+          };
+        });
       },
 
       completeSection: (sectionId: string) => {
