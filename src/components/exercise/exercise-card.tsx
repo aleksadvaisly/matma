@@ -137,12 +137,23 @@ export function ExerciseCard({
   useEffect(() => {
     // Don't update progress during initialization to avoid race condition
     if (!isInitializing) {
-      updateSectionProgress(sectionId, {
-        completed: currentIndex + (showFeedback && isCorrect ? 1 : 0),
-        total: TOTAL_EXERCISES
-      });
+      const sectionProgress = getSectionProgress(sectionId);
+      const currentCompletedCount = sectionProgress?.completedExercises || 0;
+      
+      // Only update if we're completing a NEW exercise, not when just navigating
+      if (showFeedback && isCorrect) {
+        // We just completed an exercise - increment the count if it's a new completion
+        const alreadyCompleted = sectionProgress?.exercises?.find(ex => ex.id === currentExercise.id)?.completed;
+        if (!alreadyCompleted) {
+          updateSectionProgress(sectionId, {
+            completed: Math.max(currentCompletedCount, currentIndex + 1),
+            total: TOTAL_EXERCISES
+          });
+        }
+      }
+      // Don't update progress when just navigating through already completed exercises
     }
-  }, [currentIndex, showFeedback, isCorrect, TOTAL_EXERCISES, updateSectionProgress, sectionId]); // Remove isInitializing from deps to fix warning
+  }, [currentIndex, showFeedback, isCorrect, TOTAL_EXERCISES, updateSectionProgress, sectionId, getSectionProgress, currentExercise]); // Remove isInitializing from deps to fix warning
 
   const checkAnswer = () => {
     if (!selectedAnswer) return;
