@@ -1,12 +1,6 @@
-import { notFound } from 'next/navigation';
-import { NumberLineSection } from '@/components/sections/number-line-section';
-import { ComparisonSection } from '@/components/sections/comparison-section';
-import { OppositeSection } from '@/components/sections/opposite-section';
-import { AbsoluteValueSection } from '@/components/sections/absolute-value-section';
-import { IntegerSetSection } from '@/components/sections/integer-set-section';
-import { AdditionRulesSection } from '@/components/sections/addition-rules-section';
-import { AdditionTechniquesSection } from '@/components/sections/addition-techniques-section';
-import { AdditionWordProblemsSection } from '@/components/sections/addition-word-problems-section';
+import { UniversalSection } from '@/components/sections/universal-section';
+import Database from 'better-sqlite3';
+import path from 'path';
 
 interface SectionPageProps {
   params: Promise<{
@@ -15,44 +9,44 @@ interface SectionPageProps {
   }>;
 }
 
-const sectionComponents: Record<string, Record<string, React.ComponentType>> = {
-  'chapter-1': {
-    '1-1': NumberLineSection,
-    '1-2': ComparisonSection,
-    '1-3': OppositeSection,
-    '1-4': AbsoluteValueSection,
-    '1-5': IntegerSetSection,
-  },
-  'chapter-2': {
-    '2-1': AdditionRulesSection,
-    '2-2': AdditionTechniquesSection,
-    '2-3': AdditionWordProblemsSection,
-  },
-};
+// Check if section exists in database
+function sectionExists(sectionId: string): boolean {
+  try {
+    const db = new Database(path.join(process.cwd(), 'matma.db'));
+    const result = db.prepare(
+      'SELECT id FROM sections WHERE id = ?'
+    ).get(sectionId);
+    db.close();
+    return !!result;
+  } catch (error) {
+    console.error('Error checking section existence:', error);
+    return false;
+  }
+}
 
 export default async function SectionPage({ params }: SectionPageProps) {
-  const { chapterId, sectionId } = await params;
+  const { sectionId } = await params;
 
-  const chapterSections = sectionComponents[chapterId];
+  // Check if section exists in database
+  const exists = sectionExists(sectionId);
 
-  if (!chapterSections) {
+  if (!exists) {
     return (
       <div className="p-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Wkrótce dostępne</h1>
+          <h1 className="text-2xl font-bold mb-4">Sekcja w przygotowaniu</h1>
           <p className="text-muted-foreground">
-            Ten rozdział będzie dostępny wkrótce. Na razie skup się na sekcjach z aktywnych rozdziałów.
+            Ta sekcja będzie dostępna wkrótce. Na razie skup się na innych sekcjach.
           </p>
         </div>
       </div>
     );
   }
 
-  const SectionComponent = chapterSections[sectionId];
-
-  if (!SectionComponent) {
-    notFound();
-  }
-
-  return <SectionComponent />;
+  // All sections now use the UniversalSection component
+  return (
+    <div className="p-6">
+      <UniversalSection sectionId={sectionId} />
+    </div>
+  );
 }

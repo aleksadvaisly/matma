@@ -34,22 +34,31 @@ interface Chapter {
 export function Sidebar() {
   const pathname = usePathname();
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [textbookInfo, setTextbookInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { shouldRefresh, setRefreshed } = useNavigationStore();
 
   useEffect(() => {
-    async function fetchNavigation() {
+    async function fetchData() {
       try {
-        // Get userId from localStorage or use default
-        const userId = localStorage.getItem('userId') || 'default-user';
-        const response = await fetch(`/api/navigation?userId=${userId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch navigation');
+        // Fetch textbook info and navigation in parallel
+        const [textbookRes, navigationRes] = await Promise.all([
+          fetch('/api/current-textbook'),
+          fetch(`/api/navigation?userId=${localStorage.getItem('userId') || 'default-user'}`)
+        ]);
+
+        if (!textbookRes.ok || !navigationRes.ok) {
+          throw new Error('Failed to fetch data');
         }
-        const data = await response.json();
+
+        const [textbook, navigation] = await Promise.all([
+          textbookRes.json(),
+          navigationRes.json()
+        ]);
         
-        setChapters(data.chapters);
+        setTextbookInfo(textbook);
+        setChapters(navigation.chapters);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -57,7 +66,7 @@ export function Sidebar() {
       }
     }
 
-    fetchNavigation();
+    fetchData();
   }, []);
 
   // Refresh navigation when progress changes
@@ -87,7 +96,7 @@ export function Sidebar() {
       <div className="w-80 h-screen bg-background border-r border-border overflow-y-auto">
         <div className="p-6">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold">Matematyka</h2>
+            <h2 className="text-2xl font-bold">📐 Matematyka</h2>
             <p className="text-sm text-muted-foreground">Ładowanie...</p>
           </div>
         </div>
@@ -100,7 +109,7 @@ export function Sidebar() {
       <div className="w-80 h-screen bg-background border-r border-border overflow-y-auto">
         <div className="p-6">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold">Matematyka</h2>
+            <h2 className="text-2xl font-bold">📐 Matematyka</h2>
             <p className="text-sm text-destructive">Błąd: {error}</p>
           </div>
         </div>
@@ -112,8 +121,12 @@ export function Sidebar() {
     <div className="w-80 h-screen bg-background border-r border-border overflow-y-auto">
       <div className="p-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold">Matematyka</h2>
-          <p className="text-sm text-muted-foreground">Klasa 6 - Dział I: Liczby całkowite</p>
+          <h2 className="text-2xl font-bold">
+            {textbookInfo?.subject_icon} {textbookInfo?.subject_name || 'Matematyka'}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Klasa {textbookInfo?.grade_level || '6'} - {textbookInfo?.title || 'Ćwiczenia'}
+          </p>
         </div>
 
         <Accordion type="single" collapsible className="space-y-2">
