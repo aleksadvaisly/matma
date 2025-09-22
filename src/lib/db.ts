@@ -68,7 +68,15 @@ export function getExercisesBySection(sectionId: string) {
       `).get(exercise.id) as { config_json: string } | undefined;
       
       if (config) {
-        exercise.visualConfig = JSON.parse(config.config_json);
+        try {
+          exercise.visualConfig = JSON.parse(config.config_json);
+        } catch (error) {
+          // Handle malformed JSON by converting JS object notation to proper JSON
+          const fixedJson = config.config_json
+            .replace(/(\w+):/g, '"$1":')
+            .replace(/'/g, '"');
+          exercise.visualConfig = JSON.parse(fixedJson);
+        }
       }
     }
   }
