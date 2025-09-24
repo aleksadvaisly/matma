@@ -482,17 +482,20 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 **Zadania:**
 
-1. **2-3-1**: -3 + (-5)
-   - **Odpowiedź:** -8
+1. **2-3-1**: -3 + (-5) + 2
+   - **Odpowiedź:** -6
    - **Typ:** Pole tekstowe
+   - **Wyjaśnienie:** -3 + (-5) = -8, potem -8 + 2 = -6
 
-2. **2-3-2**: -2 + 7
-   - **Odpowiedź:** 5
+2. **2-3-2**: -2 + 7 + (-3)
+   - **Odpowiedź:** 2
    - **Typ:** Pole tekstowe
+   - **Wyjaśnienie:** -2 + 7 = 5, potem 5 + (-3) = 2
 
-3. **2-3-3**: 4 + (-6)
-   - **Odpowiedź:** -2
+3. **2-3-3**: 4 + (-6) + 1
+   - **Odpowiedź:** -1
    - **Typ:** Pole tekstowe
+   - **Wyjaśnienie:** 4 + (-6) = -2, potem -2 + 1 = -1
 
 4. **2-3-4**: -3 + (-4) + (-6)
    - **Odpowiedź:** -13
