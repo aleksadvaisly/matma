@@ -38,7 +38,7 @@ export function NumberLine({
   return (
     <div className="w-full flex justify-center pb-4">
       <div className="overflow-x-auto">
-        <svg width={Math.max(800, range * 40)} height="120" className="block mx-auto">
+        <svg width={Math.max(800, range * 40 + 80)} height="120" className="block mx-auto">
         {/* Main line */}
         <line 
           x1="40" 
@@ -52,62 +52,110 @@ export function NumberLine({
         {/* Arrow end - only right */}
         <polygon points={`${range * 40 + 50},60 ${range * 40 + 40},55 ${range * 40 + 40},65`} fill="black" />
         
-        {/* Render all clickable units if enabled */}
-        {enableAllClicks && onNumberClick && Array.from({ length: range + 1 }, (_, i) => {
+        
+        {/* Minor ticks for all units (without labels) - only show if not enableAllClicks */}
+        {!enableAllClicks && Array.from({ length: range + 1 }, (_, i) => {
           const value = min + i;
           if (value < displayMin || value > displayMax) return null;
           
+          // Skip if this is a major tick (with label)
+          if (value % step === 0) return null;
+          
           const x = 40 + ((value - min) / range) * (range * 40);
-          const hasLabel = value % step === 0;
+          
+          return (
+            <line 
+              key={`minor-tick-${value}`}
+              x1={x} 
+              y1="57"
+              y2="63"
+              x2={x} 
+              stroke="gray" 
+              strokeWidth="1"
+              opacity="0.5"
+            />
+          );
+        })}
+        
+        {/* Minor ticks with click areas when enableAllClicks is true */}
+        {enableAllClicks && Array.from({ length: range + 1 }, (_, i) => {
+          const value = min + i;
+          if (value < displayMin || value > displayMax) return null;
+          
+          // Skip if this is a major tick (with label)
+          if (value % step === 0) return null;
+          
+          const x = 40 + ((value - min) / range) * (range * 40);
+          const isSelected = selectedNumber === value;
           const isClicked = clickedNumbers.includes(value);
           
           return (
-            <g key={`click-${value}`}>
-              {/* Clickable area for each unit */}
-              <g
-                onClick={() => onNumberClick(value)}
-                style={{ cursor: 'pointer' }}
-              >
-                <rect
-                  x={x - 10}
-                  y={40}
-                  width={20}
-                  height={40}
-                  fill="transparent"
-                />
-                {/* Yellow circle when clicked */}
-                {isClicked && (
-                  <circle
-                    cx={x}
-                    cy={60}
-                    r="15"
-                    fill="rgb(250 204 21)"
-                    fillOpacity="0.3"
+            <g key={`minor-click-${value}`}>
+              {/* Clickable area for minor tick */}
+              {onNumberClick && (
+                <g
+                  onClick={() => onNumberClick(value)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <rect
+                    x={x - 10}
+                    y={40}
+                    width={20}
+                    height={40}
+                    fill="transparent"
                   />
-                )}
-              </g>
-              {/* Show label if clicked but not normally labeled */}
-              {isClicked && !hasLabel && (
-                <>
+                  {/* Minor tick mark */}
                   <line 
                     x1={x} 
-                    y1="58" 
+                    y1="57"
+                    y2="63"
                     x2={x} 
-                    y2="62" 
                     stroke="gray" 
                     strokeWidth="1"
+                    opacity="0.5"
                   />
-                  <text 
-                    x={x} 
-                    y={90} 
-                    textAnchor="middle" 
-                    fontSize="12"
-                    fill="gray"
-                    style={{ pointerEvents: 'none' }}
-                  >
-                    {value}
-                  </text>
-                </>
+                  {/* Yellow circle when selected */}
+                  {isSelected && (
+                    <>
+                      <circle
+                        cx={x}
+                        cy={60}
+                        r="15"
+                        fill={feedbackState === 'correct'
+                          ? 'rgb(34 197 94)'
+                          : feedbackState === 'incorrect'
+                            ? 'rgb(239 68 68)'
+                            : 'rgb(250 204 21)'}
+                        fillOpacity="0.25"
+                      />
+                      <text 
+                        x={x} 
+                        y={90} 
+                        textAnchor="middle" 
+                        fontSize="14"
+                        fontWeight="bold"
+                        fill={feedbackState === 'correct'
+                          ? 'rgb(34 197 94)'
+                          : feedbackState === 'incorrect'
+                            ? 'rgb(239 68 68)'
+                            : 'rgb(250 204 21)'}
+                        style={{ pointerEvents: 'none' }}
+                      >
+                        {value}
+                      </text>
+                    </>
+                  )}
+                  {/* Additional visual feedback for clicked numbers if needed */}
+                  {!isSelected && isClicked && (
+                    <circle
+                      cx={x}
+                      cy={60}
+                      r="8"
+                      fill="gray"
+                      fillOpacity="0.2"
+                    />
+                  )}
+                </g>
               )}
             </g>
           );

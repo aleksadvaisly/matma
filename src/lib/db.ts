@@ -38,16 +38,56 @@ export interface VisualConfig {
 }
 
 export function getExercisesBySection(sectionId: string) {
-  const exercises = db.prepare(`
-    SELECT 
-      e.*,
-      e.layout_type,
-      it.type_name as input_type
-    FROM exercises e
-    JOIN input_types it ON e.input_type_id = it.id
-    WHERE e.section_id = ?
-    ORDER BY e.order_index
-  `).all(sectionId) as Exercise[];
+  // Check if section has variants (exercise_base_id is not null)
+  const hasVariants = db.prepare(`
+    SELECT COUNT(*) as count
+    FROM exercises 
+    WHERE section_id = ? AND exercise_base_id IS NOT NULL
+  `).get(sectionId) as { count: number };
+
+  let exercises: Exercise[] = [];
+
+  if (hasVariants.count > 0) {
+    // Use variant system for sections that have it
+    const baseExercises = db.prepare(`
+      SELECT DISTINCT exercise_base_id, MIN(order_index) as min_order
+      FROM exercises
+      WHERE section_id = ? AND exercise_base_id IS NOT NULL
+      GROUP BY exercise_base_id
+      ORDER BY min_order
+    `).all(sectionId) as { exercise_base_id: string; min_order: number }[];
+
+    // For each base exercise, randomly select one variant
+    for (const base of baseExercises) {
+      const variant = db.prepare(`
+        SELECT 
+          e.*,
+          e.layout_type,
+          it.type_name as input_type
+        FROM exercises e
+        JOIN input_types it ON e.input_type_id = it.id
+        WHERE e.exercise_base_id = ?
+        ORDER BY RANDOM()
+        LIMIT 1
+      `).get(base.exercise_base_id) as Exercise;
+      
+      if (variant) {
+        exercises.push(variant);
+      }
+    }
+  } else {
+    // Fallback to old system for sections without variants
+    exercises = db.prepare(`
+      SELECT 
+        e.*,
+        e.layout_type,
+        it.type_name as input_type
+      FROM exercises e
+      JOIN input_types it ON e.input_type_id = it.id
+      WHERE e.section_id = ?
+      ORDER BY e.order_index
+    `).all(sectionId) as Exercise[];
+  }
   
   // Get options for each exercise
   for (const exercise of exercises) {
@@ -62,24 +102,25 @@ export function getExercisesBySection(sectionId: string) {
       exercise.options = options;
     }
     
-    // Get visual config if it's number-line
+    // Get visual config if it's number-line from section_components
     if (exercise.input_type === 'number-line') {
       const config = db.prepare(`
-        SELECT config_json
-        FROM visual_configs
-        WHERE exercise_id = ?
-      `).get(exercise.id) as { config_json: string } | undefined;
+        SELECT processing_config
+        FROM section_components
+        WHERE section_id = ?
+      `).get(exercise.section_id) as { processing_config: string } | undefined;
       
       if (config) {
         try {
-          exercise.visualConfig = JSON.parse(config.config_json);
+          const parsedConfig = JSON.parse(config.processing_config);
+          exercise.visualConfig = parsedConfig.numberLineConfig || { enableAllClicks: true };
         } catch (error) {
-          // Handle malformed JSON by converting JS object notation to proper JSON
-          const fixedJson = config.config_json
-            .replace(/(\w+):/g, '"$1":')
-            .replace(/'/g, '"');
-          exercise.visualConfig = JSON.parse(fixedJson);
+          // Default config if parsing fails
+          exercise.visualConfig = { enableAllClicks: true };
         }
+      } else {
+        // Default config if no section config exists
+        exercise.visualConfig = { enableAllClicks: true };
       }
     }
   }
