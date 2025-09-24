@@ -87,6 +87,63 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
      - c) 7 jednostek od -4 → 3
      - d) 5 jednostek od -1 → 4
 
+8. **1-1-8**: Na osi liczbowej zaznacz liczby: -2⅓, -⅔, 0, ⅓, 1⅔
+   - **Odpowiedź:** Poprawne zaznaczenie punktów na osi z podziałkami co ⅓
+   - **Typ:** Oś liczbowa z ułamkami (zakres: -3 do 2, podziałka co ⅓)
+   - **Difficulty_level:** 4
+   - **Order_index:** 8
+   - **Wyjaśnienie:** Oś z podziałką ułamkową wymaga precyzyjnego lokalizowania punktów między liczbami całkowitymi
+   - **Warianty:**
+     - a) -2⅓, -⅔, 0, ⅓, 1⅔
+     - b) -1⅔, -⅓, 0, ⅔, 2⅓
+     - c) -2⅔, -1⅓, 0, ⅓, 1⅓
+     - d) -1⅓, -⅔, ⅓, 1, 1⅔
+     - e) -3, -1⅔, -⅓, ⅔, 2
+     - f) -2½, -1, 0, ½, 1½
+     - g) -1½, -½, 0, 1, 2½
+
+9. **1-1-9**: Która liczba znajduje się dokładnie w połowie między -1⅔ a ⅓?
+   - **Odpowiedź:** -⅔
+   - **Typ:** Pole tekstowe (ułamek)
+   - **Difficulty_level:** 4
+   - **Order_index:** 9
+   - **Wyjaśnienie:** Środek = (-1⅔ + ⅓) ÷ 2 = (-5/3 + 1/3) ÷ 2 = -4/3 ÷ 2 = -⅔
+   - **Warianty:**
+     - a) między -1⅔ a ⅓ → -⅔
+     - b) między -2 a ½ → -¾
+     - c) między -1½ a 1 → -¼
+     - d) między -2⅓ a ⅔ → -⅚
+     - e) między -¾ a ¾ → 0
+     - f) między -1⅓ a 1⅓ → 0
+     - g) między -2½ a ½ → -1
+
+10. **1-1-10**: O ile jednostek różnią się liczby -⅚ i ⅙?
+    - **Odpowiedź:** 1
+    - **Typ:** Pole tekstowe
+    - **Difficulty_level:** 4
+    - **Order_index:** 10
+    - **Wyjaśnienie:** Odległość = ⅙ - (-⅚) = ⅙ + ⅚ = 6/6 = 1
+    - **Warianty:**
+      - a) -⅚ i ⅙ → 1
+      - b) -¾ i ¼ → 1
+      - c) -⅔ i ⅓ → 1
+      - d) -1½ i ½ → 2
+      - e) -1⅓ i ⅔ → 2
+      - f) -2¼ i ¾ → 3
+      - g) -⅝ i ⅜ → 1
+
+11. **1-1-11**: Uporządkuj liczby od najmniejszej do największej: -2,8; ⅝; -0,5; 0,05; -0,1; -2; -1
+    - **Odpowiedź:** -2,8; -2; -1; -0,5; -0,1; 0,05; ⅝
+    - **Typ:** Pole tekstowe
+    - **Difficulty_level:** 5
+    - **Order_index:** 11
+    - **Wyjaśnienie:** Konwersja ułamków: ⅝ = 0,625. Porządkowanie na osi liczbowej.
+    - **Warianty:**
+      - a) -2,8; ⅝; -0,5; 0,05; -0,1; -2; -1 → -2,8; -2; -1; -0,5; -0,1; 0,05; ⅝
+      - b) -3,2; ¾; -0,7; 0,1; -0,3; -2,5; -1,5 → -3,2; -2,5; -1,5; -0,7; -0,3; 0,1; ¾
+      - c) -1,9; ⅖; -0,4; 0,02; -0,2; -1,5; -0,8 → -1,9; -1,5; -0,8; -0,4; -0,2; 0,02; ⅖
+      - d) -2,3; ⅞; -0,6; 0,08; -0,15; -1,8; -1,2 → -2,3; -1,8; -1,2; -0,6; -0,15; 0,08; ⅞
+
 ---
 
 ### 1.2 Porównywanie liczb
@@ -435,6 +492,61 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
     - **Odpowiedź:** 0
     - **Typ:** Pole tekstowe
 
+#### Poziom D - Dodawanie ułamków
+20. **2-1-20**: (-⅔) + ⅓
+    - **Odpowiedź:** -⅓
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 20
+    - **Wyjaśnienie:** -⅔ + ⅓ = -2/3 + 1/3 = -1/3
+    - **Warianty:**
+      - a) (-⅔) + ⅓ → -⅓
+      - b) (-¾) + ¼ → -½
+      - c) (-⅚) + ⅙ → -⅔
+      - d) (-⅝) + ⅜ → -¼
+      - e) (-⅘) + ⅖ → -⅖
+      - f) (-⅞) + ⅜ → -½
+      - g) (-⅚) + ⅓ → -½
+
+21. **2-1-21**: -1¾ + 2⅙
+    - **Odpowiedź:** 5/12
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 5
+    - **Order_index:** 21
+    - **Wyjaśnienie:** -1¾ + 2⅙ = -7/4 + 13/6 = -21/12 + 26/12 = 5/12
+    - **Warianty:**
+      - a) -1¾ + 2⅙ → 5/12
+      - b) -1½ + 2⅓ → ⅚
+      - c) -2⅔ + 3¼ → 7/12
+      - d) -1⅚ + 2½ → ⅔
+      - e) -2¼ + 3⅓ → 13/12
+      - f) -1⅝ + 2¾ → 9/8
+
+22. **2-1-22**: 3 + (-4⅔)
+    - **Odpowiedź:** -1⅔
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 22
+    - **Wyjaśnienie:** 3 + (-4⅔) = 3 - 4⅔ = -1⅔
+    - **Warianty:**
+      - a) 3 + (-4⅔) → -1⅔
+      - b) 2 + (-3½) → -1½
+      - c) 4 + (-5¾) → -1¾
+      - d) 5 + (-6⅓) → -1⅓
+      - e) 1 + (-2⅚) → -1⅚
+
+23. **2-1-23**: (-⅕) + (-⅗) + ⅖
+    - **Odpowiedź:** -⅖
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 23
+    - **Wyjaśnienie:** -⅕ + (-⅗) + ⅖ = -1/5 - 3/5 + 2/5 = -2/5
+    - **Warianty:**
+      - a) (-⅕) + (-⅗) + ⅖ → -⅖
+      - b) (-¼) + (-½) + ¾ → 0
+      - c) (-⅓) + (-⅔) + ⅙ → -⅚
+      - d) (-⅛) + (-⅜) + ¼ → -¼
+
 ---
 
 ### 2.2 Techniki dodawania
@@ -527,6 +639,76 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Opcje:** -2, 8, 2
    - **Wskazówka:** Piętra pod ziemią to liczby ujemne: 3 + (-5)
 
+#### Poziom zaawansowany - Złożone zadania z treścią
+
+6. **2-3-6**:
+   - **Treść:** Firma produkująca ozdoby choinkowe odnotowała w kolejnych kwartałach roku zyski: I kwartał: -7000 zł (strata), II kwartał: -15000 zł (strata), III kwartał: -40000 zł (strata), IV kwartał: +362000 zł (zysk).
+   - **Pytanie:** Jaki zysk osiągnęła firma w całym roku?
+   - **Odpowiedź:** 300000 zł
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 4
+   - **Order_index:** 6
+   - **Wyjaśnienie:** -7000 + (-15000) + (-40000) + 362000 = -62000 + 362000 = 300000
+   - **Warianty:**
+     - a) -7000, -15000, -40000, +362000 → 300000 zł
+     - b) -5000, -12000, -33000, +280000 → 230000 zł
+     - c) -8000, -18000, -44000, +400000 → 330000 zł
+     - d) -6000, -14000, -35000, +305000 → 250000 zł
+
+7. **2-3-7**:
+   - **Treść:** W harcerskim biegu terenowym patrol "Łosie" uzyskał punkty na poszczególnych stacjach: Samarytanka: -1 pkt (kara), Terenoznawstwo: -4 pkt (kara), Historia: 5 pkt, Przyroda: 5 pkt.
+   - **Pytanie:** Jaki był łączny wynik patrolu "Łosie"?
+   - **Odpowiedź:** 5 punktów
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
+   - **Order_index:** 7
+   - **Wyjaśnienie:** -1 + (-4) + 5 + 5 = -5 + 10 = 5
+   - **Warianty:**
+     - a) -1, -4, 5, 5 → 5 pkt
+     - b) -2, -3, 6, 4 → 5 pkt
+     - c) -3, -2, 7, 6 → 8 pkt
+     - d) -2, -5, 8, 3 → 4 pkt
+     - e) -1, -6, 9, 4 → 6 pkt
+
+8. **2-3-8**:
+   - **Treść:** W konkursie matematycznym za dobrą odpowiedź otrzymuje się 4 punkty, za złą odpowiedź -1 punkt, za brak odpowiedzi 0 punktów. Tomek rozwiązał poprawnie 8 zadań, źle rozwiązał 3 zadania, a na 2 zadania nie odpowiedział.
+   - **Pytanie:** Ile punktów zdobył Tomek?
+   - **Odpowiedź:** 29 punktów
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 4
+   - **Order_index:** 8
+   - **Wyjaśnienie:** 8×4 + 3×(-1) + 2×0 = 32 - 3 + 0 = 29
+   - **Warianty:**
+     - a) 8 dobrych, 3 złe, 2 puste → 29 pkt
+     - b) 7 dobrych, 4 złe, 1 puste → 24 pkt
+     - c) 9 dobrych, 2 złe, 3 puste → 34 pkt
+     - d) 6 dobrych, 5 złych, 2 puste → 19 pkt
+     - e) 10 dobrych, 1 zła, 1 puste → 39 pkt
+     - f) 5 dobrych, 6 złych, 3 puste → 14 pkt
+
+9. **2-3-9**:
+   - **Treść:** Średnia temperatura w ciągu tygodnia wynosiła -1°C. W dni robocze temperatury były: poniedziałek +1°C, wtorek +1°C, środa +1°C, czwartek x°C, piątek -2°C. W weekend: sobota -3°C, niedziela -3°C.
+   - **Pytanie:** Jaka była temperatura w czwartek?
+   - **Odpowiedź:** -2°C
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 5
+   - **Order_index:** 9
+   - **Wyjaśnienie:** Suma temperatur = 7×(-1) = -7°C. Znane: 1+1+1+(-2)+(-3)+(-3) = -5. Brakuje: -7-(-5) = -2°C
+
+10. **2-3-10**:
+    - **Treść:** Nurek zanurzył się na głębokość 18 metrów (zapisujemy jako -18 m). Następnie wynurzył się o 7 metrów, potem zanurzył się jeszcze o 5 metrów głębiej.
+    - **Pytanie:** Na jakiej głębokości znajduje się teraz nurek?
+    - **Odpowiedź:** -16 m
+    - **Typ:** Pole tekstowe
+    - **Difficulty_level:** 3
+    - **Order_index:** 10
+    - **Wyjaśnienie:** -18 + 7 + (-5) = -18 + 7 - 5 = -16
+    - **Warianty:**
+      - a) -18 m, +7 m, -5 m → -16 m
+      - b) -20 m, +8 m, -6 m → -18 m
+      - c) -15 m, +5 m, -8 m → -18 m
+      - d) -25 m, +10 m, -3 m → -18 m
+
 ---
 
 ## Rozdział 3: Mnożenie liczb całkowitych
@@ -592,6 +774,48 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
     - **Odpowiedź:** -25
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** Mnożenie przez -1 zmienia tylko znak
+
+#### Poziom zaawansowany - Mnożenie ułamków
+
+11. **3-1-11**: (-⅔) × ¾ = ?
+    - **Odpowiedź:** -½
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 11
+    - **Wyjaśnienie:** (-2/3) × (3/4) = -6/12 = -1/2
+    - **Warianty:**
+      - a) (-⅔) × ¾ → -½
+      - b) (-¾) × ⅔ → -½
+      - c) (-⅚) × ⅗ → -½
+      - d) (-⅜) × ⅔ → -¼
+      - e) (-⅝) × ⅖ → -¼
+      - f) (-⅔) × ⅜ → -¼
+
+12. **3-1-12**: (-1½) × (-⅓) = ?
+    - **Odpowiedź:** ½
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 12
+    - **Wyjaśnienie:** (-3/2) × (-1/3) = 3/6 = 1/2
+    - **Warianty:**
+      - a) (-1½) × (-⅓) → ½
+      - b) (-2¼) × (-⅔) → 1½
+      - c) (-1⅔) × (-¾) → 1¼
+      - d) (-2⅓) × (-⅜) → ⅞
+      - e) (-1¾) × (-⅖) → 7/10
+
+13. **3-1-13**: ¾ × (-2⅔) = ?
+    - **Odpowiedź:** -2
+    - **Typ:** Pole tekstowe (ułamek/liczba)
+    - **Difficulty_level:** 4
+    - **Order_index:** 13
+    - **Wyjaśnienie:** 3/4 × (-8/3) = -24/12 = -2
+    - **Warianty:**
+      - a) ¾ × (-2⅔) → -2
+      - b) ⅔ × (-3) → -2
+      - c) ⅝ × (-1⅗) → -1
+      - d) ⅚ × (-2⅖) → -2
+      - e) ⅞ × (-2⅔) → -7/3
 
 ---
 
@@ -720,6 +944,47 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
     - **Odpowiedź:** -4
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** Różne znaki, wynik ujemny
+
+#### Poziom zaawansowany - Dzielenie ułamków
+
+11. **4-1-11**: (-¾) : ⅜ = ?
+    - **Odpowiedź:** -2
+    - **Typ:** Pole tekstowe (ułamek/liczba)
+    - **Difficulty_level:** 4
+    - **Order_index:** 11
+    - **Wyjaśnienie:** (-3/4) : (3/8) = (-3/4) × (8/3) = -24/12 = -2
+    - **Warianty:**
+      - a) (-¾) : ⅜ → -2
+      - b) (-⅔) : ⅓ → -2
+      - c) (-⅚) : ⅙ → -5
+      - d) (-⅝) : ⅛ → -5
+      - e) (-⅞) : ⅐ → -7
+
+12. **4-1-12**: ½ : (-⅔) = ?
+    - **Odpowiedź:** -¾
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 12
+    - **Wyjaśnienie:** (1/2) : (-2/3) = (1/2) × (-3/2) = -3/4
+    - **Warianty:**
+      - a) ½ : (-⅔) → -¾
+      - b) ⅓ : (-½) → -⅔
+      - c) ¾ : (-⅜) → -2
+      - d) ⅖ : (-⅘) → -½
+      - e) ⅚ : (-⅔) → -1¼
+
+13. **4-1-13**: (-2⅓) : (-1⅙) = ?
+    - **Odpowiedź:** 2
+    - **Typ:** Pole tekstowe (liczba)
+    - **Difficulty_level:** 5
+    - **Order_index:** 13
+    - **Wyjaśnienie:** (-7/3) : (-7/6) = (-7/3) × (-6/7) = 42/21 = 2
+    - **Warianty:**
+      - a) (-2⅓) : (-1⅙) → 2
+      - b) (-3½) : (-1¾) → 2
+      - c) (-4⅔) : (-2⅓) → 2
+      - d) (-1⅔) : (-⅚) → 2
+      - e) (-2¾) : (-1⅜) → 2
 
 ---
 
