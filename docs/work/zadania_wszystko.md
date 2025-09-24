@@ -379,9 +379,9 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 ## Rozdział 2: Dodawanie liczb całkowitych
 
-### 2.1 Zasady dodawania
+### 2.1 Podstawy dodawania
 
-**Opis:** Utrwal zasady dodawania liczb całkowitych o różnych znakach
+**Opis:** Poznaj podstawowe zasady dodawania liczb całkowitych
 
 **Wskazówki:**
 - Liczby o tym samym znaku dodajemy, zachowując ich znak
@@ -426,74 +426,103 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Wyjaśnienie:** Liczby przeciwne sumują się do zera.
    - **Wskazówka:** Gdy liczby są przeciwne, znoszą się.
 
-### Dodatkowe zadania z poziomów (ze skanów):
+---
 
-#### Poziom A - Podstawowe dodawanie
-7. **2-1-7**: -3 + (-5)
+### 2.2 Dodawanie większych liczb
+
+**Opis:** Dodawanie liczb dwu- i trzycyfrowych oraz większych wartości
+
+**Wskazówki:**
+- Te same zasady co przy małych liczbach
+- Uważaj na znaki przy dużych wartościach
+- Pomocne może być wyobrażenie sobie osi liczbowej
+
+**Zadania:**
+
+1. **2-2-1**: -32 + (-45)
+   - **Odpowiedź:** -77
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 2
+
+2. **2-2-2**: -21 + 37
+   - **Odpowiedź:** 16
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 2
+
+3. **2-2-3**: -53 + (-16)
+   - **Odpowiedź:** -69
+   - **Typ:** Pole tekstowe
+
+4. **2-2-4**: -300 + (-50)
+   - **Odpowiedź:** -350
+   - **Typ:** Pole tekstowe
+
+5. **2-2-5**: -2000 + 1700
+   - **Odpowiedź:** -300
+   - **Typ:** Pole tekstowe
+
+6. **2-2-6**: -5000 + (-6000)
+   - **Odpowiedź:** -11000
+   - **Typ:** Pole tekstowe
+
+7. **2-2-7**: 400 + (-250)
+   - **Odpowiedź:** 150
+   - **Typ:** Pole tekstowe
+
+---
+
+### 2.3 Dodawanie wielu składników
+
+**Opis:** Dodawanie trzech i więcej liczb całkowitych
+
+**Wskazówki:**
+- Można grupować liczby o tym samym znaku
+- Szukaj par liczb przeciwnych (dają 0)
+- Kolejność dodawania nie ma znaczenia
+
+**Zadania:**
+
+1. **2-3-1**: -3 + (-5)
    - **Odpowiedź:** -8
    - **Typ:** Pole tekstowe
-   - **Difficulty_level:** 2
-   - **Order_index:** 7
 
-8. **2-1-8**: -2 + 7
+2. **2-3-2**: -2 + 7
    - **Odpowiedź:** 5
    - **Typ:** Pole tekstowe
-   - **Difficulty_level:** 2
-   - **Order_index:** 8
 
-9. **2-1-9**: 4 + (-6)
+3. **2-3-3**: 4 + (-6)
    - **Odpowiedź:** -2
    - **Typ:** Pole tekstowe
 
-10. **2-1-10**: -5 + (-1)
-    - **Odpowiedź:** -6
-    - **Typ:** Pole tekstowe
+4. **2-3-4**: -3 + (-4) + (-6)
+   - **Odpowiedź:** -13
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
 
-#### Poziom B - Dodawanie dużych liczb
-11. **2-1-11**: -300 + (-50)
-    - **Odpowiedź:** -350
-    - **Typ:** Pole tekstowe
+5. **2-3-5**: -1 + 3 + (-2)
+   - **Odpowiedź:** 0
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
 
-12. **2-1-12**: -2000 + 1700
-    - **Odpowiedź:** -300
-    - **Typ:** Pole tekstowe
+6. **2-3-6**: 5 + (-3) + (-2)
+   - **Odpowiedź:** 0
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
 
-13. **2-1-13**: -5000 + (-6000)
-    - **Odpowiedź:** -11000
-    - **Typ:** Pole tekstowe
+---
 
-#### Poziom C - Dodawanie liczb dwucyfrowych
-14. **2-1-14**: -32 + (-45)
-    - **Odpowiedź:** -77
-    - **Typ:** Pole tekstowe
-    - **Difficulty_level:** 3
-    - **Order_index:** 14
+### 2.4 Dodawanie ułamków
 
-15. **2-1-15**: -21 + 37
-    - **Odpowiedź:** 16
-    - **Typ:** Pole tekstowe
-    - **Difficulty_level:** 3
-    - **Order_index:** 15
+**Opis:** Dodawanie liczb wymiernych (ułamków zwykłych i mieszanych)
 
-16. **2-1-16**: -53 + (-16)
-    - **Odpowiedź:** -69
-    - **Typ:** Pole tekstowe
+**Wskazówki:**
+- Sprowadź ułamki do wspólnego mianownika
+- Dodaj liczniki, zachowując mianownik
+- Uprość wynik jeśli to możliwe
 
-#### Poziom D - Dodawanie trzech liczb
-17. **2-1-17**: -3 + (-4) + (-6)
-    - **Odpowiedź:** -13
-    - **Typ:** Pole tekstowe
+**Zadania:**
 
-18. **2-1-18**: -1 + 3 + (-2)
-    - **Odpowiedź:** 0
-    - **Typ:** Pole tekstowe
-
-19. **2-1-19**: 5 + (-3) + (-2)
-    - **Odpowiedź:** 0
-    - **Typ:** Pole tekstowe
-
-#### Poziom D - Dodawanie ułamków
-20. **2-1-20**: (-⅔) + ⅓
+1. **2-4-1**: (-⅔) + ⅓
     - **Odpowiedź:** -⅓
     - **Typ:** Pole tekstowe (ułamek)
     - **Difficulty_level:** 4
@@ -508,11 +537,10 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
       - f) (-⅞) + ⅜ → -½
       - g) (-⅚) + ⅓ → -½
 
-21. **2-1-21**: -1¾ + 2⅙
+2. **2-4-2**: -1¾ + 2⅙
     - **Odpowiedź:** 5/12
     - **Typ:** Pole tekstowe (ułamek)
     - **Difficulty_level:** 5
-    - **Order_index:** 21
     - **Wyjaśnienie:** -1¾ + 2⅙ = -7/4 + 13/6 = -21/12 + 26/12 = 5/12
     - **Warianty:**
       - a) -1¾ + 2⅙ → 5/12
@@ -522,11 +550,10 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
       - e) -2¼ + 3⅓ → 13/12
       - f) -1⅝ + 2¾ → 9/8
 
-22. **2-1-22**: 3 + (-4⅔)
+3. **2-4-3**: 3 + (-4⅔)
     - **Odpowiedź:** -1⅔
     - **Typ:** Pole tekstowe (ułamek)
     - **Difficulty_level:** 4
-    - **Order_index:** 22
     - **Wyjaśnienie:** 3 + (-4⅔) = 3 - 4⅔ = -1⅔
     - **Warianty:**
       - a) 3 + (-4⅔) → -1⅔
@@ -535,11 +562,10 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
       - d) 5 + (-6⅓) → -1⅓
       - e) 1 + (-2⅚) → -1⅚
 
-23. **2-1-23**: (-⅕) + (-⅗) + ⅖
+4. **2-4-4**: (-⅕) + (-⅗) + ⅖
     - **Odpowiedź:** -⅖
     - **Typ:** Pole tekstowe (ułamek)
     - **Difficulty_level:** 4
-    - **Order_index:** 23
     - **Wyjaśnienie:** -⅕ + (-⅗) + ⅖ = -1/5 - 3/5 + 2/5 = -2/5
     - **Warianty:**
       - a) (-⅕) + (-⅗) + ⅖ → -⅖
@@ -549,7 +575,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 ---
 
-### 2.2 Techniki dodawania
+### 2.5 Techniki dodawania
 
 **Opis:** Poznaj sprytne metody dodawania wielu liczb całkowitych
 
@@ -560,31 +586,31 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 **Zadania:**
 
-1. **2-2-1**: (-6) + 4 + 6 + (-4) = ?
+1. **2-5-1**: (-6) + 4 + 6 + (-4) = ?
    - **Odpowiedź:** 0
    - **Opcje:** 0, 2, -2
    - **Wyjaśnienie:** Sparuj liczby przeciwne: (-6 + 6) = 0 oraz (4 + -4) = 0. Cała suma to 0.
    - **Wskazówka:** Połącz liczby o przeciwnych znakach, aby się zniosły.
 
-2. **2-2-2**: 8 + (-3) + (-5) + 10 = ?
+2. **2-5-2**: 8 + (-3) + (-5) + 10 = ?
    - **Odpowiedź:** 10
    - **Opcje:** 10, 0, -10
    - **Wyjaśnienie:** Najpierw dodaj 8 i -3, otrzymasz 5. 5 + (-5) = 0, więc zostaje tylko 10.
    - **Wskazówka:** Szukaj par dających 0, aby uprościć działanie.
 
-3. **2-2-3**: (-7) + (-5) + 12 + 3 = ?
+3. **2-5-3**: (-7) + (-5) + 12 + 3 = ?
    - **Odpowiedź:** 3
    - **Opcje:** 3, 7, -7
    - **Wyjaśnienie:** Dodaj 12 i -5, otrzymasz 7. 7 + (-7) = 0, zostaje 3.
    - **Wskazówka:** Grupuj liczby tak, by powstały zera.
 
-4. **2-2-4**: (-9) + 4 + (-1) + 6 = ?
+4. **2-5-4**: (-9) + 4 + (-1) + 6 = ?
    - **Odpowiedź:** 0
    - **Opcje:** 0, -10, 10
    - **Wyjaśnienie:** Dodaj -9 i 6, masz -3. -3 + 4 = 1, 1 + (-1) = 0.
    - **Wskazówka:** Zmieniając kolejność, możesz szybciej dojść do zera.
 
-5. **2-2-5**: (-15) + 8 + 2 + 5 = ?
+5. **2-5-5**: (-15) + 8 + 2 + 5 = ?
    - **Odpowiedź:** 0
    - **Opcje:** 0, -20, 10
    - **Wyjaśnienie:** Połącz 8 i 2, to 10. 10 + 5 = 15. 15 + (-15) = 0.
@@ -592,7 +618,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 ---
 
-### 2.3 Zadania z treścią
+### 2.6 Zadania z treścią
 
 **Opis:** Zastosuj dodawanie liczb całkowitych w praktycznych sytuacjach
 
@@ -604,35 +630,35 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 **Zadania:**
 
-1. **2-3-1**: 
+1. **2-6-1**: 
    - **Treść:** Temperatura o godzinie 6:00 wynosiła -3°C. Do południa wzrosła o 8°C.
    - **Pytanie:** Jaka była temperatura w południe?
    - **Odpowiedź:** 5°C
    - **Opcje:** 5°C, 11°C, -11°C
    - **Wskazówka:** Wzrost temperatury oznacza dodawanie: -3 + 8
 
-2. **2-3-2**: 
+2. **2-6-2**: 
    - **Treść:** Nurek znajduje się 12 metrów pod powierzchnią wody. Wynurza się o 7 metrów.
    - **Pytanie:** Na jakiej głębokości znajduje się teraz?
    - **Odpowiedź:** -5m
    - **Opcje:** -5m, -19m, 5m
    - **Wskazówka:** Pod wodą to liczby ujemne: -12 + 7
 
-3. **2-3-3**: 
+3. **2-6-3**: 
    - **Treść:** Na koncie bankowym masz -50 zł (debet). Wpłacasz 120 zł.
    - **Pytanie:** Ile masz teraz na koncie?
    - **Odpowiedź:** 70 zł
    - **Opcje:** 70 zł, 170 zł, -170 zł
    - **Wskazówka:** Debet to liczba ujemna: -50 + 120
 
-4. **2-3-4**: 
+4. **2-6-4**: 
    - **Treść:** W grze zdobyłeś 15 punktów, potem straciłeś 9 punktów.
    - **Pytanie:** Ile masz punktów łącznie?
    - **Odpowiedź:** 6
    - **Opcje:** 6, 24, -6
    - **Wskazówka:** Strata to odejmowanie: 15 + (-9)
 
-5. **2-3-5**: 
+5. **2-6-5**: 
    - **Treść:** Winda jest na 3 piętrze. Jedzie 5 pięter w dół.
    - **Pytanie:** Na którym piętrze jest teraz winda?
    - **Odpowiedź:** -2
@@ -641,7 +667,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 #### Poziom zaawansowany - Złożone zadania z treścią
 
-6. **2-3-6**:
+6. **2-6-6**:
    - **Treść:** Firma produkująca ozdoby choinkowe odnotowała w kolejnych kwartałach roku zyski: I kwartał: -7000 zł (strata), II kwartał: -15000 zł (strata), III kwartał: -40000 zł (strata), IV kwartał: +362000 zł (zysk).
    - **Pytanie:** Jaki zysk osiągnęła firma w całym roku?
    - **Odpowiedź:** 300000 zł
@@ -655,7 +681,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
      - c) -8000, -18000, -44000, +400000 → 330000 zł
      - d) -6000, -14000, -35000, +305000 → 250000 zł
 
-7. **2-3-7**:
+7. **2-6-7**:
    - **Treść:** W harcerskim biegu terenowym patrol "Łosie" uzyskał punkty na poszczególnych stacjach: Samarytanka: -1 pkt (kara), Terenoznawstwo: -4 pkt (kara), Historia: 5 pkt, Przyroda: 5 pkt.
    - **Pytanie:** Jaki był łączny wynik patrolu "Łosie"?
    - **Odpowiedź:** 5 punktów
@@ -670,7 +696,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
      - d) -2, -5, 8, 3 → 4 pkt
      - e) -1, -6, 9, 4 → 6 pkt
 
-8. **2-3-8**:
+8. **2-6-8**:
    - **Treść:** W konkursie matematycznym za dobrą odpowiedź otrzymuje się 4 punkty, za złą odpowiedź -1 punkt, za brak odpowiedzi 0 punktów. Tomek rozwiązał poprawnie 8 zadań, źle rozwiązał 3 zadania, a na 2 zadania nie odpowiedział.
    - **Pytanie:** Ile punktów zdobył Tomek?
    - **Odpowiedź:** 29 punktów
@@ -686,7 +712,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
      - e) 10 dobrych, 1 zła, 1 puste → 39 pkt
      - f) 5 dobrych, 6 złych, 3 puste → 14 pkt
 
-9. **2-3-9**:
+9. **2-6-9**:
    - **Treść:** Średnia temperatura w ciągu tygodnia wynosiła -1°C. W dni robocze temperatury były: poniedziałek +1°C, wtorek +1°C, środa +1°C, czwartek x°C, piątek -2°C. W weekend: sobota -3°C, niedziela -3°C.
    - **Pytanie:** Jaka była temperatura w czwartek?
    - **Odpowiedź:** -2°C
@@ -695,7 +721,7 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Order_index:** 9
    - **Wyjaśnienie:** Suma temperatur = 7×(-1) = -7°C. Znane: 1+1+1+(-2)+(-3)+(-3) = -5. Brakuje: -7-(-5) = -2°C
 
-10. **2-3-10**:
+10. **2-6-10**:
     - **Treść:** Nurek zanurzył się na głębokość 18 metrów (zapisujemy jako -18 m). Następnie wynurzył się o 7 metrów, potem zanurzył się jeszcze o 5 metrów głębiej.
     - **Pytanie:** Na jakiej głębokości znajduje się teraz nurek?
     - **Odpowiedź:** -16 m
