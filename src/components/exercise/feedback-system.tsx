@@ -60,10 +60,21 @@ export function FeedbackSystem({
         ) : (
           <>
             {!isLastExercise ? (
-              <Button onClick={onNext} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
-                Następne zadanie
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <>
+                <Button 
+                  onClick={onReset} 
+                  variant="outline"
+                  className="gap-2" 
+                  style={{ cursor: 'pointer' }}
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Powtórz zadanie
+                </Button>
+                <Button onClick={onNext} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
+                  Następne zadanie
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </>
             ) : nextSectionUrl ? (
               <Button 
                 onClick={() => router.push(nextSectionUrl)} 

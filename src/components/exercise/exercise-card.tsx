@@ -238,6 +238,12 @@ export function ExerciseCard({
     setShowFeedback(false);
   };
 
+  const refreshVariant = () => {
+    // Simply reload the page to get a new random variant from the API
+    // This ensures the variant is properly fetched through the normal flow
+    window.location.reload();
+  };
+
   const renderContent = () => {
     if (!currentExercise) {
       return null;
@@ -331,7 +337,7 @@ export function ExerciseCard({
           nextSectionUrl={getNextSectionUrl()}
           onCheck={checkAnswer}
           onNext={nextExercise}
-          onReset={resetExercises}
+          onReset={refreshVariant}
         />
 
         {hints.length > 0 && (
