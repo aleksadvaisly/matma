@@ -56,6 +56,26 @@ export function UniversalSection({ sectionId }: UniversalSectionProps) {
         setConfig(configData);
         setSectionData(exercisesData);
 
+        // Function to determine layout for exercises
+        const determineLayout = (exercise: any): 'horizontal' | 'vertical' => {
+          // 1. Explicit database value has priority
+          if (exercise.layout_type) {
+            return exercise.layout_type;
+          }
+          
+          // 2. Fallback: auto-detection for choices
+          if (exercise.inputType === 'choices' && exercise.options) {
+            const optionTexts = exercise.options.map((opt: any) => 
+              typeof opt === 'string' ? opt : opt.text || opt.value
+            );
+            const maxLength = Math.max(...optionTexts.map((text: string) => text.length));
+            return maxLength <= 6 ? 'horizontal' : 'vertical';
+          }
+          
+          // 3. Default: vertical
+          return 'vertical';
+        };
+
         // Process exercises based on configuration
         const processedExercises = exercisesData.exercises.map((ex: any) => {
           let processedAnswer = ex.answer;
@@ -67,7 +87,8 @@ export function UniversalSection({ sectionId }: UniversalSectionProps) {
 
           return {
             ...ex,
-            answer: processedAnswer
+            answer: processedAnswer,
+            layout: determineLayout(ex)
           };
         });
 

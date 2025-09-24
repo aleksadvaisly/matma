@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ExerciseHeader } from './exercise-header';
 import { UniversalAnswerInput } from './universal-answer-input';
@@ -44,33 +43,6 @@ interface ExerciseCardProps {
   onExerciseComplete?: (exercise: Exercise, isCorrect: boolean) => void;
 }
 
-// Navigation mapping between sections
-const SECTION_NAVIGATION: Record<string, string> = {
-  '1-1': '1-2',
-  '1-2': '1-3',
-  '1-3': '1-4',
-  '1-4': '1-5',
-  '1-5': '2-1',
-  '2-1': '2-2',
-  '2-2': '2-3',
-  '2-3': '3-1',
-  '3-1': '3-2',
-  '3-2': '3-3',
-  '3-3': '3-4',
-  '3-4': '4-1',
-  '4-1': '4-2',
-  '4-2': '4-3',
-  '4-3': '5-1',
-  '5-1': '5-2',
-  '5-2': '5-3',
-  '5-3': '5-4',
-  '5-4': '6-1',
-  '6-1': '6-2',
-  '6-2': '6-3',
-  '6-3': '6-4',
-  '6-4': '6-5',
-  '6-5': null // Last section
-};
 
 export function ExerciseCard({
   title,
@@ -87,25 +59,17 @@ export function ExerciseCard({
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [nextSectionUrl, setNextSectionUrl] = useState<string | null>(null);
   
-  const pathname = usePathname();
   const { updateSectionProgress, completeExercise, initializeSection, getSectionProgress } = useExerciseStore();
 
   const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
   const displayedProgress = currentIndex + 1;
   
-  // Calculate next section URL
+  // Get next section URL from database
   const getNextSectionUrl = () => {
-    const currentSectionId = pathname?.split('/').pop();
-    if (!currentSectionId) return undefined;
-    
-    const nextSectionId = SECTION_NAVIGATION[currentSectionId];
-    if (!nextSectionId) return undefined;
-    
-    // Extract chapter from next section ID (e.g., '2-1' -> 'chapter-2')
-    const chapterId = `chapter-${nextSectionId.split('-')[0]}`;
-    return `/dashboard/chapters/${chapterId}/sections/${nextSectionId}`;
+    return nextSectionUrl || undefined;
   };
 
   // Initialize section with exercises when component mounts
@@ -131,6 +95,23 @@ export function ExerciseCard({
       setTimeout(() => setIsInitializing(false), 500);
     }
   }, [sectionId, exercises.length, initializeSection]); // Only depend on length, not exercises array
+
+  // Fetch next section URL from database
+  useEffect(() => {
+    const fetchNextSectionUrl = async () => {
+      try {
+        const response = await fetch(`/api/sections/${sectionId}/config`);
+        if (response.ok) {
+          const config = await response.json();
+          setNextSectionUrl(config.next_section_url);
+        }
+      } catch (error) {
+        console.error('Failed to fetch next section URL:', error);
+      }
+    };
+
+    fetchNextSectionUrl();
+  }, [sectionId]);
   
   // Removed auto-showing completed state - users can re-solve exercises when revisiting
 
@@ -258,6 +239,10 @@ export function ExerciseCard({
   };
 
   const renderContent = () => {
+    if (!currentExercise) {
+      return null;
+    }
+
     if (customContent) {
       return customContent(currentExercise, {
         selectedAnswer,
@@ -271,11 +256,13 @@ export function ExerciseCard({
     return (
       <>
         {currentExercise.story && (
-          <div className="text-base text-muted-foreground mb-4">
-            {currentExercise.story}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <div className="text-base text-gray-700">
+              {currentExercise.story}
+            </div>
           </div>
         )}
-        
+
         {currentExercise.question && (
           <div className="text-lg font-medium text-center">
             {currentExercise.question}
@@ -302,6 +289,7 @@ export function ExerciseCard({
           showFeedback={showFeedback}
           isCorrect={isCorrect}
           options={currentExercise.options || []}
+          layout={currentExercise.layout || 'vertical'}
           {...(currentExercise.numberLineConfig || {})}
         />
       </>

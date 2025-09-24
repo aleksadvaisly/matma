@@ -25,7 +25,7 @@ interface TextInputProps extends BaseInputProps {
 
 interface ChoicesInputProps extends BaseInputProps {
   type: 'choices';
-  options: string[];
+  options: (string | { text: string; value: string })[];
   layout?: 'horizontal' | 'vertical' | 'grid';
   buttonSize?: 'sm' | 'md' | 'lg';
 }
@@ -77,11 +77,24 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
         ? 'grid grid-cols-2 gap-2'
         : 'flex-col';
         
+      // Calculate max text length for dynamic width
+      const allTexts = props.options.map((opt) => 
+        typeof opt === 'string' ? opt : opt.text || opt.value
+      );
+      const maxLength = Math.max(...allTexts.map((text) => text.length));
+      
+      // Base size classes with padding instead of fixed width
       const sizeClass = props.buttonSize === 'lg' 
-        ? 'w-16 h-16'
+        ? 'px-4 py-3 text-lg'
         : props.buttonSize === 'sm'
-        ? 'w-12 h-12'
-        : 'w-14 h-14';
+        ? 'px-3 py-2 text-sm'
+        : 'px-3 py-2.5 text-base';
+      
+      // Dynamic width class based on longest text
+      const widthClass = maxLength > 10 ? 'min-w-[10rem]' :
+                        maxLength > 8 ? 'min-w-[8rem]' :
+                        maxLength > 6 ? 'min-w-[6rem]' : 
+                        'min-w-[4rem]';
 
       return (
         <div className={`flex ${layoutClass} gap-4 items-center justify-center`}>
@@ -90,25 +103,27 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
             correctAnswer={String(props.correctAnswer)}
           >
             {props.options.map((option) => {
-              const selected = props.value === option;
-              const isCorrectChoice = props.correctAnswer === option;
+              const optionValue = typeof option === 'string' ? option : option.value;
+              const optionText = typeof option === 'string' ? option : option.text;
+              const selected = props.value === optionValue;
+              const isCorrectChoice = props.correctAnswer === optionValue;
               const state: ChoiceFeedbackState = props.showFeedback && selected
                 ? (props.isCorrect ? 'correct' : 'incorrect')
                 : 'idle';
 
               return (
                 <ChoiceButton
-                  key={option}
-                  data-value={option}
+                  key={optionValue}
+                  data-value={optionValue}
                   size={props.buttonSize}
                   selected={selected}
                   state={state}
                   revealCorrect={props.showFeedback}
                   isCorrectChoice={isCorrectChoice}
-                  onClick={() => !props.disabled && props.onChange(option)}
-                  className={sizeClass}
+                  onClick={() => !props.disabled && props.onChange(optionValue)}
+                  className={`${sizeClass} ${widthClass}`}
                 >
-                  {option}
+                  {optionText}
                 </ChoiceButton>
               );
             })}

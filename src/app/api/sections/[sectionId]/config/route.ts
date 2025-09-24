@@ -12,7 +12,7 @@ export async function GET(
     const { sectionId } = await params;
     
     const config = db.prepare(`
-      SELECT component_type, processing_config, ui_config
+      SELECT component_type, processing_config, ui_config, next_section_id, next_chapter_id
       FROM section_components
       WHERE section_id = ?
     `).get(sectionId) as any;
@@ -25,10 +25,17 @@ export async function GET(
     }
     
     // Parse JSON strings from database
+    // Construct complete next section URL if next section exists
+    const nextSectionUrl = config.next_section_id && config.next_chapter_id
+      ? `/dashboard/chapters/${config.next_chapter_id}/sections/${config.next_section_id}`
+      : null;
+    
     return NextResponse.json({
       component_type: config.component_type,
       processing_config: JSON.parse(config.processing_config || '{}'),
-      ui_config: JSON.parse(config.ui_config || '{}')
+      ui_config: JSON.parse(config.ui_config || '{}'),
+      next_section_id: config.next_section_id,
+      next_section_url: nextSectionUrl
     });
   } catch (error) {
     console.error('Error fetching section config:', error);

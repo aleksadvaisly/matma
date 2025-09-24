@@ -39,7 +39,7 @@ export function ChoiceButton({
     <Button
       variant="outline"
       className={cn(
-        'min-w-[3rem] justify-center text-lg font-semibold transition-colors',
+        'min-w-[3rem] justify-center text-lg font-semibold transition-colors whitespace-nowrap',
         baseSelectedClass,
         feedbackClass,
         revealClass,

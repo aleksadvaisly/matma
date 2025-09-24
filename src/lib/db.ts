@@ -18,6 +18,7 @@ export interface Exercise {
   correct_answer: string;
   hint: string | null;
   explanation: string | null;
+  layout_type: string | null;
   options?: any[];
   visualConfig?: any;
 }
@@ -26,6 +27,7 @@ export interface ExerciseOption {
   id: number;
   exercise_id: string;
   option_text: string;
+  option_value?: string;
   order_index: number;
 }
 
@@ -39,6 +41,7 @@ export function getExercisesBySection(sectionId: string) {
   const exercises = db.prepare(`
     SELECT 
       e.*,
+      e.layout_type,
       it.type_name as input_type
     FROM exercises e
     JOIN input_types it ON e.input_type_id = it.id
@@ -50,7 +53,7 @@ export function getExercisesBySection(sectionId: string) {
   for (const exercise of exercises) {
     if (exercise.input_type === 'choices') {
       const options = db.prepare(`
-        SELECT option_text, order_index
+        SELECT option_text, option_value, order_index
         FROM exercise_options
         WHERE exercise_id = ?
         ORDER BY order_index
