@@ -1,6 +1,7 @@
 import { UniversalSection } from '@/components/sections/universal-section';
 import Database from 'better-sqlite3';
 import path from 'path';
+import { redirect } from 'next/navigation';
 
 interface SectionPageProps {
   params: Promise<{
@@ -24,8 +25,51 @@ function sectionExists(sectionId: string): boolean {
   }
 }
 
+// Get first exercise with random variant
+function getFirstExercise(sectionId: string): string {
+  try {
+    const db = new Database(path.join(process.cwd(), 'matma.db'));
+    
+    // Check if section has variants
+    const hasVariants = db.prepare(`
+      SELECT COUNT(*) as count
+      FROM exercises 
+      WHERE section_id = ? AND exercise_base_id IS NOT NULL
+    `).get(sectionId) as { count: number };
+
+    if (hasVariants.count > 0) {
+      // Get first exercise with random variant
+      const firstExercise = db.prepare(`
+        SELECT id FROM exercises 
+        WHERE section_id = ? AND exercise_base_id = (
+          SELECT MIN(exercise_base_id) FROM exercises WHERE section_id = ?
+        )
+        ORDER BY RANDOM()
+        LIMIT 1
+      `).get(sectionId, sectionId) as { id: string } | undefined;
+      
+      db.close();
+      return firstExercise?.id || '1-a';
+    } else {
+      // Fallback for sections without variants
+      const firstExercise = db.prepare(`
+        SELECT id FROM exercises 
+        WHERE section_id = ? 
+        ORDER BY order_index 
+        LIMIT 1
+      `).get(sectionId) as { id: string } | undefined;
+      
+      db.close();
+      return firstExercise?.id || '1';
+    }
+  } catch (error) {
+    console.error('Error getting first exercise:', error);
+    return '1-a';
+  }
+}
+
 export default async function SectionPage({ params }: SectionPageProps) {
-  const { sectionId } = await params;
+  const { chapterId, sectionId } = await params;
 
   // Check if section exists in database
   const exists = sectionExists(sectionId);
@@ -43,10 +87,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
     );
   }
 
-  // All sections now use the UniversalSection component
-  return (
-    <div className="p-6">
-      <UniversalSection sectionId={sectionId} />
-    </div>
-  );
+  // Redirect to first exercise with random variant
+  const firstExerciseId = getFirstExercise(sectionId);
+  redirect(`/dashboard/chapters/${chapterId}/sections/${sectionId}/exercise/${firstExerciseId}`);
 }

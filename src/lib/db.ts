@@ -37,7 +37,7 @@ export interface VisualConfig {
   config_json: string;
 }
 
-export function getExercisesBySection(sectionId: string) {
+export function getExercisesBySection(sectionId: string, specificExerciseId?: string | null) {
   // Check if section has variants (exercise_base_id is not null)
   const hasVariants = db.prepare(`
     SELECT COUNT(*) as count
@@ -57,19 +57,41 @@ export function getExercisesBySection(sectionId: string) {
       ORDER BY min_order
     `).all(sectionId) as { exercise_base_id: string; min_order: number }[];
 
-    // For each base exercise, randomly select one variant
+    // For each base exercise, select appropriate variant
     for (const base of baseExercises) {
-      const variant = db.prepare(`
-        SELECT 
-          e.*,
-          e.layout_type,
-          it.type_name as input_type
-        FROM exercises e
-        JOIN input_types it ON e.input_type_id = it.id
-        WHERE e.exercise_base_id = ?
-        ORDER BY RANDOM()
-        LIMIT 1
-      `).get(base.exercise_base_id) as Exercise;
+      let variant: Exercise | undefined;
+      
+      // If a specific exercise ID is requested, try to use its variant
+      if (specificExerciseId && specificExerciseId.startsWith(base.exercise_base_id)) {
+        // Extract variant letter from specific ID
+        const requestedVariant = specificExerciseId.match(/-([a-z])$/)?.[1];
+        if (requestedVariant) {
+          variant = db.prepare(`
+            SELECT 
+              e.*,
+              e.layout_type,
+              it.type_name as input_type
+            FROM exercises e
+            JOIN input_types it ON e.input_type_id = it.id
+            WHERE e.exercise_base_id = ? AND e.variant_letter = ?
+          `).get(base.exercise_base_id, requestedVariant) as Exercise | undefined;
+        }
+      }
+      
+      // Fallback to first variant if specific not found
+      if (!variant) {
+        variant = db.prepare(`
+          SELECT 
+            e.*,
+            e.layout_type,
+            it.type_name as input_type
+          FROM exercises e
+          JOIN input_types it ON e.input_type_id = it.id
+          WHERE e.exercise_base_id = ?
+          ORDER BY e.variant_letter
+          LIMIT 1
+        `).get(base.exercise_base_id) as Exercise;
+      }
       
       if (variant) {
         exercises.push(variant);
@@ -147,4 +169,15 @@ export function getSectionHints(sectionId: string) {
   `).all(sectionId) as { hint_text: string }[];
   
   return hints.map(h => h.hint_text);
+}
+
+export function getExerciseVariants(exerciseBaseId: string): string[] {
+  const variants = db.prepare(`
+    SELECT DISTINCT variant_letter
+    FROM exercises
+    WHERE exercise_base_id = ?
+    ORDER BY variant_letter
+  `).all(exerciseBaseId) as { variant_letter: string }[];
+  
+  return variants.map(v => v.variant_letter);
 }

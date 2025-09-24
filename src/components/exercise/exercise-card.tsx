@@ -8,6 +8,7 @@ import { FeedbackSystem } from './feedback-system';
 import { InfoBox } from '@/components/ui/info-box';
 import { ExpressionLine } from '@/components/ui/expression-line';
 import { useExerciseStore } from '@/lib/store';
+import { useRouter, usePathname } from 'next/navigation';
 
 export interface Exercise {
   id: string;
@@ -33,6 +34,7 @@ interface ExerciseCardProps {
   sectionId: string;
   exercises: Exercise[];
   hints?: string[];
+  initialExerciseId?: string;
   customContent?: (exercise: Exercise, props: {
     selectedAnswer: string | number | null;
     setSelectedAnswer: (value: string | number | null) => void;
@@ -50,10 +52,57 @@ export function ExerciseCard({
   sectionId,
   exercises,
   hints = [],
+  initialExerciseId,
   customContent,
   onExerciseComplete
 }: ExerciseCardProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  // Parse initial index from exerciseId (e.g., "1-1-3-b" -> index for exercise 3)
+  const getInitialIndex = () => {
+    if (!initialExerciseId) return 0;
+    
+    // Find exercise by exact ID match
+    const index = exercises.findIndex(ex => ex.id === initialExerciseId);
+    if (index !== -1) return index;
+    
+    // If not found, try to match by base ID (without variant)
+    // For IDs like "1-1-3-a", extract "1-1-3" and find any variant
+    const baseId = initialExerciseId.replace(/-[a-z]$/, '');
+    const baseIndex = exercises.findIndex(ex => {
+      const exBaseId = ex.id.replace(/-[a-z]$/, '');
+      return exBaseId === baseId;
+    });
+    if (baseIndex !== -1) return baseIndex;
+    
+    // Last resort: try to extract exercise number from ID pattern
+    // For "1-1-3-a" extract the 3rd number (exercise number)
+    const parts = initialExerciseId.split('-');
+    if (parts.length >= 3) {
+      const exerciseNum = parseInt(parts[2]); // Get the 3rd part (exercise number)
+      if (!isNaN(exerciseNum)) {
+        // Find exercise with matching exercise_number
+        const matchIndex = exercises.findIndex((ex, idx) => idx === exerciseNum - 1);
+        if (matchIndex !== -1) return matchIndex;
+      }
+    }
+    
+    return 0;
+  };
+  
+  const [currentIndex, setCurrentIndex] = useState(getInitialIndex());
+  
+  // Update index when URL changes
+  useEffect(() => {
+    const newIndex = getInitialIndex();
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex);
+      setSelectedAnswer(null);
+      setShowFeedback(false);
+      setIsCorrect(false);
+    }
+  }, [initialExerciseId]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -153,27 +202,58 @@ export function ExerciseCard({
     onExerciseComplete?.(currentExercise, correct);
   };
 
-  const nextExercise = () => {
-    if (canGoNext()) {
-      const newIndex = currentIndex + 1;
-      setCurrentIndex(newIndex);
-      
-      // Always reset state when navigating - allow re-solving
-      setSelectedAnswer(null);
-      setShowFeedback(false);
-      setIsCorrect(false);
+  const navigateToExercise = (exerciseId: string) => {
+    // Extract chapter from current path
+    const pathParts = pathname.split('/');
+    const chapterIndex = pathParts.findIndex(p => p === 'chapters');
+    
+    if (chapterIndex !== -1) {
+      const chapterId = pathParts[chapterIndex + 1];
+      const newPath = `/dashboard/chapters/${chapterId}/sections/${sectionId}/exercise/${exerciseId}`;
+      router.push(newPath);
     }
   };
 
-  const previousExercise = () => {
+  const getRandomVariant = async (exerciseId: string): Promise<string> => {
+    // Extract base ID
+    const baseId = exerciseId.replace(/-[a-z]$/, '');
+    
+    try {
+      // Check if this exercise has variants
+      const response = await fetch(`/api/exercises/variants/${baseId}`);
+      if (response.ok) {
+        const { variants } = await response.json();
+        if (variants && variants.length > 0) {
+          // Return random variant
+          const randomVariant = variants[Math.floor(Math.random() * variants.length)];
+          return `${baseId}-${randomVariant}`;
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch variants:', error);
+    }
+    
+    // If no variants, return original ID
+    return exerciseId;
+  };
+
+  const nextExercise = async () => {
+    if (canGoNext()) {
+      const nextEx = exercises[currentIndex + 1];
+      if (nextEx) {
+        const randomizedId = await getRandomVariant(nextEx.id);
+        navigateToExercise(randomizedId);
+      }
+    }
+  };
+
+  const previousExercise = async () => {
     if (canGoPrevious()) {
-      const newIndex = currentIndex - 1;
-      setCurrentIndex(newIndex);
-      
-      // Always reset state when navigating - allow re-solving
-      setSelectedAnswer(null);
-      setShowFeedback(false);
-      setIsCorrect(false);
+      const prevEx = exercises[currentIndex - 1];
+      if (prevEx) {
+        const randomizedId = await getRandomVariant(prevEx.id);
+        navigateToExercise(randomizedId);
+      }
     }
   };
 
@@ -238,10 +318,39 @@ export function ExerciseCard({
     setShowFeedback(false);
   };
 
-  const refreshVariant = () => {
-    // Simply reload the page to get a new random variant from the API
-    // This ensures the variant is properly fetched through the normal flow
-    window.location.reload();
+  const refreshVariant = async () => {
+    // Get a new random variant for current exercise
+    const currentEx = exercises[currentIndex];
+    if (!currentEx) return;
+    
+    const baseId = currentEx.id.replace(/-[a-z]$/, '');
+    const currentVariant = currentEx.id.match(/-([a-z])$/)?.[1];
+    
+    try {
+      // Fetch available variants from database
+      const response = await fetch(`/api/exercises/variants/${baseId}`);
+      if (response.ok) {
+        const { variants } = await response.json();
+        if (variants && variants.length > 1) {
+          // Filter out current variant if it exists
+          const availableVariants = currentVariant 
+            ? variants.filter((v: string) => v !== currentVariant)
+            : variants;
+          
+          if (availableVariants.length > 0) {
+            const newVariant = availableVariants[Math.floor(Math.random() * availableVariants.length)];
+            const newExerciseId = `${baseId}-${newVariant}`;
+            navigateToExercise(newExerciseId);
+            return;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Failed to refresh variant:', error);
+    }
+    
+    // If no variants available, just reload current
+    navigateToExercise(currentEx.id);
   };
 
   const renderContent = () => {

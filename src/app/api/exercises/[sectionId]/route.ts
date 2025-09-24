@@ -7,8 +7,13 @@ export async function GET(
 ) {
   try {
     const { sectionId } = await params;
-    console.log('Fetching exercises for section:', sectionId);
-    const exercises = getExercisesBySection(sectionId);
+    
+    // Get specific exercise ID from query params
+    const url = new URL(request.url);
+    const exerciseId = url.searchParams.get('exerciseId');
+    
+    console.log('Fetching exercises for section:', sectionId, 'with exerciseId:', exerciseId);
+    const exercises = getExercisesBySection(sectionId, exerciseId);
     const sectionInfo = getSectionInfo(sectionId);
     const hints = getSectionHints(sectionId);
     

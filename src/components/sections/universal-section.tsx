@@ -28,9 +28,10 @@ interface SectionData {
 
 interface UniversalSectionProps {
   sectionId: string;
+  exerciseId?: string;
 }
 
-export function UniversalSection({ sectionId }: UniversalSectionProps) {
+export function UniversalSection({ sectionId, exerciseId }: UniversalSectionProps) {
   const [config, setConfig] = useState<SectionConfig | null>(null);
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -40,10 +41,15 @@ export function UniversalSection({ sectionId }: UniversalSectionProps) {
   useEffect(() => {
     async function loadSection() {
       try {
+        // Build exercises URL with optional exerciseId parameter
+        const exercisesUrl = exerciseId 
+          ? `/api/exercises/${sectionId}?exerciseId=${exerciseId}`
+          : `/api/exercises/${sectionId}`;
+        
         // Fetch section configuration and exercises in parallel
         const [configRes, exercisesRes] = await Promise.all([
           fetch(`/api/sections/${sectionId}/config`),
-          fetch(`/api/exercises/${sectionId}`)
+          fetch(exercisesUrl)
         ]);
 
         if (!configRes.ok || !exercisesRes.ok) {
@@ -101,7 +107,7 @@ export function UniversalSection({ sectionId }: UniversalSectionProps) {
     }
 
     loadSection();
-  }, [sectionId]);
+  }, [sectionId, exerciseId]);
 
   if (loading) {
     return (
@@ -128,6 +134,7 @@ export function UniversalSection({ sectionId }: UniversalSectionProps) {
       sectionId={sectionId}
       exercises={exercises}
       hints={config.ui_config?.showHints ? sectionData.hints : []}
+      initialExerciseId={exerciseId}
     />
   );
 }
