@@ -124,25 +124,52 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
       exercise.options = options;
     }
     
-    // Get visual config if it's number-line from section_components
-    if (exercise.input_type === 'number-line') {
-      const config = db.prepare(`
-        SELECT processing_config
-        FROM section_components
-        WHERE section_id = ?
-      `).get(exercise.section_id) as { processing_config: string } | undefined;
+    // Get visual config - first check exercise-specific, then section-level
+    if (exercise.input_type === 'number-line' || exercise.input_type === 'text') {
+      // First try to get exercise-specific config from visual_configs table
+      const exerciseConfig = db.prepare(`
+        SELECT config_json
+        FROM visual_configs
+        WHERE exercise_id = ?
+      `).get(exercise.id) as { config_json: string } | undefined;
       
-      if (config) {
+      if (exerciseConfig) {
         try {
-          const parsedConfig = JSON.parse(config.processing_config);
-          exercise.visualConfig = parsedConfig.numberLineConfig || { enableAllClicks: true };
+          exercise.visualConfig = JSON.parse(exerciseConfig.config_json);
         } catch (error) {
-          // Default config if parsing fails
+          console.error('Failed to parse exercise visual config:', error);
+        }
+      }
+      
+      // If no exercise-specific config and it's number-line, try section_components
+      if (!exercise.visualConfig && exercise.input_type === 'number-line') {
+        const config = db.prepare(`
+          SELECT processing_config
+          FROM section_components
+          WHERE section_id = ?
+        `).get(exercise.section_id) as { processing_config: string } | undefined;
+        
+        if (config) {
+          try {
+            const parsedConfig = JSON.parse(config.processing_config);
+            exercise.visualConfig = parsedConfig.numberLineConfig || { enableAllClicks: true };
+          } catch (error) {
+            // Default config if parsing fails
+            exercise.visualConfig = { enableAllClicks: true };
+          }
+        } else {
+          // Default config if no section config exists
           exercise.visualConfig = { enableAllClicks: true };
         }
-      } else {
-        // Default config if no section config exists
-        exercise.visualConfig = { enableAllClicks: true };
+      }
+      
+      // Default configs if nothing found
+      if (!exercise.visualConfig) {
+        if (exercise.input_type === 'number-line') {
+          exercise.visualConfig = { enableAllClicks: true };
+        } else if (exercise.input_type === 'text') {
+          exercise.visualConfig = {};
+        }
       }
     }
   }

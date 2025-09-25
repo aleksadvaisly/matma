@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { NumberLine } from '@/components/ui/number-line';
 import { ChoiceButton, type ChoiceFeedbackState } from '@/components/ui/choice-button';
 import { HintHighlightGroup } from '@/components/ui/hint-highlight';
-import { FractionUtils } from '@/lib/fraction-utils';
+import { Fraction } from '@/lib/fraction';
 
 type InputType = 'text' | 'choices' | 'number-line' | 'choice-grid';
 
@@ -62,7 +62,7 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
     case 'text':
       // Parse fraction if supportsFractions is enabled to show visual feedback
       const parsedFraction = props.supportsFractions && props.value 
-        ? FractionUtils.parse(String(props.value)) 
+        ? Fraction.parse(String(props.value)) 
         : null;
       const hasValidFraction = parsedFraction !== null;
       
@@ -84,7 +84,7 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
             <div className="text-sm text-gray-600 min-w-[60px]">
               {hasValidFraction && parsedFraction ? (
                 <span className="text-green-600" title="Rozpoznano ułamek">
-                  {FractionUtils.toUnicode(parsedFraction)}
+                  {parsedFraction.toUnicode()}
                 </span>
               ) : (
                 <span className="text-orange-600" title="Nie rozpoznano jako ułamek">

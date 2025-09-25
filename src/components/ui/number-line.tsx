@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FractionUtils } from '@/lib/fraction-utils';
+import { Fraction } from '@/lib/fraction';
 
 interface NumberLineProps {
   min?: number;
@@ -43,7 +43,12 @@ export function NumberLine({
   // Separate logic for fractions vs integers
   if (subdivision > 1) {
     // FRACTION PATH - use fractional positions and wider spacing
-    const positions = FractionUtils.getFractionalPositions(min, max, subdivision);
+    // Generate positions using subdivision
+    const positions: number[] = [];
+    const step = 1 / subdivision;
+    for (let i = min; i <= max; i += step) {
+      positions.push(Math.round(i * subdivision) / subdivision);
+    }
     const majorPositions = positions.filter(pos => pos % 1 === 0);
     const minorPositions = positions.filter(pos => pos % 1 !== 0);
     
@@ -141,7 +146,7 @@ export function NumberLine({
                             style={{ pointerEvents: 'none' }}
                           >
                             {fractionDisplay 
-                              ? FractionUtils.formatForNumberLine(position, subdivision)
+                              ? Fraction.fromDecimal(position, subdivision).toUnicode()
                               : position.toFixed(3).replace(/\.?0+$/, '')
                             }
                           </text>
@@ -454,7 +459,7 @@ export function NumberLine({
                     <circle
                       cx={x}
                       cy={60}
-                      r="8"
+                      r="5.6"
                       fill={markedNumber.color}
                       style={{ pointerEvents: 'none' }}
                     />

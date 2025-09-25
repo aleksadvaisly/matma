@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect, ReactNode, useCallback } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ExerciseHeader } from './exercise-header';
 import { UniversalAnswerInput } from './universal-answer-input';
@@ -9,7 +9,7 @@ import { InfoBox } from '@/components/ui/info-box';
 import { ExpressionLine } from '@/components/ui/expression-line';
 import { useExerciseStore } from '@/lib/store';
 import { useRouter, usePathname } from 'next/navigation';
-import { FractionUtils } from '@/lib/fraction-utils';
+import { Fraction } from '@/lib/fraction';
 
 export interface Exercise {
   id: string;
@@ -107,12 +107,19 @@ export function ExerciseCard({
     const newIndex = getInitialIndex();
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex);
-      setSelectedAnswer(null);
+      setSelectedAnswerState(null);
       setShowFeedback(false);
       setIsCorrect(false);
     }
   }, [initialExerciseId]);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(null);
+  const [selectedAnswer, setSelectedAnswerState] = useState<string | number | null>(null);
+  
+  const setSelectedAnswer = (value: string | number | null) => {
+    console.log('=== DEBUG: setSelectedAnswer called ===');
+    console.log('New value:', value, '(type:', typeof value, ')');
+    console.log('Current exercise ID:', currentExercise?.id);
+    setSelectedAnswerState(value);
+  };
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHints, setShowHints] = useState(false);
@@ -194,19 +201,30 @@ export function ExerciseCard({
     }
   }, [currentIndex, showFeedback, isCorrect, TOTAL_EXERCISES, updateSectionProgress, sectionId, getSectionProgress, currentExercise]); // Remove isInitializing from deps to fix warning
 
-  const checkAnswer = () => {
-    if (!selectedAnswer) return;
+  const checkAnswer = useCallback(() => {
+    console.log('=== DEBUG: checkAnswer called ===');
+    console.log('selectedAnswer:', selectedAnswer, '(type:', typeof selectedAnswer, ')');
+    console.log('currentExercise.answer:', currentExercise.answer, '(type:', typeof currentExercise.answer, ')');
+    console.log('currentExercise.id:', currentExercise.id);
+    
+    if (!selectedAnswer) {
+      console.log('DEBUG: selectedAnswer is falsy, returning early');
+      return;
+    }
 
     const selectedStr = String(selectedAnswer).trim();
     const answerStr = String(currentExercise.answer).trim();
     
-    // Try mathematical equivalence first (for fractions/decimals)
-    let correct = FractionUtils.areEquivalent(selectedStr, answerStr);
+    console.log('selectedStr:', selectedStr);
+    console.log('answerStr:', answerStr);
     
-    // Fallback to exact string comparison if fraction parsing fails
-    if (!correct) {
-      correct = selectedStr === answerStr;
-    }
+    // Try mathematical equivalence using exact fraction arithmetic
+    let correct = Fraction.areEquivalent(selectedStr, answerStr);
+    console.log('Fraction.areEquivalent result:', correct);
+    
+    // No fallback needed - Fraction.areEquivalent handles all cases
+    
+    console.log('FINAL correct result:', correct);
     
     setIsCorrect(correct);
     setShowFeedback(true);
@@ -216,7 +234,7 @@ export function ExerciseCard({
     }
     
     onExerciseComplete?.(currentExercise, correct);
-  };
+  }, [selectedAnswer, currentExercise, completeExercise, onExerciseComplete]);
 
   const navigateToExercise = (exerciseId: string) => {
     // Extract chapter from current path
@@ -330,7 +348,7 @@ export function ExerciseCard({
 
   const resetExercises = () => {
     setCurrentIndex(0);
-    setSelectedAnswer(null);
+    setSelectedAnswerState(null);
     setShowFeedback(false);
   };
 
