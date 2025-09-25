@@ -6,14 +6,14 @@ import { Fraction } from '@/lib/fraction';
 interface NumberLineProps {
   min?: number;
   max?: number;
-  selectedNumber?: number | null;
-  onNumberClick?: (number: number) => void;
+  selectedNumber?: Fraction | number | null;
+  onNumberClick?: (value: Fraction | number) => void;
   showHints?: boolean;
-  correctAnswer?: number;
+  correctAnswer?: Fraction | number | string; // Allow string for parsing from DB
   step?: number;
-  markedNumbers?: { value: number; color: string; label?: string }[];
+  markedNumbers?: { value: Fraction | number; color: string; label?: string }[];
   enableAllClicks?: boolean;
-  clickedNumbers?: number[];
+  clickedNumbers?: (Fraction | number)[];
   feedbackState?: 'idle' | 'correct' | 'incorrect';
   tickSpacing?: number; // Override automatic tick spacing for integers
   // Fraction support
@@ -40,17 +40,43 @@ export function NumberLine({
 }: NumberLineProps) {
   const range = max - min;
   
+  // Helper to parse correctAnswer to Fraction if needed
+  const correctAnswerFraction = correctAnswer !== undefined
+    ? (typeof correctAnswer === 'string' 
+        ? Fraction.parse(correctAnswer)
+        : correctAnswer instanceof Fraction 
+          ? correctAnswer
+          : new Fraction(correctAnswer as number))
+    : null;
+  
+  // Helper to parse selectedNumber to Fraction if needed for comparison
+  const selectedFraction = selectedNumber !== null && selectedNumber !== undefined
+    ? (selectedNumber instanceof Fraction
+        ? selectedNumber
+        : new Fraction(selectedNumber as number))
+    : null;
+  
+  // Helper function to compare values (Fraction or number)
+  const areValuesEqual = (a: Fraction | number | null | undefined, b: Fraction | number | null | undefined): boolean => {
+    if (a === null || a === undefined || b === null || b === undefined) return false;
+    
+    // Convert both to Fractions for comparison
+    const fa = a instanceof Fraction ? a : new Fraction(a);
+    const fb = b instanceof Fraction ? b : new Fraction(b);
+    
+    return fa.equals(fb);
+  };
+  
   // Separate logic for fractions vs integers
   if (subdivision > 1) {
-    // FRACTION PATH - use fractional positions and wider spacing
-    // Generate positions using subdivision
-    const positions: number[] = [];
-    const step = 1 / subdivision;
-    for (let i = min; i <= max; i += step) {
-      positions.push(Math.round(i * subdivision) / subdivision);
+    // FRACTION PATH - use exact Fraction objects
+    // Generate positions as Fractions
+    const positions: Fraction[] = [];
+    for (let i = min * subdivision; i <= max * subdivision; i++) {
+      positions.push(new Fraction(i, subdivision));
     }
-    const majorPositions = positions.filter(pos => pos % 1 === 0);
-    const minorPositions = positions.filter(pos => pos % 1 !== 0);
+    const majorPositions = positions.filter(pos => pos.isWhole());
+    const minorPositions = positions.filter(pos => !pos.isWhole());
     
     return (
       <div className="w-full flex justify-center pb-4">
@@ -74,14 +100,14 @@ export function NumberLine({
             
             {/* Minor (fractional) ticks */}
             {minorPositions.map((position) => {
-              const x = 40 + ((position - min) / range) * (range * 80);
-              const isSelected = Math.abs((selectedNumber || 0) - position) < 1e-6;
-              const isClicked = clickedNumbers.some(num => Math.abs(num - position) < 1e-6);
-              const markedNumber = markedNumbers.find(m => Math.abs(m.value - position) < 1e-6);
-              const isCorrectAnswer = Math.abs((correctAnswer || 0) - position) < 1e-6;
+              const x = 40 + ((position.toDecimal() - min) / range) * (range * 80);
+              const isSelected = areValuesEqual(selectedFraction, position);
+              const isClicked = clickedNumbers.some(num => areValuesEqual(num, position));
+              const markedNumber = markedNumbers.find(m => areValuesEqual(m.value, position));
+              const isCorrectAnswer = areValuesEqual(correctAnswerFraction, position);
               
               return (
-                <g key={`minor-${position}`}>
+                <g key={`minor-${position.toString()}`}>
                   {/* Minor tick mark */}
                   <line 
                     x1={x} 
@@ -146,8 +172,8 @@ export function NumberLine({
                             style={{ pointerEvents: 'none' }}
                           >
                             {fractionDisplay 
-                              ? Fraction.fromDecimal(position, subdivision).toUnicode()
-                              : position.toFixed(3).replace(/\.?0+$/, '')
+                              ? position.toUnicode()
+                              : position.toDecimal().toFixed(3).replace(/\.?0+$/, '')
                             }
                           </text>
                         </>
@@ -160,13 +186,13 @@ export function NumberLine({
             
             {/* Major (integer) ticks and numbers */}
             {majorPositions.map((position) => {
-              const x = 40 + ((position - min) / range) * (range * 80);
-              const isSelected = Math.abs((selectedNumber || 0) - position) < 1e-6;
-              const markedNumber = markedNumbers.find(m => Math.abs(m.value - position) < 1e-6);
-              const isCorrectAnswer = Math.abs((correctAnswer || 0) - position) < 1e-6;
+              const x = 40 + ((position.toDecimal() - min) / range) * (range * 80);
+              const isSelected = areValuesEqual(selectedFraction, position);
+              const markedNumber = markedNumbers.find(m => areValuesEqual(m.value, position));
+              const isCorrectAnswer = areValuesEqual(correctAnswerFraction, position);
               
               return (
-                <g key={`major-${position}`}>
+                <g key={`major-${position.toString()}`}>
                   {/* Major tick mark */}
                   <line 
                     x1={x} 
@@ -239,7 +265,7 @@ export function NumberLine({
                     }
                     style={{ pointerEvents: 'none' }}
                   >
-                    {position}
+                    {position.numerator}
                   </text>
                 </g>
               );

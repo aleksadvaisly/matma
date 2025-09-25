@@ -20,6 +20,7 @@ export async function GET(
     // Transform to match existing component format
     const transformedExercises = exercises.map(ex => ({
       id: ex.id,
+      variant_letter: ex.variant_letter,
       question: ex.question || ex.story,
       story: ex.story,  // Include story separately for word problems
       answer: ex.correct_answer,

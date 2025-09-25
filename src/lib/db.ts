@@ -19,6 +19,7 @@ export interface Exercise {
   hint: string | null;
   explanation: string | null;
   layout_type: string | null;
+  variant_letter?: string;
   options?: any[];
   visualConfig?: any;
 }

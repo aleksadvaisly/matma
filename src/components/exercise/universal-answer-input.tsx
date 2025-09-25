@@ -9,11 +9,11 @@ import { Fraction } from '@/lib/fraction';
 type InputType = 'text' | 'choices' | 'number-line' | 'choice-grid';
 
 interface BaseInputProps {
-  value: string | number | null;
-  onChange: (value: string | number) => void;
+  value: string | number | Fraction | null;
+  onChange: (value: string | number | Fraction) => void;
   disabled?: boolean;
   showHints?: boolean;
-  correctAnswer?: string | number;
+  correctAnswer?: string | number | Fraction;
   showFeedback?: boolean;
   isCorrect?: boolean;
 }
@@ -36,7 +36,7 @@ interface NumberLineInputProps extends BaseInputProps {
   type: 'number-line';
   min: number;
   max: number;
-  markedNumbers?: Array<{ value: number; color: string }>;
+  markedNumbers?: Array<{ value: number | Fraction; color: string }>;
   enableAllClicks?: boolean;
   tickSpacing?: number; // Override automatic tick spacing
   // Fraction support
@@ -162,11 +162,11 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
         <NumberLine
           min={props.min}
           max={props.max}
-          selectedNumber={props.value as number | null}
-          onNumberClick={(num) => !props.disabled && props.onChange(num)}
+          selectedNumber={props.value as Fraction | number | null}
+          onNumberClick={(value) => !props.disabled && props.onChange(value)}
           markedNumbers={props.markedNumbers}
           showHints={props.showHints}
-          correctAnswer={props.correctAnswer as number}
+          correctAnswer={props.correctAnswer}
           feedbackState={props.showFeedback 
             ? (props.isCorrect ? 'correct' : 'incorrect') 
             : 'idle'}

@@ -20,6 +20,7 @@ export interface Exercise {
   options?: string[];
   hint?: string;
   explanation?: string;
+  variant_letter?: string;
   inputType?: 'text' | 'choices' | 'number-line' | 'choice-grid';
   numberLineConfig?: {
     min: number;
@@ -45,8 +46,8 @@ interface ExerciseCardProps {
   hints?: string[];
   initialExerciseId?: string;
   customContent?: (exercise: Exercise, props: {
-    selectedAnswer: string | number | null;
-    setSelectedAnswer: (value: string | number | null) => void;
+    selectedAnswer: string | number | Fraction | null;
+    setSelectedAnswer: (value: string | number | Fraction | null) => void;
     showHints: boolean;
     showFeedback: boolean;
     isCorrect: boolean;
@@ -112,9 +113,9 @@ export function ExerciseCard({
       setIsCorrect(false);
     }
   }, [initialExerciseId]);
-  const [selectedAnswer, setSelectedAnswerState] = useState<string | number | null>(null);
+  const [selectedAnswer, setSelectedAnswerState] = useState<string | number | Fraction | null>(null);
   
-  const setSelectedAnswer = (value: string | number | null) => {
+  const setSelectedAnswer = (value: string | number | Fraction | null) => {
     console.log('=== DEBUG: setSelectedAnswer called ===');
     console.log('New value:', value, '(type:', typeof value, ')');
     console.log('Current exercise ID:', currentExercise?.id);
@@ -212,15 +213,22 @@ export function ExerciseCard({
       return;
     }
 
-    const selectedStr = String(selectedAnswer).trim();
-    const answerStr = String(currentExercise.answer).trim();
+    let correct: boolean;
     
-    console.log('selectedStr:', selectedStr);
-    console.log('answerStr:', answerStr);
-    
-    // Try mathematical equivalence using exact fraction arithmetic
-    let correct = Fraction.areEquivalent(selectedStr, answerStr);
-    console.log('Fraction.areEquivalent result:', correct);
+    // If selectedAnswer is a Fraction object from the number line
+    if (selectedAnswer instanceof Fraction) {
+      const answerFraction = Fraction.parse(String(currentExercise.answer));
+      correct = answerFraction ? selectedAnswer.equals(answerFraction) : false;
+      console.log('Fraction comparison:', selectedAnswer.toString(), 'vs', answerFraction?.toString(), '=', correct);
+    } else {
+      // For text input and other types, use string comparison with Fraction.areEquivalent
+      const selectedStr = String(selectedAnswer).trim();
+      const answerStr = String(currentExercise.answer).trim();
+      console.log('selectedStr:', selectedStr);
+      console.log('answerStr:', answerStr);
+      correct = Fraction.areEquivalent(selectedStr, answerStr);
+      console.log('Fraction.areEquivalent result:', correct);
+    }
     
     // No fallback needed - Fraction.areEquivalent handles all cases
     
@@ -414,6 +422,9 @@ export function ExerciseCard({
 
         {currentExercise.question && (
           <div className="text-lg font-medium text-center">
+            {currentExercise.variant_letter && (
+              <span className="font-bold">{currentExercise.variant_letter}) </span>
+            )}
             {currentExercise.question}
           </div>
         )}
@@ -430,8 +441,8 @@ export function ExerciseCard({
 
         <UniversalAnswerInput
           type={currentExercise.inputType || 'choices'}
-          value={selectedAnswer}
-          onChange={setSelectedAnswer}
+          value={selectedAnswer as string | number | null}
+          onChange={setSelectedAnswer as (value: string | number) => void}
           disabled={showFeedback}
           showHints={showHints}
           correctAnswer={currentExercise.answer}
