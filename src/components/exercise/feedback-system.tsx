@@ -76,14 +76,40 @@ export function FeedbackSystem({
                 </Button>
               </>
             ) : nextSectionUrl ? (
-              <Button 
-                onClick={() => router.push(nextSectionUrl)} 
-                className="flex-1 gap-2"
-                style={{ cursor: 'pointer' }}
-              >
-                Przejdź do następnego tematu
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              !isCorrect ? (
+                // Wrong answer on last exercise - show retry option
+                <>
+                  <Button 
+                    onClick={onReset} 
+                    variant="outline"
+                    className="gap-2"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                    Powtórz zadanie
+                  </Button>
+                  <Button 
+                    onClick={() => router.push(nextSectionUrl)} 
+                    disabled
+                    variant="secondary"
+                    className="flex-1 gap-2"
+                    style={{ cursor: 'not-allowed', opacity: 0.5 }}
+                  >
+                    Przejdź do następnego tematu
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </>
+              ) : (
+                // Correct answer - proceed to next section
+                <Button 
+                  onClick={() => router.push(nextSectionUrl)} 
+                  className="flex-1 gap-2"
+                  style={{ cursor: 'pointer' }}
+                >
+                  Przejdź do następnego tematu
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              )
             ) : (
               <Button onClick={onReset} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
                 <RefreshCw className="h-4 w-4" />
