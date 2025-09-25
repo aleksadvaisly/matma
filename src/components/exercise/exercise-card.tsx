@@ -9,6 +9,7 @@ import { InfoBox } from '@/components/ui/info-box';
 import { ExpressionLine } from '@/components/ui/expression-line';
 import { useExerciseStore } from '@/lib/store';
 import { useRouter, usePathname } from 'next/navigation';
+import { FractionUtils } from '@/lib/fraction-utils';
 
 export interface Exercise {
   id: string;
@@ -25,6 +26,14 @@ export interface Exercise {
     max: number;
     markedNumbers?: Array<{ value: number; color: string }>;
     enableAllClicks?: boolean;
+    // Fraction support
+    subdivision?: number; // 1 for integers, 2 for halves, 3 for thirds, etc.
+    fractionDisplay?: boolean; // Whether to show fractions in Unicode format
+    allowFractionalClick?: boolean; // Whether clicking on fractional positions is allowed
+  };
+  textConfig?: {
+    supportsFractions?: boolean; // Whether text input should support fraction parsing
+    placeholder?: string;
   };
 }
 
@@ -188,9 +197,16 @@ export function ExerciseCard({
   const checkAnswer = () => {
     if (!selectedAnswer) return;
 
-    const normalizedSelected = String(selectedAnswer).trim();
-    const normalizedAnswer = String(currentExercise.answer).trim();
-    const correct = normalizedSelected === normalizedAnswer;
+    const selectedStr = String(selectedAnswer).trim();
+    const answerStr = String(currentExercise.answer).trim();
+    
+    // Try mathematical equivalence first (for fractions/decimals)
+    let correct = FractionUtils.areEquivalent(selectedStr, answerStr);
+    
+    // Fallback to exact string comparison if fraction parsing fails
+    if (!correct) {
+      correct = selectedStr === answerStr;
+    }
     
     setIsCorrect(correct);
     setShowFeedback(true);
@@ -404,8 +420,8 @@ export function ExerciseCard({
           showFeedback={showFeedback}
           isCorrect={isCorrect}
           options={currentExercise.options || []}
-          layout={currentExercise.layout || 'vertical'}
-          {...(currentExercise.numberLineConfig || {})}
+          {...(currentExercise.inputType === 'number-line' ? currentExercise.numberLineConfig || {} : {})}
+          {...(currentExercise.inputType === 'text' ? currentExercise.textConfig || {} : {})}
         />
       </>
     );

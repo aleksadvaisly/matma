@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { NumberLine } from '@/components/ui/number-line';
 import { ChoiceButton, type ChoiceFeedbackState } from '@/components/ui/choice-button';
 import { HintHighlightGroup } from '@/components/ui/hint-highlight';
+import { FractionUtils } from '@/lib/fraction-utils';
 
 type InputType = 'text' | 'choices' | 'number-line' | 'choice-grid';
 
@@ -21,6 +22,7 @@ interface TextInputProps extends BaseInputProps {
   type: 'text';
   placeholder?: string;
   className?: string;
+  supportsFractions?: boolean; // Whether to show fraction parsing feedback
 }
 
 interface ChoicesInputProps extends BaseInputProps {
@@ -36,6 +38,11 @@ interface NumberLineInputProps extends BaseInputProps {
   max: number;
   markedNumbers?: Array<{ value: number; color: string }>;
   enableAllClicks?: boolean;
+  tickSpacing?: number; // Override automatic tick spacing
+  // Fraction support
+  subdivision?: number; // 1 for integers, 2 for halves, 3 for thirds, etc.
+  fractionDisplay?: boolean; // Whether to show fractions in Unicode format
+  allowFractionalClick?: boolean; // Whether clicking on fractional positions is allowed
 }
 
 interface ChoiceGridInputProps extends BaseInputProps {
@@ -53,13 +60,19 @@ type UniversalAnswerInputProps =
 export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
   switch (props.type) {
     case 'text':
+      // Parse fraction if supportsFractions is enabled to show visual feedback
+      const parsedFraction = props.supportsFractions && props.value 
+        ? FractionUtils.parse(String(props.value)) 
+        : null;
+      const hasValidFraction = parsedFraction !== null;
+      
       return (
         <div className={`flex items-center gap-2 ${props.className || ''}`}>
           <Input
             type="text"
             value={props.value || ''}
             onChange={(e) => props.onChange(e.target.value)}
-            placeholder={props.placeholder}
+            placeholder={props.placeholder || (props.supportsFractions ? 'Wpisz liczbę lub ułamek (np. 1/2, ⅔, 1½)' : '')}
             disabled={props.disabled}
             className={`${
               props.showHints && !props.showFeedback 
@@ -67,6 +80,19 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
                 : ''
             }`}
           />
+          {props.supportsFractions && props.value && (
+            <div className="text-sm text-gray-600 min-w-[60px]">
+              {hasValidFraction && parsedFraction ? (
+                <span className="text-green-600" title="Rozpoznano ułamek">
+                  {FractionUtils.toUnicode(parsedFraction)}
+                </span>
+              ) : (
+                <span className="text-orange-600" title="Nie rozpoznano jako ułamek">
+                  ?
+                </span>
+              )}
+            </div>
+          )}
         </div>
       );
 
@@ -145,6 +171,10 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
             ? (props.isCorrect ? 'correct' : 'incorrect') 
             : 'idle'}
           enableAllClicks={props.enableAllClicks}
+          tickSpacing={props.tickSpacing}
+          subdivision={props.subdivision}
+          fractionDisplay={props.fractionDisplay}
+          allowFractionalClick={props.allowFractionalClick}
         />
       );
 
