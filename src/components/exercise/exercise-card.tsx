@@ -218,9 +218,14 @@ export function ExerciseCard({
     console.log('selectedStr:', selectedStr);
     console.log('answerStr:', answerStr);
     
+    // For number line, use subdivision to improve precision
+    const targetDenominator = currentExercise.inputType === 'number-line'
+      ? currentExercise.numberLineConfig?.subdivision
+      : undefined;
+
     // Try mathematical equivalence using exact fraction arithmetic
-    let correct = Fraction.areEquivalent(selectedStr, answerStr);
-    console.log('Fraction.areEquivalent result:', correct);
+    let correct = Fraction.areEquivalent(selectedStr, answerStr, targetDenominator);
+    console.log('Fraction.areEquivalent result:', correct, 'with target denominator:', targetDenominator);
     
     // No fallback needed - Fraction.areEquivalent handles all cases
     

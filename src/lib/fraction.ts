@@ -322,16 +322,24 @@ export class Fraction {
    * Check if a value is mathematically equivalent
    * Handles fractions, decimals, and mixed formats
    */
-  static areEquivalent(a: string | number, b: string | number): boolean {
+  static areEquivalent(a: string | number, b: string | number, targetDenominator?: number): boolean {
     try {
-      const fa = typeof a === 'number' ? new Fraction(a, 1) : Fraction.parse(String(a));
-      const fb = typeof b === 'number' ? new Fraction(b, 1) : Fraction.parse(String(b));
+      const fa = typeof a === 'number'
+        ? Fraction.fromDecimal(a, targetDenominator)
+        : Fraction.parse(String(a));
       
-      if (!fa || !fb) return false;
+      const fb = typeof b === 'number'
+        ? Fraction.fromDecimal(b, targetDenominator)
+        : Fraction.parse(String(b));
+
+      if (!fa || !fb) {
+        // Fallback for safety, though should be rare
+        return String(a).trim() === String(b).trim();
+      }
       
       return fa.equals(fb);
     } catch {
-      // Fallback to string comparison
+      // Fallback to string comparison on any error
       return String(a).trim() === String(b).trim();
     }
   }
