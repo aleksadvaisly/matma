@@ -100,15 +100,26 @@ export function FeedbackSystem({
                   </Button>
                 </>
               ) : (
-                // Correct answer - proceed to next section
-                <Button 
-                  onClick={() => router.push(nextSectionUrl)} 
-                  className="flex-1 gap-2"
-                  style={{ cursor: 'pointer' }}
-                >
-                  Przejdź do następnego tematu
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+                // Correct answer - show retry AND next section options
+                <>
+                  <Button 
+                    onClick={onReset} 
+                    variant="outline"
+                    className="gap-2"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                    Powtórz zadanie
+                  </Button>
+                  <Button 
+                    onClick={() => router.push(nextSectionUrl)} 
+                    className="flex-1 gap-2"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Przejdź do następnego tematu
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </>
               )
             ) : (
               <Button onClick={onReset} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
