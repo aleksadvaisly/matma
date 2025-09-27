@@ -183,6 +183,9 @@ export class Fraction {
    */
   static parse(str: string): Fraction | null {
     str = str.trim();
+    
+    // Normalize minus characters: convert mathematical minus sign (−) to hyphen-minus (-)
+    str = str.replace(/−/g, '-');
 
     // Handle Unicode fractions
     const unicodeMap: Record<string, string> = {
@@ -210,20 +213,20 @@ export class Fraction {
     for (const [unicode, fraction] of Object.entries(unicodeMap)) {
       if (str.includes(unicode)) {
         const parts = str.split(unicode);
-        if (parts.length === 2 && parts[0]) {
+        if (parts.length === 2 && parts[0] === '-') {
+          // Handle negative Unicode fractions like "-½"
+          const frac = Fraction.parse(fraction);
+          if (frac) {
+            return new Fraction(-frac.numerator, frac.denominator);
+          }
+        } else if (parts.length === 2 && !parts[0]) {
+          return Fraction.parse(fraction);
+        } else if (parts.length === 2 && parts[0]) {
           const whole = parseInt(parts[0]);
           const frac = Fraction.parse(fraction);
           if (!isNaN(whole) && frac) {
             const sign = whole < 0 ? -1 : 1;
             return new Fraction(sign * (Math.abs(whole) * frac.denominator + frac.numerator), frac.denominator);
-          }
-        } else if (parts.length === 2 && !parts[0]) {
-          return Fraction.parse(fraction);
-        } else if (parts.length === 2 && parts[0] === '-') {
-          // Handle negative Unicode fractions like "-⅔"
-          const frac = Fraction.parse(fraction);
-          if (frac) {
-            return new Fraction(-frac.numerator, frac.denominator);
           }
         }
       }

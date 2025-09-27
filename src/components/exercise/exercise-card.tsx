@@ -138,6 +138,31 @@ export function ExerciseCard({
 
   const TOTAL_EXERCISES = exercises.length;
   const currentExercise = exercises[currentIndex];
+  
+  // Early return if no exercises available
+  if (exercises.length === 0) {
+    return (
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
+            <p className="text-gray-600 mt-2">{description}</p>
+          </div>
+        </CardHeader>
+        <CardContent className="text-center py-12">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+              Sekcja w przygotowaniu
+            </h3>
+            <p className="text-blue-700">
+              Ta sekcja nie zawiera jeszcze ćwiczeń. Wróć tutaj wkrótce!
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const displayedProgress = currentIndex + 1;
   
   // Get next section URL from database
@@ -492,24 +517,26 @@ export function ExerciseCard({
       <CardContent className="space-y-6">
         {renderContent()}
 
-        <FeedbackSystem
-          showFeedback={showFeedback}
-          isCorrect={isCorrect}
-          correctAnswer={currentExercise.answer}
-          customMessage={
-            showFeedback && currentExercise.explanation
-              ? (isCorrect 
-                  ? `Brawo! ${currentExercise.explanation}`
-                  : `Jeszcze raz. ${currentExercise.explanation}`)
-              : undefined
-          }
-          selectedAnswer={selectedAnswer}
-          isLastExercise={currentIndex === TOTAL_EXERCISES - 1}
-          nextSectionUrl={getNextSectionUrl()}
-          onCheck={checkAnswer}
-          onNext={nextExercise}
-          onReset={refreshVariant}
-        />
+        {currentExercise && (
+          <FeedbackSystem
+            showFeedback={showFeedback}
+            isCorrect={isCorrect}
+            correctAnswer={currentExercise.answer}
+            customMessage={
+              showFeedback && currentExercise.explanation
+                ? (isCorrect 
+                    ? `Brawo! ${currentExercise.explanation}`
+                    : `Jeszcze raz. ${currentExercise.explanation}`)
+                : undefined
+            }
+            selectedAnswer={selectedAnswer}
+            isLastExercise={currentIndex === TOTAL_EXERCISES - 1}
+            nextSectionUrl={getNextSectionUrl()}
+            onCheck={checkAnswer}
+            onNext={nextExercise}
+            onReset={refreshVariant}
+          />
+        )}
 
         {hints.length > 0 && (
           <InfoBox title="Wskazówki" items={hints} />

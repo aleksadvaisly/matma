@@ -24,8 +24,8 @@ function sectionExists(sectionId: string): boolean {
   }
 }
 
-// Get first exercise with random variant
-function getFirstExercise(sectionId: string): string {
+// Get first exercise with random variant, returns null if no exercises exist
+function getFirstExercise(sectionId: string): string | null {
   try {
     const db = new Database(path.join(process.cwd(), 'matma.db'));
     
@@ -48,7 +48,7 @@ function getFirstExercise(sectionId: string): string {
       `).get(sectionId, sectionId) as { id: string } | undefined;
       
       db.close();
-      return firstExercise?.id || '1-a';
+      return firstExercise?.id || null;
     } else {
       // Fallback for sections without variants
       const firstExercise = db.prepare(`
@@ -59,11 +59,11 @@ function getFirstExercise(sectionId: string): string {
       `).get(sectionId) as { id: string } | undefined;
       
       db.close();
-      return firstExercise?.id || '1';
+      return firstExercise?.id || null;
     }
   } catch (error) {
     console.error('Error getting first exercise:', error);
-    return '1-a';
+    return null;
   }
 }
 
@@ -86,7 +86,23 @@ export default async function SectionPage({ params }: SectionPageProps) {
     );
   }
 
-  // Redirect to first exercise with random variant
+  // Check if section has exercises
   const firstExerciseId = getFirstExercise(sectionId);
+  
+  if (!firstExerciseId) {
+    // Section exists but has no exercises
+    return (
+      <div className="p-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Sekcja w przygotowaniu</h1>
+          <p className="text-muted-foreground">
+            Ta sekcja nie zawiera jeszcze ćwiczeń. Wróć tutaj wkrótce!
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to first exercise with random variant
   redirect(`/dashboard/chapters/${chapterId}/sections/${sectionId}/exercise/${firstExerciseId}`);
 }

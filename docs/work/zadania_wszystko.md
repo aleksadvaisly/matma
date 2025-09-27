@@ -375,6 +375,72 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** Liczby całkowite nie mają części ułamkowej
 
+11. **1-5-11**: Wskaż przedział, do którego należą wszystkie liczby całkowite, które są co najmniej równe 0, ale jednocześnie mniejsze od 4.
+    - **Odpowiedź:** [0, 4)
+    - **Opcje:** (0, 4) | [0, 3] | [0, 4)
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** "Co najmniej równe 0" oznacza ≥ 0 (nawias domknięty), "mniejsze od 4" oznacza < 4 (nawias otwarty)
+    - **Warianty:**
+      - a) co najmniej 0, mniejsze od 4 → [0, 4)
+      - b) co najmniej -2, mniejsze od 3 → [-2, 3)
+      - c) co najmniej 1, mniejsze od 5 → [1, 5)
+
+12. **1-5-12**: Ile liczb całkowitych należy do przedziału (-5, -1]?
+    - **Odpowiedź:** 4
+    - **Opcje:** 3 | 4 | 5
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** Liczby całkowite spełniające -5 < x ≤ -1 to: -4, -3, -2, -1 (cztery liczby)
+    - **Warianty:**
+      - a) (-5, -1] → 4 liczby
+      - b) (-3, 2] → 5 liczb
+      - c) (-7, -3] → 4 liczby
+
+13. **1-5-13**: Trzy z poniższych przedziałów zawierają dokładnie cztery liczby całkowite. Który przedział jest inny?
+    - **Odpowiedź:** (-3, 1)
+    - **Opcje:** (0, 5) | [-1, 2] | [5, 9) | (-3, 1)
+    - **Typ:** Wybór
+    - **Difficulty_level:** 4
+    - **Wyjaśnienie:** (0, 5) ma 4 liczby: 1,2,3,4; [-1, 2] ma 4 liczby: -1,0,1,2; [5, 9) ma 4 liczby: 5,6,7,8; (-3, 1) ma tylko 3 liczby: -2,-1,0
+    - **Warianty:**
+      - a) (0, 5), [-1, 2], [5, 9), (-3, 1) → (-3, 1) ma 3 liczby
+      - b) [2, 6], (-1, 3), (4, 8], [-2, 0) → [-2, 0) ma 2 liczby
+      - c) (1, 5], [-3, 0], (6, 10), [0, 3] → (6, 10) ma 3 liczby
+
+14. **1-5-14**: Który zbiór zawiera wszystkie liczby całkowite z przedziału (-3.1, 2.9)?
+    - **Odpowiedź:** {-3, -2, -1, 0, 1, 2}
+    - **Opcje:** {-3, -2, -1, 0, 1, 2, 3} | {-3, -2, -1, 0, 1, 2} | {-2, -1, 0, 1, 2}
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** Największa liczba całkowita < 2.9 to 2, najmniejsza liczba całkowita > -3.1 to -3
+    - **Warianty:**
+      - a) (-3.1, 2.9) → {-3, -2, -1, 0, 1, 2}
+      - b) (-2.7, 3.2) → {-2, -1, 0, 1, 2, 3}
+      - c) (-4.8, 1.3) → {-4, -3, -2, -1, 0, 1}
+
+15. **1-5-15**: W którym przedziale znajdują się wszystkie liczby naturalne mniejsze od 5? (Uwaga: 0 nie jest liczbą naturalną)
+    - **Odpowiedź:** [1, 4]
+    - **Opcje:** [1, 4] | [0, 5) | (0, 5)
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** Liczby naturalne to 1, 2, 3, 4, ... Liczby naturalne < 5 to: 1, 2, 3, 4
+    - **Warianty:**
+      - a) naturalne < 5 → [1, 4]
+      - b) naturalne < 7 → [1, 6]
+      - c) naturalne < 3 → [1, 2]
+
+16. **1-5-16**: Ile liczb całkowitych znajduje się w przedziale (-0.5, 0.5)?
+    - **Odpowiedź:** 1
+    - **Opcje:** 0 | 1 | 2
+    - **Typ:** Wybór
+    - **Difficulty_level:** 2
+    - **Wyjaśnienie:** Jedyną liczbą całkowitą spełniającą -0.5 < x < 0.5 jest 0
+    - **Warianty:**
+      - a) (-0.5, 0.5) → 1 liczba (0)
+      - b) (-1.5, 1.5) → 3 liczby (-1, 0, 1)
+      - c) (0.5, 2.5) → 2 liczby (1, 2)
+
 ---
 
 ## Rozdział 2: Dodawanie liczb całkowitych
