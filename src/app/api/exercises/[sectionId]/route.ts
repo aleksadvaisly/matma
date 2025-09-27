@@ -38,12 +38,19 @@ export async function GET(
       sequenceBuilderConfig: ex.input_type === 'sequence-builder' ? ex.visualConfig : undefined
     }));
     
-    return NextResponse.json({
+    const response = NextResponse.json({
       exercises: transformedExercises,
       hints: hints,
       title: sectionInfo?.title,
       description: sectionInfo?.description
     });
+    
+    // Prevent caching to ensure fresh data
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Database error:', error);
     return NextResponse.json(

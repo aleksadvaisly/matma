@@ -187,6 +187,18 @@ export class Fraction {
     // Normalize minus characters: convert mathematical minus sign (−) to hyphen-minus (-)
     str = str.replace(/−/g, '-');
 
+    // Normalize Polish "i" notation: "1 i 1/2" → "1 1/2"
+    str = str.replace(/\s+i\s+/g, ' ');
+
+    // Normalize plus sign: "+1" → "1", "+1/2" → "1/2"
+    str = str.replace(/^\+/, '');
+
+    // Normalize "and" notation: "1and1/2" → "1 1/2"
+    str = str.replace(/and/g, ' ');
+
+    // Better whitespace handling: normalize multiple spaces and spaces around /
+    str = str.replace(/\s+/g, ' ').replace(/\s*\/\s*/g, '/');
+
     // Handle Unicode fractions
     const unicodeMap: Record<string, string> = {
       '½': '1/2',

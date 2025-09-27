@@ -69,6 +69,34 @@ describe('Fraction', () => {
       expect(Fraction.parse('1½')).toEqual(new Fraction(3, 2));
     });
 
+    test('parses Polish "i" notation', () => {
+      expect(Fraction.parse('1 i 1/2')).toEqual(new Fraction(3, 2));
+      expect(Fraction.parse('1 i 1/8')).toEqual(new Fraction(9, 8));
+      expect(Fraction.parse('-1 i 3/4')).toEqual(new Fraction(-7, 4));
+      expect(Fraction.parse('2 i 1/3')).toEqual(new Fraction(7, 3));
+    });
+
+    test('normalizes plus signs', () => {
+      expect(Fraction.parse('+1')).toEqual(new Fraction(1, 1));
+      expect(Fraction.parse('+5')).toEqual(new Fraction(5, 1));
+      expect(Fraction.parse('+1/2')).toEqual(new Fraction(1, 2));
+      expect(Fraction.parse('+2/3')).toEqual(new Fraction(2, 3));
+    });
+
+    test('handles better whitespace in fractions', () => {
+      expect(Fraction.parse('1  1/2')).toEqual(new Fraction(3, 2));
+      expect(Fraction.parse('2   1/3')).toEqual(new Fraction(7, 3));
+      expect(Fraction.parse('1 / 2')).toEqual(new Fraction(1, 2));
+      expect(Fraction.parse('3 /4')).toEqual(new Fraction(3, 4));
+      expect(Fraction.parse('5/ 6')).toEqual(new Fraction(5, 6));
+    });
+
+    test('parses "and" notation', () => {
+      expect(Fraction.parse('1and1/2')).toEqual(new Fraction(3, 2));
+      expect(Fraction.parse('2and1/3')).toEqual(new Fraction(7, 3));
+      expect(Fraction.parse('1and3/4')).toEqual(new Fraction(7, 4));
+    });
+
     test('returns null for invalid input', () => {
       expect(Fraction.parse('abc')).toBeNull();
       expect(Fraction.parse('')).toBeNull();

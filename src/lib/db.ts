@@ -4,6 +4,15 @@ import { Fraction } from './fraction';
 
 const db = new Database(path.join(process.cwd(), 'matma.db'));
 
+// Enable WAL mode for better concurrency and immediate consistency
+db.pragma('journal_mode = WAL');
+db.pragma('synchronous = NORMAL');
+db.pragma('cache_size = 1000');
+db.pragma('temp_store = memory');
+
+// Export the database instance to share across the app
+export { db };
+
 /**
  * Calculate optimal number line range based on the correct answer
  * Prevents the recurring issue of manually configured incorrect ranges

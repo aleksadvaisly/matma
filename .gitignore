@@ -43,6 +43,11 @@ next-env.d.ts
 /prisma/*.db-journal
 *.sqlite
 *.sqlite3
+matma.db-shm
+matma.db-wal
+
+# playwright
+.playwright-mcp/
 
 # IDEs
 .vscode/

@@ -207,9 +207,11 @@ export const useExerciseStore = create<ExerciseState>()(
 
               console.log(`Progress saved for section ${sectionToSave}: ${updatedCompletedCount} exercises`);
               
-              // Trigger sidebar refresh
+              // Trigger sidebar refresh with a small delay to ensure database transaction is committed
               if (typeof window !== 'undefined') {
-                useNavigationStore.getState().refreshNavigation();
+                setTimeout(() => {
+                  useNavigationStore.getState().refreshNavigation();
+                }, 100);
               }
             } catch (error) {
               console.error('Error saving progress to database:', error);
@@ -382,9 +384,11 @@ export const useExerciseStore = create<ExerciseState>()(
 
           console.log(`Progress saved for section ${sectionId}`);
           
-          // Trigger sidebar refresh
+          // Trigger sidebar refresh with a small delay to ensure database transaction is committed
           if (typeof window !== 'undefined') {
-            useNavigationStore.getState().refreshNavigation();
+            setTimeout(() => {
+              useNavigationStore.getState().refreshNavigation();
+            }, 100);
           }
         } catch (error) {
           console.error('Error saving progress to database:', error);

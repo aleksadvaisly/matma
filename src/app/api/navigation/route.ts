@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import Database from 'better-sqlite3';
-import path from 'path';
-
-const db = new Database(path.join(process.cwd(), 'matma.db'));
+import { db } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
@@ -81,9 +78,16 @@ export async function GET(request: Request) {
       };
     });
     
-    return NextResponse.json({
+    const response = NextResponse.json({
       chapters: chaptersWithSections
     });
+    
+    // Prevent caching to ensure fresh data
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Database error:', error);
     return NextResponse.json(

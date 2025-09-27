@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import Database from 'better-sqlite3';
-import path from 'path';
-
-const db = new Database(path.join(process.cwd(), 'matma.db'));
+import { db } from '@/lib/db';
 
 // GET: Fetch user progress for all sections or specific user
 export async function GET(request: Request) {
@@ -25,7 +22,14 @@ export async function GET(request: Request) {
       ORDER BY s.chapter_id, s.order_index
     `).all(userId);
     
-    return NextResponse.json({ progress });
+    const response = NextResponse.json({ progress });
+    
+    // Prevent caching to ensure fresh data
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Database error:', error);
     return NextResponse.json(
@@ -77,16 +81,21 @@ export async function POST(request: Request) {
         completed_at = excluded.completed_at
     `);
 
-    stmt.run(
-      userId,
-      sectionId, 
-      exercisesCompleted, 
-      actualTotal,
-      lastExerciseId,
-      isCompleted ? new Date().toISOString() : null
-    );
+    // Use transaction to ensure data consistency
+    const transaction = db.transaction(() => {
+      stmt.run(
+        userId,
+        sectionId, 
+        exercisesCompleted, 
+        actualTotal,
+        lastExerciseId,
+        isCompleted ? new Date().toISOString() : null
+      );
+    });
+    
+    transaction();
 
-    return NextResponse.json({ 
+    const response = NextResponse.json({ 
       success: true,
       progress: {
         sectionId,
@@ -95,6 +104,13 @@ export async function POST(request: Request) {
         isCompleted
       }
     });
+    
+    // Prevent caching to ensure fresh data
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Database error:', error);
     return NextResponse.json(
