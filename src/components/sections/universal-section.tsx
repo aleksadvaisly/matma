@@ -84,16 +84,11 @@ export function UniversalSection({ sectionId, exerciseId }: UniversalSectionProp
 
         // Process exercises based on configuration
         const processedExercises = exercisesData.exercises.map((ex: any) => {
-          let processedAnswer = ex.answer;
-          
-          // Apply answer type processing
-          if (configData.processing_config?.answerType === 'integer') {
-            processedAnswer = parseInt(ex.answer, 10);
-          }
-
+          // Keep answers as strings - the Fraction comparison logic handles conversion
+          // Don't apply blanket integer parsing as it breaks fraction answers like "7/3"
           return {
             ...ex,
-            answer: processedAnswer,
+            answer: ex.answer, // Keep original answer string
             layout: determineLayout(ex)
           };
         });

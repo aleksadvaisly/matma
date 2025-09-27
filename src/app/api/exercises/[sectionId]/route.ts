@@ -27,13 +27,15 @@ export async function GET(
       hint: ex.hint,
       explanation: ex.explanation,
       inputType: ex.input_type === 'number-line' ? 'number-line' : 
-                 ex.input_type === 'choices' ? 'choices' : 'text',
+                 ex.input_type === 'choices' ? 'choices' : 
+                 ex.input_type === 'sequence-builder' ? 'sequence-builder' : 'text',
       options: ex.options?.map(opt => ({
         text: opt.option_text,
         value: opt.option_value || opt.option_text
       })),
       layout_type: ex.layout_type,
-      numberLineConfig: ex.visualConfig
+      numberLineConfig: ex.visualConfig,
+      sequenceBuilderConfig: ex.input_type === 'sequence-builder' ? ex.visualConfig : undefined
     }));
     
     return NextResponse.json({

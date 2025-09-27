@@ -1,7 +1,46 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import { Fraction } from './fraction';
 
 const db = new Database(path.join(process.cwd(), 'matma.db'));
+
+/**
+ * Calculate optimal number line range based on the correct answer
+ * Prevents the recurring issue of manually configured incorrect ranges
+ */
+function calculateOptimalRange(correctAnswer: string): { min: number, max: number } {
+  try {
+    const answerFraction = Fraction.parse(correctAnswer);
+    if (!answerFraction) {
+      console.warn(`Could not parse answer "${correctAnswer}" as fraction, using default range`);
+      return { min: 0, max: 10 };
+    }
+    
+    const answerDecimal = answerFraction.toDecimal();
+    
+    // Smart range calculation based on answer value
+    if (answerDecimal < 0) {
+      // For negative answers, ensure range includes 0 and extends beyond answer
+      const min = Math.floor(answerDecimal - 1);
+      const max = Math.max(2, Math.ceil(Math.abs(answerDecimal)) + 1);
+      return { min, max };
+    } else if (answerDecimal < 1) {
+      // For fractional answers less than 1, use 0 to 2 or 3
+      return { min: 0, max: answerDecimal > 0.5 ? 3 : 2 };
+    } else {
+      // For positive answers >= 1
+      const answerInt = Math.floor(answerDecimal);
+      const padding = answerInt <= 3 ? 1 : 2; // Smaller padding for small numbers
+      return { 
+        min: Math.max(0, answerInt - padding), 
+        max: answerInt + padding + 1 
+      };
+    }
+  } catch (error) {
+    console.error(`Error calculating range for answer "${correctAnswer}":`, error);
+    return { min: 0, max: 10 };
+  }
+}
 
 export interface Exercise {
   id: string;
@@ -126,7 +165,7 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
     }
     
     // Get visual config - first check exercise-specific, then section-level
-    if (exercise.input_type === 'number-line' || exercise.input_type === 'text') {
+    if (exercise.input_type === 'number-line' || exercise.input_type === 'text' || exercise.input_type === 'sequence-builder') {
       // First try to get exercise-specific config from visual_configs table
       const exerciseConfig = db.prepare(`
         SELECT config_json
@@ -137,6 +176,9 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
       if (exerciseConfig) {
         try {
           exercise.visualConfig = JSON.parse(exerciseConfig.config_json);
+          
+          // Keep visual config as-is from database
+          // The display layer (number-line.tsx) will handle not showing edge labels
         } catch (error) {
           console.error('Failed to parse exercise visual config:', error);
         }
@@ -159,16 +201,26 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
             exercise.visualConfig = { enableAllClicks: true };
           }
         } else {
-          // Default config if no section config exists
-          exercise.visualConfig = { enableAllClicks: true };
+          // Default config if no section config exists - use smart range calculation
+          const optimalRange = calculateOptimalRange(exercise.correct_answer);
+          exercise.visualConfig = { 
+            enableAllClicks: true, 
+            ...optimalRange 
+          };
         }
       }
       
       // Default configs if nothing found
       if (!exercise.visualConfig) {
         if (exercise.input_type === 'number-line') {
-          exercise.visualConfig = { enableAllClicks: true };
+          const optimalRange = calculateOptimalRange(exercise.correct_answer);
+          exercise.visualConfig = { 
+            enableAllClicks: true, 
+            ...optimalRange 
+          };
         } else if (exercise.input_type === 'text') {
+          exercise.visualConfig = {};
+        } else if (exercise.input_type === 'sequence-builder') {
           exercise.visualConfig = {};
         }
       }

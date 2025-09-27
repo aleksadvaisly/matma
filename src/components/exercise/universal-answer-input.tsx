@@ -4,9 +4,10 @@ import { Input } from '@/components/ui/input';
 import { NumberLine } from '@/components/ui/number-line';
 import { ChoiceButton, type ChoiceFeedbackState } from '@/components/ui/choice-button';
 import { HintHighlightGroup } from '@/components/ui/hint-highlight';
+import { SequenceBuilder } from '@/components/ui/sequence-builder';
 import { Fraction } from '@/lib/fraction';
 
-type InputType = 'text' | 'choices' | 'number-line' | 'choice-grid';
+type InputType = 'text' | 'choices' | 'number-line' | 'choice-grid' | 'sequence-builder';
 
 interface BaseInputProps {
   value: string | number | Fraction | null;
@@ -39,7 +40,10 @@ interface NumberLineInputProps extends BaseInputProps {
   markedNumbers?: Array<{ value: number | Fraction; color: string }>;
   enableAllClicks?: boolean;
   tickSpacing?: number; // Override automatic tick spacing
-  // Fraction support
+  // NEW fraction support
+  resolution?: string; // e.g., "1/2", "1/4" - defines clickable granularity
+  captionOnEvery?: number; // e.g., 1 - show labels every N units
+  // Legacy fraction support
   subdivision?: number; // 1 for integers, 2 for halves, 3 for thirds, etc.
   fractionDisplay?: boolean; // Whether to show fractions in Unicode format
   allowFractionalClick?: boolean; // Whether clicking on fractional positions is allowed
@@ -51,11 +55,18 @@ interface ChoiceGridInputProps extends BaseInputProps {
   columns?: number;
 }
 
+interface SequenceBuilderInputProps extends BaseInputProps {
+  type: 'sequence-builder';
+  choices: string[];
+  separator?: string;
+}
+
 type UniversalAnswerInputProps = 
   | TextInputProps 
   | ChoicesInputProps 
   | NumberLineInputProps
-  | ChoiceGridInputProps;
+  | ChoiceGridInputProps
+  | SequenceBuilderInputProps;
 
 export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
   switch (props.type) {
@@ -172,6 +183,8 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
             : 'idle'}
           enableAllClicks={props.enableAllClicks}
           tickSpacing={props.tickSpacing}
+          resolution={props.resolution}
+          captionOnEvery={props.captionOnEvery}
           subdivision={props.subdivision}
           fractionDisplay={props.fractionDisplay}
           allowFractionalClick={props.allowFractionalClick}
@@ -203,6 +216,17 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
             );
           })}
         </div>
+      );
+
+    case 'sequence-builder':
+      return (
+        <SequenceBuilder
+          choices={props.choices}
+          value={String(props.value || '')}
+          onChange={props.onChange}
+          disabled={props.disabled}
+          separator={props.separator}
+        />
       );
   }
 }

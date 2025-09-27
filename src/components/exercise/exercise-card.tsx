@@ -21,13 +21,16 @@ export interface Exercise {
   hint?: string;
   explanation?: string;
   variant_letter?: string;
-  inputType?: 'text' | 'choices' | 'number-line' | 'choice-grid';
+  inputType?: 'text' | 'choices' | 'number-line' | 'choice-grid' | 'sequence-builder';
   numberLineConfig?: {
     min: number;
     max: number;
     markedNumbers?: Array<{ value: number; color: string }>;
     enableAllClicks?: boolean;
-    // Fraction support
+    // NEW fraction support
+    resolution?: string; // e.g., "1/2", "1/4" - defines clickable granularity
+    captionOnEvery?: number; // e.g., 1 - show labels every N units
+    // Legacy fraction support
     subdivision?: number; // 1 for integers, 2 for halves, 3 for thirds, etc.
     fractionDisplay?: boolean; // Whether to show fractions in Unicode format
     allowFractionalClick?: boolean; // Whether clicking on fractional positions is allowed
@@ -35,6 +38,10 @@ export interface Exercise {
   textConfig?: {
     supportsFractions?: boolean; // Whether text input should support fraction parsing
     placeholder?: string;
+  };
+  sequenceBuilderConfig?: {
+    choices?: string[];
+    separator?: string;
   };
 }
 
@@ -451,6 +458,7 @@ export function ExerciseCard({
           options={currentExercise.options || []}
           {...(currentExercise.inputType === 'number-line' ? currentExercise.numberLineConfig || {} : {})}
           {...(currentExercise.inputType === 'text' ? currentExercise.textConfig || {} : {})}
+          {...(currentExercise.inputType === 'sequence-builder' ? currentExercise.sequenceBuilderConfig || {} : {})}
         />
       </>
     );

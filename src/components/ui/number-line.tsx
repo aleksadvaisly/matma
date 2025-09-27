@@ -16,7 +16,10 @@ interface NumberLineProps {
   clickedNumbers?: (Fraction | number)[];
   feedbackState?: 'idle' | 'correct' | 'incorrect';
   tickSpacing?: number; // Override automatic tick spacing for integers
-  // Fraction support
+  // Fraction support - NEW APPROACH
+  resolution?: string; // e.g., "1/2", "1/4" - defines clickable granularity
+  captionOnEvery?: number; // e.g., 1 - show labels every N units
+  // Legacy support (will be deprecated)
   subdivision?: number; // 1 for integers, 2 for halves, 3 for thirds, etc.
   fractionDisplay?: boolean; // Whether to show fractions in Unicode format
   allowFractionalClick?: boolean; // Whether clicking on fractional positions is allowed
@@ -34,6 +37,8 @@ export function NumberLine({
   clickedNumbers = [],
   feedbackState = 'idle',
   tickSpacing,
+  resolution,
+  captionOnEvery,
   subdivision = 1,
   fractionDisplay = true,
   allowFractionalClick = true
@@ -48,6 +53,20 @@ export function NumberLine({
           ? correctAnswer
           : new Fraction(correctAnswer as number))
     : null;
+  
+  // NEW: Determine effective subdivision from resolution string
+  let effectiveSubdivision = subdivision;
+  if (resolution) {
+    const resFraction = Fraction.parse(resolution);
+    if (resFraction) {
+      // subdivision = denominator / numerator
+      // e.g., "1/2" -> subdivision = 2, "1/4" -> subdivision = 4
+      effectiveSubdivision = resFraction.denominator / resFraction.numerator;
+    }
+  }
+  
+  // Use captionOnEvery if provided, otherwise default to showing all integers
+  const labelEvery = captionOnEvery || 1;
   
   // Helper to parse selectedNumber to Fraction if needed for comparison
   const selectedFraction = selectedNumber !== null && selectedNumber !== undefined
@@ -68,12 +87,12 @@ export function NumberLine({
   };
   
   // Separate logic for fractions vs integers
-  if (subdivision > 1) {
+  if (effectiveSubdivision > 1) {
     // FRACTION PATH - use exact Fraction objects
     // Generate positions as Fractions
     const positions: Fraction[] = [];
-    for (let i = min * subdivision; i <= max * subdivision; i++) {
-      positions.push(new Fraction(i, subdivision));
+    for (let i = min * effectiveSubdivision; i <= max * effectiveSubdivision; i++) {
+      positions.push(new Fraction(i, effectiveSubdivision));
     }
     const majorPositions = positions.filter(pos => pos.isWhole());
     const minorPositions = positions.filter(pos => !pos.isWhole());
@@ -193,15 +212,17 @@ export function NumberLine({
               
               return (
                 <g key={`major-${position.toString()}`}>
-                  {/* Major tick mark */}
-                  <line 
-                    x1={x} 
-                    y1="55" 
-                    x2={x} 
-                    y2="65" 
-                    stroke="black" 
-                    strokeWidth="2"
-                  />
+                  {/* Major tick mark - hide at edges */}
+                  {position.toDecimal() !== min && position.toDecimal() !== max && (
+                    <line 
+                      x1={x} 
+                      y1="55" 
+                      x2={x} 
+                      y2="65" 
+                      stroke="black" 
+                      strokeWidth="2"
+                    />
+                  )}
                   
                   {/* Clickable area and highlights */}
                   {onNumberClick && (
@@ -245,28 +266,31 @@ export function NumberLine({
                     </g>
                   )}
                   
-                  {/* Number label */}
-                  <text 
-                    x={x} 
-                    y={90} 
-                    textAnchor="middle" 
-                    fontSize="14"
-                    fontWeight={isSelected || markedNumber ? 'bold' : 'normal'}
-                    fill={
-                      markedNumber ? markedNumber.color :
-                      isSelected ? (
-                        feedbackState === 'correct'
-                          ? 'rgb(34 197 94)'
-                          : feedbackState === 'incorrect'
-                            ? 'rgb(239 68 68)'
-                            : 'rgb(250 204 21)'
-                      ) : 
-                      'black'
-                    }
-                    style={{ pointerEvents: 'none' }}
-                  >
-                    {position.numerator}
-                  </text>
+                  {/* Number label - hide at edges and show based on captionOnEvery */}
+                  {position.toDecimal() !== min && position.toDecimal() !== max && 
+                   position.numerator % labelEvery === 0 && (
+                    <text 
+                      x={x} 
+                      y={90} 
+                      textAnchor="middle" 
+                      fontSize="14"
+                      fontWeight={isSelected || markedNumber ? 'bold' : 'normal'}
+                      fill={
+                        markedNumber ? markedNumber.color :
+                        isSelected ? (
+                          feedbackState === 'correct'
+                            ? 'rgb(34 197 94)'
+                            : feedbackState === 'incorrect'
+                              ? 'rgb(239 68 68)'
+                              : 'rgb(250 204 21)'
+                        ) : 
+                        'black'
+                      }
+                      style={{ pointerEvents: 'none' }}
+                    >
+                      {position.numerator}
+                    </text>
+                  )}
                 </g>
               );
             })}
