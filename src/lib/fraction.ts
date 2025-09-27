@@ -327,9 +327,18 @@ export class Fraction {
       const fa = typeof a === 'number' ? new Fraction(a, 1) : Fraction.parse(String(a));
       const fb = typeof b === 'number' ? new Fraction(b, 1) : Fraction.parse(String(b));
       
-      if (!fa || !fb) return false;
+      // If both are valid fractions, compare them
+      if (fa && fb) {
+        return fa.equals(fb);
+      }
       
-      return fa.equals(fb);
+      // If neither could be parsed as fractions, use string comparison
+      if (!fa && !fb) {
+        return String(a).trim() === String(b).trim();
+      }
+      
+      // If one is a fraction and one isn't, they're not equivalent
+      return false;
     } catch {
       // Fallback to string comparison
       return String(a).trim() === String(b).trim();

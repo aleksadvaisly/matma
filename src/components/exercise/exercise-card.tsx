@@ -260,6 +260,8 @@ export function ExerciseCard({
       const chapterId = pathParts[chapterIndex + 1];
       const newPath = `/dashboard/chapters/${chapterId}/sections/${sectionId}/exercise/${exerciseId}`;
       router.push(newPath);
+    } else {
+      console.error('CRITICAL: Could not find chapters in pathname:', pathname);
     }
   };
 
@@ -292,6 +294,8 @@ export function ExerciseCard({
       if (nextEx) {
         const randomizedId = await getRandomVariant(nextEx.id);
         navigateToExercise(randomizedId);
+      } else {
+        console.error('CRITICAL: No next exercise found at index:', currentIndex + 1);
       }
     }
   };
@@ -309,10 +313,12 @@ export function ExerciseCard({
   const canGoNext = () => {
     // Can go to next exercise if:
     // 1. Not on the last exercise
-    // 2. EITHER the current exercise was just completed (answered correctly)
-    //    OR the current exercise is already completed from previous session (can skip)
-    //    OR the next exercise is already completed from previous session
-    if (currentIndex >= TOTAL_EXERCISES - 1) return false;
+    // 2. Feedback has been shown (allows progression after both correct and incorrect answers)
+    // 3. OR the current exercise is already completed from previous session
+    // 4. OR the next exercise is already completed from previous session
+    if (currentIndex >= TOTAL_EXERCISES - 1) {
+      return false;
+    }
     
     const sectionProgress = getSectionProgress(sectionId);
     const currentExerciseId = exercises[currentIndex]?.id;
@@ -331,18 +337,6 @@ export function ExerciseCard({
       || (currentIndex + 1) < (sectionProgress?.completedExercises || 0);
     
     const canProgress = (showFeedback && isCorrect) || isCurrentExerciseCompleted || isNextExerciseCompleted;
-    
-    // LOG: Debug progress blocking for troubleshooting
-    if (!canProgress && process.env.NODE_ENV === 'development') {
-      console.log(`Progress blocked at exercise ${currentIndex + 1} (${currentExerciseId}):`, {
-        showFeedback,
-        isCorrect,
-        isCurrentExerciseCompleted,
-        isNextExerciseCompleted,
-        currentIndex,
-        totalExercises: TOTAL_EXERCISES
-      });
-    }
     
     return canProgress;
   };
@@ -368,18 +362,30 @@ export function ExerciseCard({
   };
 
   const refreshVariant = async () => {
-    // Get a new random variant for current exercise
+    // FAIL-FAST: Critical validation
     const currentEx = exercises[currentIndex];
-    if (!currentEx) return;
+    if (!currentEx) {
+      console.error('CRITICAL: No current exercise found - reloading page as fallback');
+      window.location.reload();
+      return;
+    }
     
     const baseId = currentEx.id.replace(/-[a-z]$/, '');
     const currentVariant = currentEx.id.match(/-([a-z])$/)?.[1];
     
     try {
-      // Fetch available variants from database
-      const response = await fetch(`/api/exercises/variants/${baseId}`);
+      // Quick timeout for API call - fail fast if slow
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      
+      const response = await fetch(`/api/exercises/variants/${baseId}`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
       if (response.ok) {
         const { variants } = await response.json();
+        
         if (variants && variants.length > 1) {
           // Filter out current variant if it exists
           const availableVariants = currentVariant 
@@ -394,12 +400,15 @@ export function ExerciseCard({
           }
         }
       }
+      
+      // FALLBACK: If no variants or API issues, reload page for fresh variant
+      window.location.reload();
+      
     } catch (error) {
-      console.error('Failed to refresh variant:', error);
+      console.error('Variant fetch failed:', error);
+      // FAIL-FAST: Any error in variant fetching - reload page
+      window.location.reload();
     }
-    
-    // If no variants available, just reload current
-    navigateToExercise(currentEx.id);
   };
 
   const renderContent = () => {

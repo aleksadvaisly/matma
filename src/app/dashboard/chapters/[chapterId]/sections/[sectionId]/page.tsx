@@ -1,4 +1,3 @@
-import { UniversalSection } from '@/components/sections/universal-section';
 import Database from 'better-sqlite3';
 import path from 'path';
 import { redirect } from 'next/navigation';
