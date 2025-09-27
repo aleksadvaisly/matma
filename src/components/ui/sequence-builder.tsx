@@ -6,7 +6,7 @@ import { Input } from './input';
 import { X, Undo2 } from 'lucide-react';
 
 interface SequenceBuilderProps {
-  choices: string[];
+  choices?: string[];
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;
@@ -20,13 +20,14 @@ export function SequenceBuilder({
   disabled = false,
   separator = ';'
 }: SequenceBuilderProps) {
-  const [availableChoices, setAvailableChoices] = useState<string[]>(choices);
+  const [availableChoices, setAvailableChoices] = useState<string[]>(choices || []);
   const [selectedSequence, setSelectedSequence] = useState<string[]>([]);
 
   useEffect(() => {
+    const safeChoices = choices || [];
     const currentSequence = value ? value.split(separator).map(s => s.trim()).filter(Boolean) : [];
     setSelectedSequence(currentSequence);
-    setAvailableChoices(choices.filter(choice => !currentSequence.includes(choice)));
+    setAvailableChoices(safeChoices.filter(choice => !currentSequence.includes(choice)));
   }, [value, choices, separator]);
 
   const handleButtonClick = (clickedValue: string) => {
@@ -41,7 +42,7 @@ export function SequenceBuilder({
   const handleClear = () => {
     if (disabled) return;
     
-    setAvailableChoices(choices);
+    setAvailableChoices(choices || []);
     setSelectedSequence([]);
     onChange('');
   };
@@ -54,8 +55,9 @@ export function SequenceBuilder({
     
     setSelectedSequence(newSequence);
     setAvailableChoices(prev => [...prev, lastItem].sort((a, b) => {
-      const indexA = choices.indexOf(a);
-      const indexB = choices.indexOf(b);
+      const safeChoices = choices || [];
+      const indexA = safeChoices.indexOf(a);
+      const indexB = safeChoices.indexOf(b);
       return indexA - indexB;
     }));
     onChange(newSequence.join(separator));
@@ -93,7 +95,7 @@ export function SequenceBuilder({
       </div>
       
       <div className="flex flex-wrap gap-2 justify-center">
-        {availableChoices.map(choice => (
+        {(availableChoices || []).map(choice => (
           <Button
             key={choice}
             type="button"
@@ -109,7 +111,7 @@ export function SequenceBuilder({
 
       {selectedSequence.length > 0 && (
         <div className="text-sm text-gray-600 text-center">
-          Wybrane: {selectedSequence.length} z {choices.length}
+          Wybrane: {selectedSequence.length} z {(choices || []).length}
         </div>
       )}
     </div>

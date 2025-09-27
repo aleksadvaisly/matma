@@ -198,6 +198,10 @@ export class Fraction {
 
     // Better whitespace handling: normalize multiple spaces and spaces around /
     str = str.replace(/\s+/g, ' ').replace(/\s*\/\s*/g, '/');
+    
+    // Strip common units for comparison (°C, m, km, zł, PLN, etc.)
+    // This allows comparing "-15" with "-15°C" as equal
+    str = str.replace(/\s*(°C|°F|°K|m|km|cm|mm|zł|PLN|USD|EUR|kg|g|mg|l|ml|s|min|h)$/i, '');
 
     // Handle Unicode fractions
     const unicodeMap: Record<string, string> = {

@@ -60,11 +60,16 @@ export async function POST(request: Request) {
     }
 
     // Get total exercises count from database if not provided accurately
+    // For sections with variants (exercise_base_id populated), count unique base exercises
+    // For sections without variants (exercise_base_id empty), count all exercises
     const actualTotal = db.prepare(`
-      SELECT COUNT(*) as count 
-      FROM exercises 
-      WHERE section_id = ?
-    `).get(sectionId)?.count || totalExercises;
+      SELECT 
+        CASE 
+          WHEN EXISTS (SELECT 1 FROM exercises WHERE section_id = ? AND exercise_base_id IS NOT NULL AND exercise_base_id != '') 
+          THEN (SELECT COUNT(DISTINCT exercise_base_id) FROM exercises WHERE section_id = ? AND exercise_base_id IS NOT NULL AND exercise_base_id != '')
+          ELSE (SELECT COUNT(*) FROM exercises WHERE section_id = ?)
+        END as count
+    `).get(sectionId, sectionId, sectionId)?.count || totalExercises;
 
     const isCompleted = exercisesCompleted >= actualTotal;
     

@@ -87,6 +87,63 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
      - c) 7 jednostek od -4 → 3
      - d) 5 jednostek od -1 → 4
 
+8. **1-1-8**: Na osi liczbowej zaznacz liczby: -2⅓, -⅔, 0, ⅓, 1⅔
+   - **Odpowiedź:** Poprawne zaznaczenie punktów na osi z podziałkami co ⅓
+   - **Typ:** Oś liczbowa z ułamkami (zakres: -3 do 2, podziałka co ⅓)
+   - **Difficulty_level:** 4
+   - **Order_index:** 8
+   - **Wyjaśnienie:** Oś z podziałką ułamkową wymaga precyzyjnego lokalizowania punktów między liczbami całkowitymi
+   - **Warianty:**
+     - a) -2⅓, -⅔, 0, ⅓, 1⅔
+     - b) -1⅔, -⅓, 0, ⅔, 2⅓
+     - c) -2⅔, -1⅓, 0, ⅓, 1⅓
+     - d) -1⅓, -⅔, ⅓, 1, 1⅔
+     - e) -3, -1⅔, -⅓, ⅔, 2
+     - f) -2½, -1, 0, ½, 1½
+     - g) -1½, -½, 0, 1, 2½
+
+9. **1-1-9**: Która liczba znajduje się dokładnie w połowie między -1⅔ a ⅓?
+   - **Odpowiedź:** -⅔
+   - **Typ:** Pole tekstowe (ułamek)
+   - **Difficulty_level:** 4
+   - **Order_index:** 9
+   - **Wyjaśnienie:** Środek = (-1⅔ + ⅓) ÷ 2 = (-5/3 + 1/3) ÷ 2 = -4/3 ÷ 2 = -⅔
+   - **Warianty:**
+     - a) między -1⅔ a ⅓ → -⅔
+     - b) między -2 a ½ → -¾
+     - c) między -1½ a 1 → -¼
+     - d) między -2⅓ a ⅔ → -⅚
+     - e) między -¾ a ¾ → 0
+     - f) między -1⅓ a 1⅓ → 0
+     - g) między -2½ a ½ → -1
+
+10. **1-1-10**: O ile jednostek różnią się liczby -⅚ i ⅙?
+    - **Odpowiedź:** 1
+    - **Typ:** Pole tekstowe
+    - **Difficulty_level:** 4
+    - **Order_index:** 10
+    - **Wyjaśnienie:** Odległość = ⅙ - (-⅚) = ⅙ + ⅚ = 6/6 = 1
+    - **Warianty:**
+      - a) -⅚ i ⅙ → 1
+      - b) -¾ i ¼ → 1
+      - c) -⅔ i ⅓ → 1
+      - d) -1½ i ½ → 2
+      - e) -1⅓ i ⅔ → 2
+      - f) -2¼ i ¾ → 3
+      - g) -⅝ i ⅜ → 1
+
+11. **1-1-11**: Uporządkuj liczby od najmniejszej do największej: -2,8; ⅝; -0,5; 0,05; -0,1; -2; -1
+    - **Odpowiedź:** -2,8; -2; -1; -0,5; -0,1; 0,05; ⅝
+    - **Typ:** Pole tekstowe
+    - **Difficulty_level:** 5
+    - **Order_index:** 11
+    - **Wyjaśnienie:** Konwersja ułamków: ⅝ = 0,625. Porządkowanie na osi liczbowej.
+    - **Warianty:**
+      - a) -2,8; ⅝; -0,5; 0,05; -0,1; -2; -1 → -2,8; -2; -1; -0,5; -0,1; 0,05; ⅝
+      - b) -3,2; ¾; -0,7; 0,1; -0,3; -2,5; -1,5 → -3,2; -2,5; -1,5; -0,7; -0,3; 0,1; ¾
+      - c) -1,9; ⅖; -0,4; 0,02; -0,2; -1,5; -0,8 → -1,9; -1,5; -0,8; -0,4; -0,2; 0,02; ⅖
+      - d) -2,3; ⅞; -0,6; 0,08; -0,15; -1,8; -1,2 → -2,3; -1,8; -1,2; -0,6; -0,15; 0,08; ⅞
+
 ---
 
 ### 1.2 Porównywanie liczb
@@ -102,41 +159,40 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 **Zadania:**
 
-1. **1-2-1**: Porównaj liczby: -3 ? 2
+1. **1-2-1**: Porównaj liczby o przeciwnych znakach.
    - **Odpowiedź:** <
    - **Opcje:** <, =, >
-   - **Wskazówka:** Każda liczba ujemna jest mniejsza od każdej liczby dodatniej.
+   - **Wskazówka:** Liczby dodatnie są zawsze większe od ujemnych; zero jest większe od liczb ujemnych.
+   - **Warianty:**
+     - a) -3 ? 2 → <
+     - b) 5 ? -1 → >
+     - c) 0 ? -5 → >
+     - d) -4 ? 6 → <
+     - e) -2 ? 9 → <
 
-2. **1-2-2**: Porównaj liczby: 5 ? -1
-   - **Odpowiedź:** >
-   - **Opcje:** <, =, >
-   - **Wskazówka:** Liczby dodatnie są zawsze większe od ujemnych.
-
-3. **1-2-3**: Porównaj liczby: -7 ? -4
+2. **1-2-2**: Porównaj liczby ujemne.
    - **Odpowiedź:** <
    - **Opcje:** <, =, >
-   - **Wskazówka:** Z dwóch liczb ujemnych większa jest ta, która jest bliżej zera.
+   - **Wskazówka:** Wśród liczb ujemnych większa jest ta, która jest bliżej zera.
+   - **Warianty:**
+     - a) -7 ? -4 → <
+     - b) -2 ? -8 → >
+     - c) -11 ? -3 → <
+     - d) -5 ? -1 → <
+     - e) -6 ? -6 → =
 
-4. **1-2-4**: Porównaj liczby: -2 ? -8
-   - **Odpowiedź:** >
-   - **Opcje:** <, =, >
-   - **Wskazówka:** -2 jest bliżej zera niż -8, więc jest większe.
-
-5. **1-2-5**: Porównaj liczby: 0 ? -5
-   - **Odpowiedź:** >
-   - **Opcje:** <, =, >
-   - **Wskazówka:** Zero jest większe od każdej liczby ujemnej.
-
-6. **1-2-6**: Porównaj liczby: -3 ? -3
-   - **Odpowiedź:** =
-   - **Opcje:** <, =, >
-   - **Wskazówka:** To ta sama liczba, więc są sobie równe.
-
-7. **1-2-7**: Porównaj liczby: 4 ? 7
+3. **1-2-3**: Porównaj liczby dodatnie lub identyczne.
    - **Odpowiedź:** <
    - **Opcje:** <, =, >
-   - **Wskazówka:** Na osi liczbowej 4 znajduje się po lewej stronie od 7.
+   - **Wskazówka:** Liczba dalej na prawo na osi liczbowej jest większa; identyczne liczby są równe.
+   - **Warianty:**
+     - a) 4 ? 7 → <
+     - b) -3 ? -3 → =
+     - c) 12 ? 5 → >
+     - d) 1 ? 1 → =
+     - e) 9 ? 10 → <
 
+---
 ---
 
 ### 1.3 Liczby przeciwne
@@ -155,30 +211,79 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 1. **1-3-1**: Znajdź liczbę przeciwną do 5
    - **Odpowiedź:** -5
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) przeciwną do 5 → -5
+     - b) przeciwną do 11 → -11
+     - c) przeciwną do 18 → -18
+     - d) przeciwną do 2 → -2
+     - e) przeciwną do 0 → 0
+
 
 2. **1-3-2**: Znajdź liczbę przeciwną do -3
    - **Odpowiedź:** 3
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) przeciwną do -3 → 3
+     - b) przeciwną do -12 → 12
+     - c) przeciwną do -9 → 9
+     - d) przeciwną do -1 → 1
+     - e) przeciwną do -25 → 25
+
 
 3. **1-3-3**: Znajdź liczbę przeciwną do -8
    - **Odpowiedź:** 8
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) przeciwną do -8 → 8
+     - b) przeciwną do -15 → 15
+     - c) przeciwną do -20 → 20
+     - d) przeciwną do -4 → 4
+     - e) przeciwną do -30 → 30
+
 
 4. **1-3-4**: Znajdź liczbę przeciwną do 12
    - **Odpowiedź:** -12
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) przeciwną do 12 → -12
+     - b) przeciwną do 6 → -6
+     - c) przeciwną do 25 → -25
+     - d) przeciwną do 14 → -14
+     - e) przeciwną do 100 → -100
+
 
 5. **1-3-5**: Znajdź liczbę przeciwną do 0
    - **Odpowiedź:** 0
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) przeciwną do 0 → 0
+     - b) przeciwną do 0 (temperatura) → 0
+     - c) przeciwną do 0 (saldo konta) → 0
+     - d) przeciwną do 0 (poziom morza) → 0
+     - e) przeciwną do 0 (różnica wyniku) → 0
+
 
 6. **1-3-6**: Znajdź liczbę odwrotną do 2
    - **Odpowiedź:** 1/2
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) odwrotną do 2 → 1/2
+     - b) odwrotną do -4 → -1/4
+     - c) odwrotną do 5 → 1/5
+     - d) odwrotną do -10 → -1/10
+     - e) odwrotną do 1/2 → 2
+
 
 7. **1-3-7**: Znajdź liczbę odwrotną do 1/3
    - **Odpowiedź:** 3
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) odwrotną do 1/3 → 3
+     - b) odwrotną do -2/5 → -5/2
+     - c) odwrotną do 3/4 → 4/3
+     - d) odwrotną do -7 → -1/7
+     - e) odwrotną do 5/6 → 6/5
+
 
 ---
 
@@ -198,60 +303,151 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 1. **1-4-1**: Znajdź wartość bezwzględną liczby -7
    - **Odpowiedź:** 7
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) |-7| → 7
+     - b) |-12| → 12
+     - c) |-1| → 1
+     - d) |-20| → 20
+     - e) |-9| → 9
+
 
 2. **1-4-2**: Ile wynosi |5|?
    - **Odpowiedź:** 5
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) |5| → 5
+     - b) |2| → 2
+     - c) |17| → 17
+     - d) |0| → 0
+     - e) |28| → 28
+
 
 3. **1-4-3**: Oblicz |-12|
    - **Odpowiedź:** 12
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) |-12| → 12
+     - b) |-30| → 30
+     - c) |-4| → 4
+     - d) |-19| → 19
+     - e) |-100| → 100
+
 
 4. **1-4-4**: Która liczba ma większą wartość bezwzględną: -8 czy 6?
    - **Odpowiedź:** -8
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) -8 czy 6 → -8
+     - b) -9 czy 5 → -9
+     - c) -12 czy 10 → -12
+     - d) -4 czy 3 → -4
+     - e) -15 czy 7 → -15
+
 
 5. **1-4-5**: Ile wynosi |0|?
    - **Odpowiedź:** 0
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) |0| → 0
+     - b) |0,3| → 0,3
+     - c) |-0,8| → 0,8
+     - d) |-0,01| → 0,01
+     - e) |0| + 5 → 5
+
 
 6. **1-4-6**: Znajdź liczbę, której wartość bezwzględna wynosi 15
    - **Odpowiedź:** 15
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) wartość bezwzględna 15 → 15 lub -15
+     - b) wartość bezwzględna 9 → 9 lub -9
+     - c) wartość bezwzględna 4 → 4 lub -4
+     - d) wartość bezwzględna 20 → 20 lub -20
+     - e) wartość bezwzględna 1 → 1 lub -1
+
 
 7. **1-4-7**: Która liczba jest dalej od zera: -10 czy 9?
    - **Odpowiedź:** -10
    - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) -10 czy 9 → -10
+     - b) -7 czy 5 → -7
+     - c) -12 czy 8 → -12
+     - d) -4 czy 3 → -4
+     - e) -25 czy 20 → -25
+
 
 8. **1-4-8**: Oblicz |-9| + 5
    - **Odpowiedź:** 14
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** |-9| = 9, więc 9 + 5 = 14
+   - **Warianty:**
+     - a) |-9| + 5 → 14
+     - b) |-4| + 6 → 10
+     - c) |-11| + 2 → 13
+     - d) |-7| + 8 → 15
+     - e) |-3| + 9 → 12
+
 
 9. **1-4-9**: Oblicz 11 + |-5|
    - **Odpowiedź:** 16
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** |-5| = 5, więc 11 + 5 = 16
+   - **Warianty:**
+     - a) 11 + |-5| → 16
+     - b) 7 + |-2| → 9
+     - c) -4 + |-6| → 2
+     - d) 3 + |-8| → 11
+     - e) -10 + |-3| → -7
+
 
 10. **1-4-10**: Oblicz |-25| - 12
     - **Odpowiedź:** 13
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** |-25| = 25, więc 25 - 12 = 13
+   - **Warianty:**
+     - a) |-25| - 12 → 13
+     - b) |-18| - 5 → 13
+     - c) |-9| - 2 → 7
+     - d) |-30| - 10 → 20
+     - e) |-14| - 7 → 7
+
 
 11. **1-4-11**: Oblicz 19 - |-13|
     - **Odpowiedź:** 6
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** |-13| = 13, więc 19 - 13 = 6
+   - **Warianty:**
+     - a) 19 - |-13| → 6
+     - b) 12 - |-4| → 8
+     - c) 7 - |-9| → -2
+     - d) 25 - |-5| → 20
+     - e) 30 - |-12| → 18
+
 
 12. **1-4-12**: Oblicz |8 - 5|
     - **Odpowiedź:** 3
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** 8 - 5 = 3, |3| = 3
+   - **Warianty:**
+     - a) |8 - 5| → 3
+     - b) |12 - 9| → 3
+     - c) |4 - 10| → 6
+     - d) |15 - 2| → 13
+     - e) |1 - 6| → 5
+
 
 13. **1-4-13**: Oblicz |8 + 5|
     - **Odpowiedź:** 13
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** 8 + 5 = 13, |13| = 13
+   - **Warianty:**
+     - a) |8 + 5| → 13
+     - b) |4 + 9| → 13
+     - c) |10 + 12| → 22
+     - d) |7 + 3| → 10
+     - e) |1 + 15| → 16
+
 
 ---
 
@@ -272,59 +468,198 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** Z
    - **Opcje:** Z, N, Q
    - **Wyjaśnienie:** Litera Z (z niemieckiego Zahlen) opisuje całą rodzinę liczb całkowitych.
+   - **Warianty:**
+     - a) symbol liczb całkowitych → Z
+     - b) symbol liczb wymiernych → Q
+     - c) symbol liczb naturalnych → N
+     - d) symbol liczb dodatnich całkowitych → Z+
+     - e) symbol liczb nieujemnych całkowitych → Z0+
+
 
 2. **1-5-2**: Który zestaw zawiera wyłącznie liczby należące do zbioru Z?
    - **Odpowiedź:** -4, 0, 7
    - **Opcje:** -4, 0, 7 | -1/2, 0, 5/2 | π, 1, -3/2
    - **Wyjaśnienie:** Liczby całkowite to wartości bez części ułamkowej: ..., -2, -1, 0, 1, 2, ...
+   - **Warianty:**
+     - a) -4, 0, 7 → tylko liczby całkowite
+     - b) -1/2, 0, 5/2 → zawiera ułamki
+     - c) π, 1, -3/2 → zawiera liczbę niewymierną
+     - d) -5, 3, 12 → tylko liczby całkowite
+     - e) -8, -2, 9 → tylko liczby całkowite
+
 
 3. **1-5-3**: Jak nazywamy część zbioru Z złożoną z liczb większych od zera?
    - **Odpowiedź:** Z+
    - **Opcje:** Z+, Z-, N-
    - **Wyjaśnienie:** Z+ oznacza liczby całkowite dodatnie: 1, 2, 3, ...
+   - **Warianty:**
+     - a) Z+ → liczby całkowite dodatnie
+     - b) Z- → liczby całkowite ujemne
+     - c) N → liczby naturalne
+     - d) Z → liczby całkowite
+     - e) Q → liczby wymierne
+
 
 4. **1-5-4**: Która para tworzy liczby przeciwne należące do Z?
    - **Odpowiedź:** -6 i 6
    - **Opcje:** -6 i 6 | 2 i 5 | -4 i -4
    - **Wyjaśnienie:** Liczby przeciwne to pary liczb, których suma daje zero.
+   - **Warianty:**
+     - a) -6 i 6 → liczby przeciwne
+     - b) -2 i 5 → nie są przeciwne
+     - c) -4 i -4 → nie są przeciwne
+     - d) -9 i 9 → liczby przeciwne
+     - e) -1 i 1 → liczby przeciwne
+
 
 5. **1-5-5**: W którym przedziale znajdują się liczby całkowite 1, 2, 3, ... , 9?
    - **Odpowiedź:** [1, 9]
    - **Opcje:** (0, 10) | [1, 9] | (0, 9]
    - **Wyjaśnienie:** Nawias kwadratowy [ ] oznacza, że liczba brzegowa należy do przedziału.
+   - **Warianty:**
+     - a) (0, 10) → zawiera liczby rzeczywiste w przedziale
+     - b) [1, 9] → dokładnie liczby 1–9
+     - c) (0, 9] → brak jedynki w zbiorze
+     - d) [2, 10] → przesunięty zakres
+     - e) [1, 9) → bez dziewiątki
+
 
 6. **1-5-6**: Jakie liczby całkowite są większe od -3 i mniejsze od 2?
    - **Odpowiedź:** -2, -1, 0, 1
    - **Opcje:** -2, -1, 0, 1 | -3, -2, -1, 0, 1, 2 | -2, -1, 0
    - **Wyjaśnienie:** Szukamy liczb całkowitych spełniających: -3 < x < 2, czyli x ∈ {-2, -1, 0, 1}.
+   - **Warianty:**
+     - a) -2, -1, 0, 1 → spełniają warunek
+     - b) -3, -2, -1, 0, 1, 2 → zawiera spoza zakresu
+     - c) -2, -1, 0 → brakuje 1
+     - d) -1, 0, 1 → brakuje -2
+     - e) 0, 1 → zbyt mało elementów
+
 
 7. **1-5-7**: Czym różni się zbiór N od zbioru Z+?
    - **Odpowiedź:** N zawiera zero, Z+ nie
    - **Opcje:** N zawiera zero, Z+ nie | Z+ zawiera zero, N nie | Nie ma różnicy
    - **Wyjaśnienie:** N = {0, 1, 2, 3, ...}, natomiast Z+ = {1, 2, 3, ...} (bez zera).
+   - **Warianty:**
+     - a) N zawiera zero, Z+ nie → poprawne
+     - b) Z+ zawiera zero, N nie → błędne
+     - c) Nie ma różnicy → błędne
+     - d) N to liczby ujemne → błędne
+     - e) Z+ to liczby wymierne → błędne
+
 
 8. **1-5-8**: Wśród liczb: -3, 2/3, 0, 17/4, 12/4, 20/5, 19/8, 7 jest 5 liczb całkowitych. Które to liczby?
    - **Odpowiedź:** -3, 0, 12/4, 20/5, 7
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 12/4 = 3, 20/5 = 4 są liczbami całkowitymi
+   - **Warianty:**
+     - a) -3, 0, 3, 4, 7 → liczby całkowite
+     - b) 2/3, 17/4 → liczby niecałkowite
+     - c) 19/8 → ułamek niewłaściwy
+     - d) 12/4 → 3, liczba całkowita
+     - e) 20/5 → 4, liczba całkowita
+
 
 9. **1-5-9**: Które z liczb: -10, -7, -4, -1, 2 są mniejsze niż -8?
    - **Odpowiedź:** -10
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Tylko -10 < -8
+   - **Warianty:**
+     - a) -10 → mniejsze niż -8
+     - b) -7 → większe niż -8
+     - c) -4 → większe niż -8
+     - d) -1 → większe niż -8
+     - e) 2 → dodatnia
+
 
 10. **1-5-10**: Wybierz wszystkie liczby całkowite spośród: -12.7, -3, -1/4, 1/3, 20/3, -17, 0, 1
     - **Odpowiedź:** -3, -17, 0, 1
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** Liczby całkowite nie mają części ułamkowej
+   - **Warianty:**
+     - a) -12.7 → niecałkowita
+     - b) -3 → liczba całkowita
+     - c) -1/4 → niecałkowita
+     - d) 1/3 → niecałkowita
+     - e) 20/3 → niecałkowita
+     - f) -17 → liczba całkowita
+     - g) 0 → liczba całkowita
+     - h) 1 → liczba całkowita
+
+
+11. **1-5-11**: Wskaż przedział, do którego należą wszystkie liczby całkowite, które są co najmniej równe 0, ale jednocześnie mniejsze od 4.
+    - **Odpowiedź:** [0, 4)
+    - **Opcje:** (0, 4) | [0, 3] | [0, 4)
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** "Co najmniej równe 0" oznacza ≥ 0 (nawias domknięty), "mniejsze od 4" oznacza < 4 (nawias otwarty)
+    - **Warianty:**
+      - a) co najmniej 0, mniejsze od 4 → [0, 4)
+      - b) co najmniej -2, mniejsze od 3 → [-2, 3)
+      - c) co najmniej 1, mniejsze od 5 → [1, 5)
+
+12. **1-5-12**: Ile liczb całkowitych należy do przedziału (-5, -1]?
+    - **Odpowiedź:** 4
+    - **Opcje:** 3 | 4 | 5
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** Liczby całkowite spełniające -5 < x ≤ -1 to: -4, -3, -2, -1 (cztery liczby)
+    - **Warianty:**
+      - a) (-5, -1] → 4 liczby
+      - b) (-3, 2] → 5 liczb
+      - c) (-7, -3] → 4 liczby
+
+13. **1-5-13**: Trzy z poniższych przedziałów zawierają dokładnie cztery liczby całkowite. Który przedział jest inny?
+    - **Odpowiedź:** (-3, 1)
+    - **Opcje:** (0, 5) | [-1, 2] | [5, 9) | (-3, 1)
+    - **Typ:** Wybór
+    - **Difficulty_level:** 4
+    - **Wyjaśnienie:** (0, 5) ma 4 liczby: 1,2,3,4; [-1, 2] ma 4 liczby: -1,0,1,2; [5, 9) ma 4 liczby: 5,6,7,8; (-3, 1) ma tylko 3 liczby: -2,-1,0
+    - **Warianty:**
+      - a) (0, 5), [-1, 2], [5, 9), (-3, 1) → (-3, 1) ma 3 liczby
+      - b) [2, 6], (-1, 3), (4, 8], [-2, 0) → [-2, 0) ma 2 liczby
+      - c) (1, 5], [-3, 0], (6, 10), [0, 3] → (6, 10) ma 3 liczby
+
+14. **1-5-14**: Który zbiór zawiera wszystkie liczby całkowite z przedziału (-3.1, 2.9)?
+    - **Odpowiedź:** {-3, -2, -1, 0, 1, 2}
+    - **Opcje:** {-3, -2, -1, 0, 1, 2, 3} | {-3, -2, -1, 0, 1, 2} | {-2, -1, 0, 1, 2}
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** Największa liczba całkowita < 2.9 to 2, najmniejsza liczba całkowita > -3.1 to -3
+    - **Warianty:**
+      - a) (-3.1, 2.9) → {-3, -2, -1, 0, 1, 2}
+      - b) (-2.7, 3.2) → {-2, -1, 0, 1, 2, 3}
+      - c) (-4.8, 1.3) → {-4, -3, -2, -1, 0, 1}
+
+15. **1-5-15**: W którym przedziale znajdują się wszystkie liczby naturalne mniejsze od 5? (Uwaga: 0 nie jest liczbą naturalną)
+    - **Odpowiedź:** [1, 4]
+    - **Opcje:** [1, 4] | [0, 5) | (0, 5)
+    - **Typ:** Wybór
+    - **Difficulty_level:** 3
+    - **Wyjaśnienie:** Liczby naturalne to 1, 2, 3, 4, ... Liczby naturalne < 5 to: 1, 2, 3, 4
+    - **Warianty:**
+      - a) naturalne < 5 → [1, 4]
+      - b) naturalne < 7 → [1, 6]
+      - c) naturalne < 3 → [1, 2]
+
+16. **1-5-16**: Ile liczb całkowitych znajduje się w przedziale (-0.5, 0.5)?
+    - **Odpowiedź:** 1
+    - **Opcje:** 0 | 1 | 2
+    - **Typ:** Wybór
+    - **Difficulty_level:** 2
+    - **Wyjaśnienie:** Jedyną liczbą całkowitą spełniającą -0.5 < x < 0.5 jest 0
+    - **Warianty:**
+      - a) (-0.5, 0.5) → 1 liczba (0)
+      - b) (-1.5, 1.5) → 3 liczby (-1, 0, 1)
+      - c) (0.5, 2.5) → 2 liczby (1, 2)
 
 ---
 
 ## Rozdział 2: Dodawanie liczb całkowitych
 
-### 2.1 Zasady dodawania
+### 2.1 Podstawy dodawania
 
-**Opis:** Utrwal zasady dodawania liczb całkowitych o różnych znakach
+**Opis:** Poznaj podstawowe zasady dodawania liczb całkowitych
 
 **Wskazówki:**
 - Liczby o tym samym znaku dodajemy, zachowując ich znak
@@ -338,106 +673,323 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Opcje:** -8, -2, 2
    - **Wyjaśnienie:** Liczby mają ten sam znak, więc dodajemy moduły: 3 + 5 = 8 i zachowujemy znak minus.
    - **Wskazówka:** Przy tym samym znaku dodaj moduły i zachowaj znak liczb.
+   - **Warianty:**
+     - a) (-3) + (-5) → -8
+     - b) (-7) + (-2) → -9
+     - c) (-4) + (-6) → -10
+     - d) (-1) + (-9) → -10
+     - e) (-8) + (-3) → -11
+
 
 2. **2-1-2**: 7 + (-4) = ?
    - **Odpowiedź:** 3
    - **Opcje:** 11, 3, -3
    - **Wyjaśnienie:** Znaki są różne. Odejmij mniejszy moduł od większego: 7 - 4 = 3. Wynik ma znak liczby o większym module, czyli dodatni.
    - **Wskazówka:** Porównaj, która liczba jest dalej od zera.
+   - **Warianty:**
+     - a) 7 + (-4) → 3
+     - b) 6 + (-2) → 4
+     - c) 9 + (-5) → 4
+     - d) 12 + (-8) → 4
+     - e) 10 + (-3) → 7
+
 
 3. **2-1-3**: (-12) + 9 = ?
    - **Odpowiedź:** -3
    - **Opcje:** -21, -3, 21
    - **Wyjaśnienie:** Moduły różnią się o 3. Większy moduł ma liczba ujemna, więc wynik jest -3.
    - **Wskazówka:** 12 jest dalej od zera niż 9, dlatego wynik będzie ujemny.
+   - **Warianty:**
+     - a) (-12) + 9 → -3
+     - b) (-15) + 11 → -4
+     - c) (-20) + 14 → -6
+     - d) (-8) + 5 → -3
+     - e) (-30) + 18 → -12
+
 
 4. **2-1-4**: 15 + 8 = ?
    - **Odpowiedź:** 23
    - **Opcje:** 7, 23, -23
    - **Wyjaśnienie:** Dodajemy dwa dodatnie składniki: 15 + 8 = 23.
    - **Wskazówka:** Przy tym samym znaku po prostu dodaj wartości.
+   - **Warianty:**
+     - a) 15 + 8 → 23
+     - b) 11 + 9 → 20
+     - c) 20 + 7 → 27
+     - d) 13 + 5 → 18
+     - e) 18 + 12 → 30
+
 
 5. **2-1-5**: (-6) + (-9) = ?
    - **Odpowiedź:** -15
    - **Opcje:** -15, 15, -3
    - **Wyjaśnienie:** Suma liczb ujemnych to liczba ujemna. 6 + 9 = 15, więc wynik to -15.
    - **Wskazówka:** Dodaj moduły, znak pozostaje ujemny.
+   - **Warianty:**
+     - a) (-6) + (-9) → -15
+     - b) (-4) + (-11) → -15
+     - c) (-10) + (-7) → -17
+     - d) (-8) + (-5) → -13
+     - e) (-12) + (-3) → -15
+
 
 6. **2-1-6**: (-4) + 4 = ?
    - **Odpowiedź:** 0
    - **Opcje:** 8, 0, -8
    - **Wyjaśnienie:** Liczby przeciwne sumują się do zera.
    - **Wskazówka:** Gdy liczby są przeciwne, znoszą się.
+   - **Warianty:**
+     - a) (-4) + 4 → 0
+     - b) (-7) + 7 → 0
+     - c) (-9) + 9 → 0
+     - d) (-15) + 15 → 0
+     - e) (-20) + 20 → 0
 
-### Dodatkowe zadania z poziomów (ze skanów):
-
-#### Poziom A - Podstawowe dodawanie
-7. **2-1-7**: -3 + (-5)
-   - **Odpowiedź:** -8
-   - **Typ:** Pole tekstowe
-   - **Difficulty_level:** 2
-   - **Order_index:** 7
-
-8. **2-1-8**: -2 + 7
-   - **Odpowiedź:** 5
-   - **Typ:** Pole tekstowe
-   - **Difficulty_level:** 2
-   - **Order_index:** 8
-
-9. **2-1-9**: 4 + (-6)
-   - **Odpowiedź:** -2
-   - **Typ:** Pole tekstowe
-
-10. **2-1-10**: -5 + (-1)
-    - **Odpowiedź:** -6
-    - **Typ:** Pole tekstowe
-
-#### Poziom B - Dodawanie dużych liczb
-11. **2-1-11**: -300 + (-50)
-    - **Odpowiedź:** -350
-    - **Typ:** Pole tekstowe
-
-12. **2-1-12**: -2000 + 1700
-    - **Odpowiedź:** -300
-    - **Typ:** Pole tekstowe
-
-13. **2-1-13**: -5000 + (-6000)
-    - **Odpowiedź:** -11000
-    - **Typ:** Pole tekstowe
-
-#### Poziom C - Dodawanie liczb dwucyfrowych
-14. **2-1-14**: -32 + (-45)
-    - **Odpowiedź:** -77
-    - **Typ:** Pole tekstowe
-    - **Difficulty_level:** 3
-    - **Order_index:** 14
-
-15. **2-1-15**: -21 + 37
-    - **Odpowiedź:** 16
-    - **Typ:** Pole tekstowe
-    - **Difficulty_level:** 3
-    - **Order_index:** 15
-
-16. **2-1-16**: -53 + (-16)
-    - **Odpowiedź:** -69
-    - **Typ:** Pole tekstowe
-
-#### Poziom D - Dodawanie trzech liczb
-17. **2-1-17**: -3 + (-4) + (-6)
-    - **Odpowiedź:** -13
-    - **Typ:** Pole tekstowe
-
-18. **2-1-18**: -1 + 3 + (-2)
-    - **Odpowiedź:** 0
-    - **Typ:** Pole tekstowe
-
-19. **2-1-19**: 5 + (-3) + (-2)
-    - **Odpowiedź:** 0
-    - **Typ:** Pole tekstowe
 
 ---
 
-### 2.2 Techniki dodawania
+### 2.2 Dodawanie większych liczb
+
+**Opis:** Dodawanie liczb dwu- i trzycyfrowych oraz większych wartości
+
+**Wskazówki:**
+- Te same zasady co przy małych liczbach
+- Uważaj na znaki przy dużych wartościach
+- Pomocne może być wyobrażenie sobie osi liczbowej
+
+**Zadania:**
+
+1. **2-2-1**: -32 + (-45)
+   - **Odpowiedź:** -77
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 2
+   - **Warianty:**
+     - a) -32 + (-45) → -77
+     - b) -18 + (-22) → -40
+     - c) -50 + (-30) → -80
+     - d) -12 + (-8) → -20
+     - e) -70 + (-15) → -85
+
+
+2. **2-2-2**: -21 + 37
+   - **Odpowiedź:** 16
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 2
+   - **Warianty:**
+     - a) -21 + 37 → 16
+     - b) -14 + 25 → 11
+     - c) -30 + 18 → -12
+     - d) -45 + 60 → 15
+     - e) -10 + 35 → 25
+
+
+3. **2-2-3**: -53 + (-16)
+   - **Odpowiedź:** -69
+   - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) -53 + (-16) → -69
+     - b) -40 + (-25) → -65
+     - c) -70 + (-12) → -82
+     - d) -85 + (-15) → -100
+     - e) -60 + (-33) → -93
+
+
+4. **2-2-4**: -300 + (-50)
+   - **Odpowiedź:** -350
+   - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) -300 + (-50) → -350
+     - b) -120 + (-40) → -160
+     - c) -450 + (-150) → -600
+     - d) -800 + (-200) → -1000
+     - e) -600 + (-30) → -630
+
+
+5. **2-2-5**: -2000 + 1700
+   - **Odpowiedź:** -300
+   - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) -2000 + 1700 → -300
+     - b) -1500 + 900 → -600
+     - c) -800 + 500 → -300
+     - d) -1200 + 450 → -750
+     - e) -500 + 700 → 200
+
+
+6. **2-2-6**: -5000 + (-6000)
+   - **Odpowiedź:** -11000
+   - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) -5000 + (-6000) → -11000
+     - b) -2000 + (-3500) → -5500
+     - c) -7500 + (-2500) → -10000
+     - d) -3200 + (-1800) → -5000
+     - e) -4000 + (-9000) → -13000
+
+
+7. **2-2-7**: 400 + (-250)
+   - **Odpowiedź:** 150
+   - **Typ:** Pole tekstowe
+   - **Warianty:**
+     - a) 400 + (-250) → 150
+     - b) 320 + (-180) → 140
+     - c) 500 + (-275) → 225
+     - d) 650 + (-400) → 250
+     - e) 280 + (-450) → -170
+
+
+---
+
+### 2.3 Dodawanie wielu składników
+
+**Opis:** Dodawanie trzech i więcej liczb całkowitych
+
+**Wskazówki:**
+- Można grupować liczby o tym samym znaku
+- Szukaj par liczb przeciwnych (dają 0)
+- Kolejność dodawania nie ma znaczenia
+
+**Zadania:**
+
+1. **2-3-1**: -3 + (-5) + 2
+   - **Odpowiedź:** -6
+   - **Typ:** Pole tekstowe
+   - **Wyjaśnienie:** -3 + (-5) = -8, potem -8 + 2 = -6
+   - **Warianty:**
+     - a) -3 + (-5) + 2 → -6
+     - b) -4 + (-2) + 3 → -3
+     - c) -6 + (-1) + 4 → -3
+     - d) -8 + (-2) + 5 → -5
+     - e) -1 + (-7) + 6 → -2
+
+
+2. **2-3-2**: -2 + 7 + (-3)
+   - **Odpowiedź:** 2
+   - **Typ:** Pole tekstowe
+   - **Wyjaśnienie:** -2 + 7 = 5, potem 5 + (-3) = 2
+   - **Warianty:**
+     - a) -2 + 7 + (-3) → 2
+     - b) -5 + 9 + (-4) → 0
+     - c) -6 + 11 + (-2) → 3
+     - d) -3 + 8 + (-5) → 0
+     - e) -4 + 10 + (-1) → 5
+
+
+3. **2-3-3**: 4 + (-6) + 1
+   - **Odpowiedź:** -1
+   - **Typ:** Pole tekstowe
+   - **Wyjaśnienie:** 4 + (-6) = -2, potem -2 + 1 = -1
+   - **Warianty:**
+     - a) 4 + (-6) + 1 → -1
+     - b) 5 + (-8) + 2 → -1
+     - c) 7 + (-9) + 3 → 1
+     - d) 6 + (-4) + (-5) → -3
+     - e) 9 + (-12) + 4 → 1
+
+
+4. **2-3-4**: -3 + (-4) + (-6)
+   - **Odpowiedź:** -13
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
+   - **Warianty:**
+     - a) -3 + (-4) + (-6) → -13
+     - b) -5 + (-2) + (-7) → -14
+     - c) -8 + (-3) + (-1) → -12
+     - d) -10 + (-4) + (-2) → -16
+     - e) -7 + (-6) + (-4) → -17
+
+
+5. **2-3-5**: -1 + 3 + (-2)
+   - **Odpowiedź:** 0
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
+   - **Warianty:**
+     - a) -1 + 3 + (-2) → 0
+     - b) -2 + 5 + (-3) → 0
+     - c) -4 + 6 + (-2) → 0
+     - d) -5 + 8 + (-3) → 0
+     - e) -6 + 9 + (-3) → 0
+
+
+6. **2-3-6**: 5 + (-3) + (-2)
+   - **Odpowiedź:** 0
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
+   - **Warianty:**
+     - a) 5 + (-3) + (-2) → 0
+     - b) 6 + (-4) + (-2) → 0
+     - c) 7 + (-5) + (-2) → 0
+     - d) 8 + (-6) + (-2) → 0
+     - e) 9 + (-7) + (-2) → 0
+
+
+---
+
+### 2.4 Dodawanie ułamków
+
+**Opis:** Dodawanie liczb wymiernych (ułamków zwykłych i mieszanych)
+
+**Wskazówki:**
+- Sprowadź ułamki do wspólnego mianownika
+- Dodaj liczniki, zachowując mianownik
+- Uprość wynik jeśli to możliwe
+
+**Zadania:**
+
+1. **2-4-1**: (-⅔) + ⅓
+    - **Odpowiedź:** -⅓
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 20
+    - **Wyjaśnienie:** -⅔ + ⅓ = -2/3 + 1/3 = -1/3
+    - **Warianty:**
+      - a) (-⅔) + ⅓ → -⅓
+      - b) (-¾) + ¼ → -½
+      - c) (-⅚) + ⅙ → -⅔
+      - d) (-⅝) + ⅜ → -¼
+      - e) (-⅘) + ⅖ → -⅖
+      - f) (-⅞) + ⅜ → -½
+      - g) (-⅚) + ⅓ → -½
+
+2. **2-4-2**: -1¾ + 2⅙
+    - **Odpowiedź:** 5/12
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 5
+    - **Wyjaśnienie:** -1¾ + 2⅙ = -7/4 + 13/6 = -21/12 + 26/12 = 5/12
+    - **Warianty:**
+      - a) -1¾ + 2⅙ → 5/12
+      - b) -1½ + 2⅓ → ⅚
+      - c) -2⅔ + 3¼ → 7/12
+      - d) -1⅚ + 2½ → ⅔
+      - e) -2¼ + 3⅓ → 13/12
+      - f) -1⅝ + 2¾ → 9/8
+
+3. **2-4-3**: 3 + (-4⅔)
+    - **Odpowiedź:** -1⅔
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Wyjaśnienie:** 3 + (-4⅔) = 3 - 4⅔ = -1⅔
+    - **Warianty:**
+      - a) 3 + (-4⅔) → -1⅔
+      - b) 2 + (-3½) → -1½
+      - c) 4 + (-5¾) → -1¾
+      - d) 5 + (-6⅓) → -1⅓
+      - e) 1 + (-2⅚) → -1⅚
+
+4. **2-4-4**: (-⅕) + (-⅗) + ⅖
+    - **Odpowiedź:** -⅖
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Wyjaśnienie:** -⅕ + (-⅗) + ⅖ = -1/5 - 3/5 + 2/5 = -2/5
+    - **Warianty:**
+      - a) (-⅕) + (-⅗) + ⅖ → -⅖
+      - b) (-¼) + (-½) + ¾ → 0
+      - c) (-⅓) + (-⅔) + ⅙ → -⅚
+      - d) (-⅛) + (-⅜) + ¼ → -¼
+
+---
+
+### 2.5 Techniki dodawania
 
 **Opis:** Poznaj sprytne metody dodawania wielu liczb całkowitych
 
@@ -448,39 +1000,74 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 **Zadania:**
 
-1. **2-2-1**: (-6) + 4 + 6 + (-4) = ?
+1. **2-5-1**: (-6) + 4 + 6 + (-4) = ?
    - **Odpowiedź:** 0
    - **Opcje:** 0, 2, -2
    - **Wyjaśnienie:** Sparuj liczby przeciwne: (-6 + 6) = 0 oraz (4 + -4) = 0. Cała suma to 0.
    - **Wskazówka:** Połącz liczby o przeciwnych znakach, aby się zniosły.
+   - **Warianty:**
+     - a) (-6) + 4 + 6 + (-4) → 0
+     - b) (-3) + 7 + 5 + (-9) → 0
+     - c) (-8) + 10 + 2 + (-4) → 0
+     - d) (-5) + 9 + 1 + (-5) → 0
+     - e) (-7) + 6 + 4 + (-3) → 0
 
-2. **2-2-2**: 8 + (-3) + (-5) + 10 = ?
+
+2. **2-5-2**: 8 + (-3) + (-5) + 10 = ?
    - **Odpowiedź:** 10
    - **Opcje:** 10, 0, -10
    - **Wyjaśnienie:** Najpierw dodaj 8 i -3, otrzymasz 5. 5 + (-5) = 0, więc zostaje tylko 10.
    - **Wskazówka:** Szukaj par dających 0, aby uprościć działanie.
+   - **Warianty:**
+     - a) 8 + (-3) + (-5) + 10 → 10
+     - b) 6 + (-4) + (-2) + 8 → 8
+     - c) 9 + (-6) + (-3) + 7 → 7
+     - d) 12 + (-5) + (-4) + 9 → 12
+     - e) 5 + (-2) + (-3) + 8 → 8
 
-3. **2-2-3**: (-7) + (-5) + 12 + 3 = ?
+
+3. **2-5-3**: (-7) + (-5) + 12 + 3 = ?
    - **Odpowiedź:** 3
    - **Opcje:** 3, 7, -7
    - **Wyjaśnienie:** Dodaj 12 i -5, otrzymasz 7. 7 + (-7) = 0, zostaje 3.
    - **Wskazówka:** Grupuj liczby tak, by powstały zera.
+   - **Warianty:**
+     - a) (-7) + (-5) + 12 + 3 → 3
+     - b) (-8) + (-4) + 15 + 1 → 4
+     - c) (-6) + (-9) + 18 + 2 → 5
+     - d) (-10) + (-5) + 14 + 6 → 5
+     - e) (-12) + (-3) + 20 + 1 → 6
 
-4. **2-2-4**: (-9) + 4 + (-1) + 6 = ?
+
+4. **2-5-4**: (-9) + 4 + (-1) + 6 = ?
    - **Odpowiedź:** 0
    - **Opcje:** 0, -10, 10
    - **Wyjaśnienie:** Dodaj -9 i 6, masz -3. -3 + 4 = 1, 1 + (-1) = 0.
    - **Wskazówka:** Zmieniając kolejność, możesz szybciej dojść do zera.
+   - **Warianty:**
+     - a) (-9) + 4 + (-1) + 6 → 0
+     - b) (-8) + 5 + (-2) + 5 → 0
+     - c) (-7) + 6 + (-3) + 4 → 0
+     - d) (-5) + 3 + (-4) + 6 → 0
+     - e) (-10) + 7 + (-1) + 4 → 0
 
-5. **2-2-5**: (-15) + 8 + 2 + 5 = ?
+
+5. **2-5-5**: (-15) + 8 + 2 + 5 = ?
    - **Odpowiedź:** 0
    - **Opcje:** 0, -20, 10
    - **Wyjaśnienie:** Połącz 8 i 2, to 10. 10 + 5 = 15. 15 + (-15) = 0.
    - **Wskazówka:** Łącz dodatnie składniki, aby utworzyć liczbę przeciwną do ujemnej.
+   - **Warianty:**
+     - a) (-15) + 8 + 2 + 5 → 0
+     - b) (-12) + 6 + 3 + 3 → 0
+     - c) (-18) + 10 + 4 + 4 → 0
+     - d) (-20) + 12 + 5 + 3 → 0
+     - e) (-9) + 4 + 1 + 4 → 0
+
 
 ---
 
-### 2.3 Zadania z treścią
+### 2.6 Zadania z treścią
 
 **Opis:** Zastosuj dodawanie liczb całkowitych w praktycznych sytuacjach
 
@@ -492,40 +1079,152 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
 
 **Zadania:**
 
-1. **2-3-1**: 
+1. **2-6-1**: 
    - **Treść:** Temperatura o godzinie 6:00 wynosiła -3°C. Do południa wzrosła o 8°C.
    - **Pytanie:** Jaka była temperatura w południe?
    - **Odpowiedź:** 5°C
    - **Opcje:** 5°C, 11°C, -11°C
    - **Wskazówka:** Wzrost temperatury oznacza dodawanie: -3 + 8
+   - **Warianty:**
+     - a) -3°C + wzrost 8°C → 5°C
+     - b) -5°C + wzrost 10°C → 5°C
+     - c) -7°C + wzrost 12°C → 5°C
+     - d) -2°C + wzrost 6°C → 4°C
+     - e) -1°C + wzrost 9°C → 8°C
 
-2. **2-3-2**: 
+
+2. **2-6-2**: 
    - **Treść:** Nurek znajduje się 12 metrów pod powierzchnią wody. Wynurza się o 7 metrów.
    - **Pytanie:** Na jakiej głębokości znajduje się teraz?
-   - **Odpowiedź:** -5m
-   - **Opcje:** -5m, -19m, 5m
+   - **Odpowiedź:** -5 m
+   - **Opcje:** -5 m, -19 m, 5 m
    - **Wskazówka:** Pod wodą to liczby ujemne: -12 + 7
+   - **Warianty:**
+     - a) -12 m + wynurzenie 7 m → -5 m
+     - b) -18 m + wynurzenie 9 m → -9 m
+     - c) -20 m + wynurzenie 11 m → -9 m
+     - d) -15 m + wynurzenie 6 m → -9 m
+     - e) -9 m + wynurzenie 4 m → -5 m
 
-3. **2-3-3**: 
+
+3. **2-6-3**: 
    - **Treść:** Na koncie bankowym masz -50 zł (debet). Wpłacasz 120 zł.
    - **Pytanie:** Ile masz teraz na koncie?
    - **Odpowiedź:** 70 zł
    - **Opcje:** 70 zł, 170 zł, -170 zł
    - **Wskazówka:** Debet to liczba ujemna: -50 + 120
+   - **Warianty:**
+     - a) debet -50 zł + wpłata 120 zł → 70 zł
+     - b) debet -80 zł + wpłata 150 zł → 70 zł
+     - c) debet -40 zł + wpłata 100 zł → 60 zł
+     - d) debet -25 zł + wpłata 90 zł → 65 zł
+     - e) debet -120 zł + wpłata 200 zł → 80 zł
 
-4. **2-3-4**: 
+
+4. **2-6-4**: 
    - **Treść:** W grze zdobyłeś 15 punktów, potem straciłeś 9 punktów.
    - **Pytanie:** Ile masz punktów łącznie?
    - **Odpowiedź:** 6
    - **Opcje:** 6, 24, -6
    - **Wskazówka:** Strata to odejmowanie: 15 + (-9)
+   - **Warianty:**
+     - a) 15 pkt + (-9 pkt) → 6 pkt
+     - b) 12 pkt + (-7 pkt) → 5 pkt
+     - c) 18 pkt + (-11 pkt) → 7 pkt
+     - d) 20 pkt + (-14 pkt) → 6 pkt
+     - e) 10 pkt + (-4 pkt) → 6 pkt
 
-5. **2-3-5**: 
+
+5. **2-6-5**: 
    - **Treść:** Winda jest na 3 piętrze. Jedzie 5 pięter w dół.
    - **Pytanie:** Na którym piętrze jest teraz winda?
    - **Odpowiedź:** -2
    - **Opcje:** -2, 8, 2
    - **Wskazówka:** Piętra pod ziemią to liczby ujemne: 3 + (-5)
+   - **Warianty:**
+     - a) 3 piętro + (-5) pięter → -2 piętro
+     - b) 5 piętro + (-7) pięter → -2 piętro
+     - c) 4 piętro + (-6) pięter → -2 piętro
+     - d) 6 piętro + (-8) pięter → -2 piętro
+     - e) 2 piętro + (-5) pięter → -3 piętro
+
+
+#### Poziom zaawansowany - Złożone zadania z treścią
+
+6. **2-6-6**:
+   - **Treść:** Firma produkująca ozdoby choinkowe odnotowała w kolejnych kwartałach roku zyski: I kwartał: -7000 zł (strata), II kwartał: -15000 zł (strata), III kwartał: -40000 zł (strata), IV kwartał: +362000 zł (zysk).
+   - **Pytanie:** Jaki zysk osiągnęła firma w całym roku?
+   - **Odpowiedź:** 300000 zł
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 4
+   - **Order_index:** 6
+   - **Wyjaśnienie:** -7000 + (-15000) + (-40000) + 362000 = -62000 + 362000 = 300000
+   - **Warianty:**
+     - a) -7000, -15000, -40000, +362000 → 300000 zł
+     - b) -5000, -12000, -33000, +280000 → 230000 zł
+     - c) -8000, -18000, -44000, +400000 → 330000 zł
+     - d) -6000, -14000, -35000, +305000 → 250000 zł
+
+7. **2-6-7**:
+   - **Treść:** W harcerskim biegu terenowym patrol "Łosie" uzyskał punkty na poszczególnych stacjach: Samarytanka: -1 pkt (kara), Terenoznawstwo: -4 pkt (kara), Historia: 5 pkt, Przyroda: 5 pkt.
+   - **Pytanie:** Jaki był łączny wynik patrolu "Łosie"?
+   - **Odpowiedź:** 5 punktów
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 3
+   - **Order_index:** 7
+   - **Wyjaśnienie:** -1 + (-4) + 5 + 5 = -5 + 10 = 5
+   - **Warianty:**
+     - a) -1, -4, 5, 5 → 5 pkt
+     - b) -2, -3, 6, 4 → 5 pkt
+     - c) -3, -2, 7, 6 → 8 pkt
+     - d) -2, -5, 8, 3 → 4 pkt
+     - e) -1, -6, 9, 4 → 6 pkt
+
+8. **2-6-8**:
+   - **Treść:** W konkursie matematycznym za dobrą odpowiedź otrzymuje się 4 punkty, za złą odpowiedź -1 punkt, za brak odpowiedzi 0 punktów. Tomek rozwiązał poprawnie 8 zadań, źle rozwiązał 3 zadania, a na 2 zadania nie odpowiedział.
+   - **Pytanie:** Ile punktów zdobył Tomek?
+   - **Odpowiedź:** 29 punktów
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 4
+   - **Order_index:** 8
+   - **Wyjaśnienie:** 8×4 + 3×(-1) + 2×0 = 32 - 3 + 0 = 29
+   - **Warianty:**
+     - a) 8 dobrych, 3 złe, 2 puste → 29 pkt
+     - b) 7 dobrych, 4 złe, 1 puste → 24 pkt
+     - c) 9 dobrych, 2 złe, 3 puste → 34 pkt
+     - d) 6 dobrych, 5 złych, 2 puste → 19 pkt
+     - e) 10 dobrych, 1 zła, 1 puste → 39 pkt
+     - f) 5 dobrych, 6 złych, 3 puste → 14 pkt
+
+9. **2-6-9**:
+   - **Treść:** Średnia temperatura w ciągu tygodnia wynosiła -1°C. W dni robocze temperatury były: poniedziałek +1°C, wtorek +1°C, środa +1°C, czwartek x°C, piątek -2°C. W weekend: sobota -3°C, niedziela -3°C.
+   - **Pytanie:** Jaka była temperatura w czwartek?
+   - **Odpowiedź:** -2°C
+   - **Typ:** Pole tekstowe
+   - **Difficulty_level:** 5
+   - **Order_index:** 9
+   - **Wyjaśnienie:** Suma temperatur = 7×(-1) = -7°C. Znane: 1+1+1+(-2)+(-3)+(-3) = -5. Brakuje: -7-(-5) = -2°C
+   - **Warianty:**
+     - a) średnia -1°C, suma -7°C → czwartek -2°C
+     - b) średnia -2°C, suma -14°C → brakujący dzień -4°C
+     - c) średnia 0°C, suma 0°C → brakujący dzień -2°C
+     - d) średnia 1°C, suma 7°C → brakujący dzień 0°C
+     - e) średnia -3°C, suma -21°C → brakujący dzień -4°C
+
+
+10. **2-6-10**:
+    - **Treść:** Nurek zanurzył się na głębokość 18 metrów (zapisujemy jako -18 m). Następnie wynurzył się o 7 metrów, potem zanurzył się jeszcze o 5 metrów głębiej.
+    - **Pytanie:** Na jakiej głębokości znajduje się teraz nurek?
+    - **Odpowiedź:** -16 m
+    - **Typ:** Pole tekstowe
+    - **Difficulty_level:** 3
+    - **Order_index:** 10
+    - **Wyjaśnienie:** -18 + 7 + (-5) = -18 + 7 - 5 = -16
+    - **Warianty:**
+      - a) -18 m, +7 m, -5 m → -16 m
+      - b) -20 m, +8 m, -6 m → -18 m
+      - c) -15 m, +5 m, -8 m → -18 m
+      - d) -25 m, +10 m, -3 m → -18 m
 
 ---
 
@@ -547,51 +1246,163 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 12
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Obie liczby dodatnie, wynik dodatni
+   - **Warianty:**
+     - a) 3 · 4 → 12
+     - b) 2 · 5 → 10
+     - c) 6 · 7 → 42
+     - d) 9 · 3 → 27
+     - e) 4 · 8 → 32
+
 
 2. **3-1-2**: (-3) · 4 = ?
    - **Odpowiedź:** -12
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) (-3) · 4 → -12
+     - b) (-5) · 6 → -30
+     - c) (-7) · 2 → -14
+     - d) (-9) · 3 → -27
+     - e) (-4) · 8 → -32
+
 
 3. **3-1-3**: 3 · (-4) = ?
    - **Odpowiedź:** -12
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) 3 · (-4) → -12
+     - b) 5 · (-7) → -35
+     - c) 8 · (-2) → -16
+     - d) 6 · (-9) → -54
+     - e) 4 · (-11) → -44
+
 
 4. **3-1-4**: (-3) · (-4) = ?
    - **Odpowiedź:** 12
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Te same znaki (oba ujemne), wynik dodatni
+   - **Warianty:**
+     - a) (-3) · (-4) → 12
+     - b) (-6) · (-5) → 30
+     - c) (-8) · (-7) → 56
+     - d) (-2) · (-9) → 18
+     - e) (-10) · (-3) → 30
+
 
 5. **3-1-5**: (-5) · 6 = ?
    - **Odpowiedź:** -30
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) (-5) · 6 → -30
+     - b) (-4) · 9 → -36
+     - c) (-7) · 5 → -35
+     - d) (-3) · 8 → -24
+     - e) (-6) · 4 → -24
+
 
 6. **3-1-6**: (-7) · (-8) = ?
    - **Odpowiedź:** 56
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Te same znaki, wynik dodatni
+   - **Warianty:**
+     - a) (-7) · (-8) → 56
+     - b) (-5) · (-9) → 45
+     - c) (-6) · (-6) → 36
+     - d) (-8) · (-3) → 24
+     - e) (-4) · (-12) → 48
+
 
 7. **3-1-7**: 9 · (-2) = ?
    - **Odpowiedź:** -18
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) 9 · (-2) → -18
+     - b) 7 · (-3) → -21
+     - c) 5 · (-4) → -20
+     - d) 12 · (-1) → -12
+     - e) 11 · (-5) → -55
+
 
 8. **3-1-8**: 0 · (-15) = ?
    - **Odpowiedź:** 0
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Zero pomnożone przez dowolną liczbę daje zero
+   - **Warianty:**
+     - a) 0 · (-15) → 0
+     - b) 0 · 12 → 0
+     - c) 0 · (-9) → 0
+     - d) 0 · 123 → 0
+     - e) 0 · (-1) → 0
+
 
 9. **3-1-9**: (-10) · 0 = ?
    - **Odpowiedź:** 0
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Dowolna liczba pomnożona przez zero daje zero
+   - **Warianty:**
+     - a) (-10) · 0 → 0
+     - b) 25 · 0 → 0
+     - c) (-7) · 0 → 0
+     - d) 18 · 0 → 0
+     - e) (-4) · 0 → 0
+
 
 10. **3-1-10**: (-1) · 25 = ?
     - **Odpowiedź:** -25
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** Mnożenie przez -1 zmienia tylko znak
+   - **Warianty:**
+     - a) (-1) · 25 → -25
+     - b) (-2) · 30 → -60
+     - c) (-5) · 11 → -55
+     - d) (-3) · 14 → -42
+     - e) (-6) · 9 → -54
+
+
+#### Poziom zaawansowany - Mnożenie ułamków
+
+11. **3-1-11**: (-⅔) × ¾ = ?
+    - **Odpowiedź:** -½
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 11
+    - **Wyjaśnienie:** (-2/3) × (3/4) = -6/12 = -1/2
+    - **Warianty:**
+      - a) (-⅔) × ¾ → -½
+      - b) (-¾) × ⅔ → -½
+      - c) (-⅚) × ⅗ → -½
+      - d) (-⅜) × ⅔ → -¼
+      - e) (-⅝) × ⅖ → -¼
+      - f) (-⅔) × ⅜ → -¼
+
+12. **3-1-12**: (-1½) × (-⅓) = ?
+    - **Odpowiedź:** ½
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 12
+    - **Wyjaśnienie:** (-3/2) × (-1/3) = 3/6 = 1/2
+    - **Warianty:**
+      - a) (-1½) × (-⅓) → ½
+      - b) (-2¼) × (-⅔) → 1½
+      - c) (-1⅔) × (-¾) → 1¼
+      - d) (-2⅓) × (-⅜) → ⅞
+      - e) (-1¾) × (-⅖) → 7/10
+
+13. **3-1-13**: ¾ × (-2⅔) = ?
+    - **Odpowiedź:** -2
+    - **Typ:** Pole tekstowe (ułamek/liczba)
+    - **Difficulty_level:** 4
+    - **Order_index:** 13
+    - **Wyjaśnienie:** 3/4 × (-8/3) = -24/12 = -2
+    - **Warianty:**
+      - a) ¾ × (-2⅔) → -2
+      - b) ⅔ × (-3) → -2
+      - c) ⅝ × (-1⅗) → -1
+      - d) ⅚ × (-2⅖) → -2
+      - e) ⅞ × (-2⅔) → -7/3
 
 ---
 
@@ -605,26 +1416,61 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** -8
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Trzy czynniki ujemne dają wynik ujemny
+   - **Warianty:**
+     - a) (-2) · (-2) · (-2) → -8
+     - b) (-3) · (-3) · (-3) → -27
+     - c) (-1) · (-1) · (-1) → -1
+     - d) (-4) · (-4) · (-4) → -64
+     - e) (-5) · (-5) · (-5) → -125
+
 
 2. **3-2-2**: (-3) · 2 · (-1) = ?
    - **Odpowiedź:** 6
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Dwa czynniki ujemne i jeden dodatni dają wynik dodatni
+   - **Warianty:**
+     - a) (-3) · 2 · (-1) → 6
+     - b) (-4) · 3 · (-2) → 24
+     - c) (-5) · 4 · (-1) → 20
+     - d) (-6) · 3 · (-2) → 36
+     - e) (-7) · 2 · (-3) → 42
+
 
 3. **3-2-3**: 5 · (-2) · (-3) = ?
    - **Odpowiedź:** 30
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Dwa czynniki ujemne dają wynik dodatni, potem mnożymy przez 5
+   - **Warianty:**
+     - a) 5 · (-2) · (-3) → 30
+     - b) 6 · (-3) · (-2) → 36
+     - c) 4 · (-5) · (-1) → 20
+     - d) 7 · (-2) · (-4) → 56
+     - e) 9 · (-3) · (-1) → 27
+
 
 4. **3-2-4**: (-4) · (-5) · 2 = ?
    - **Odpowiedź:** 40
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-4) · (-5) = 20, potem 20 · 2 = 40
+   - **Warianty:**
+     - a) (-4) · (-5) · 2 → 40
+     - b) (-3) · (-6) · 2 → 36
+     - c) (-7) · (-2) · 3 → 42
+     - d) (-8) · (-1) · 4 → 32
+     - e) (-5) · (-4) · 3 → 60
+
 
 5. **3-2-5**: (-1) · (-1) · (-1) · (-1) = ?
    - **Odpowiedź:** 1
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Parzysta liczba czynników ujemnych daje wynik dodatni
+   - **Warianty:**
+     - a) (-1) · (-1) · (-1) · (-1) → 1
+     - b) (-2) · (-2) · (-2) · (-2) → 16
+     - c) (-3) · (-3) · (-3) · (-3) → 81
+     - d) (-4) · (-4) · (-4) · (-4) → 256
+     - e) (-5) · (-5) · (-5) · (-5) → 625
+
 
 ---
 
@@ -640,13 +1486,27 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** -15°C
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 5 · (-3) = -15
+   - **Warianty:**
+     - a) spadek 3°C/h przez 5 h → -15°C
+     - b) spadek 4°C/h przez 2 h → -8°C
+     - c) spadek 2°C/h przez 7 h → -14°C
+     - d) spadek 5°C/h przez 3 h → -15°C
+     - e) spadek 1°C/h przez 9 h → -9°C
+
 
 2. **3-3-2**:
    - **Treść:** Nurek schodzi w dół z prędkością 4 metry na minutę. Gdzie będzie po 3 minutach?
    - **Pytanie:** Na jakiej głębokości będzie nurek?
-   - **Odpowiedź:** -12m
+   - **Odpowiedź:** -12 m
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 3 · (-4) = -12
+   - **Warianty:**
+     - a) -4 m/min przez 3 min → -12 m
+     - b) -6 m/min przez 2 min → -12 m
+     - c) -5 m/min przez 4 min → -20 m
+     - d) -3 m/min przez 5 min → -15 m
+     - e) -2 m/min przez 7 min → -14 m
+
 
 3. **3-3-3**:
    - **Treść:** Firma ma stratę 500 zł miesięcznie. Jaka będzie łączna strata po 6 miesiącach?
@@ -654,6 +1514,13 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** -3000 zł
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 6 · (-500) = -3000
+   - **Warianty:**
+     - a) -500 zł/mies. przez 6 mies. → -3000 zł
+     - b) -800 zł/mies. przez 4 mies. → -3200 zł
+     - c) -350 zł/mies. przez 9 mies. → -3150 zł
+     - d) -1000 zł/mies. przez 3 mies. → -3000 zł
+     - e) -250 zł/mies. przez 12 mies. → -3000 zł
+
 
 ---
 
@@ -675,51 +1542,162 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Obie liczby dodatnie, wynik dodatni
+   - **Warianty:**
+     - a) 12 : 3 → 4
+     - b) 24 : 6 → 4
+     - c) 18 : 3 → 6
+     - d) 30 : 5 → 6
+     - e) 45 : 9 → 5
+
 
 2. **4-1-2**: (-12) : 3 = ?
    - **Odpowiedź:** -4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) (-12) : 3 → -4
+     - b) (-18) : 6 → -3
+     - c) (-20) : 4 → -5
+     - d) (-27) : 9 → -3
+     - e) (-35) : 5 → -7
+
 
 3. **4-1-3**: 12 : (-3) = ?
    - **Odpowiedź:** -4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) 12 : (-3) → -4
+     - b) 18 : (-6) → -3
+     - c) 28 : (-4) → -7
+     - d) 36 : (-9) → -4
+     - e) 25 : (-5) → -5
+
 
 4. **4-1-4**: (-12) : (-3) = ?
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Te same znaki, wynik dodatni
+   - **Warianty:**
+     - a) (-12) : (-3) → 4
+     - b) (-18) : (-6) → 3
+     - c) (-30) : (-5) → 6
+     - d) (-49) : (-7) → 7
+     - e) (-63) : (-9) → 7
+
 
 5. **4-1-5**: (-20) : 5 = ?
    - **Odpowiedź:** -4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) (-20) : 5 → -4
+     - b) (-24) : 6 → -4
+     - c) (-35) : 7 → -5
+     - d) (-45) : 9 → -5
+     - e) (-28) : 4 → -7
+
 
 6. **4-1-6**: (-24) : (-6) = ?
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Te same znaki, wynik dodatni
+   - **Warianty:**
+     - a) (-24) : (-6) → 4
+     - b) (-36) : (-9) → 4
+     - c) (-30) : (-5) → 6
+     - d) (-42) : (-7) → 6
+     - e) (-32) : (-8) → 4
+
 
 7. **4-1-7**: 30 : (-5) = ?
    - **Odpowiedź:** -6
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) 30 : (-5) → -6
+     - b) 45 : (-9) → -5
+     - c) 63 : (-7) → -9
+     - d) 72 : (-8) → -9
+     - e) 55 : (-5) → -11
+
 
 8. **4-1-8**: 0 : (-7) = ?
    - **Odpowiedź:** 0
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Zero podzielone przez dowolną liczbę (różną od zera) daje zero
+   - **Warianty:**
+     - a) 0 : (-7) → 0
+     - b) 0 : 8 → 0
+     - c) 0 : (-15) → 0
+     - d) 0 : 3 → 0
+     - e) 0 : (-2) → 0
+
 
 9. **4-1-9**: (-36) : (-9) = ?
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Te same znaki, wynik dodatni
+   - **Warianty:**
+     - a) (-36) : (-9) → 4
+     - b) (-48) : (-12) → 4
+     - c) (-54) : (-6) → 9
+     - d) (-80) : (-10) → 8
+     - e) (-90) : (-15) → 6
+
 
 10. **4-1-10**: (-100) : 25 = ?
     - **Odpowiedź:** -4
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** Różne znaki, wynik ujemny
+   - **Warianty:**
+     - a) (-100) : 25 → -4
+     - b) (-96) : 12 → -8
+     - c) (-84) : 7 → -12
+     - d) (-72) : 8 → -9
+     - e) (-120) : 15 → -8
+
+
+#### Poziom zaawansowany - Dzielenie ułamków
+
+11. **4-1-11**: (-¾) : ⅜ = ?
+    - **Odpowiedź:** -2
+    - **Typ:** Pole tekstowe (ułamek/liczba)
+    - **Difficulty_level:** 4
+    - **Order_index:** 11
+    - **Wyjaśnienie:** (-3/4) : (3/8) = (-3/4) × (8/3) = -24/12 = -2
+    - **Warianty:**
+      - a) (-¾) : ⅜ → -2
+      - b) (-⅔) : ⅓ → -2
+      - c) (-⅚) : ⅙ → -5
+      - d) (-⅝) : ⅛ → -5
+      - e) (-⅞) : ⅐ → -7
+
+12. **4-1-12**: ½ : (-⅔) = ?
+    - **Odpowiedź:** -¾
+    - **Typ:** Pole tekstowe (ułamek)
+    - **Difficulty_level:** 4
+    - **Order_index:** 12
+    - **Wyjaśnienie:** (1/2) : (-2/3) = (1/2) × (-3/2) = -3/4
+    - **Warianty:**
+      - a) ½ : (-⅔) → -¾
+      - b) ⅓ : (-½) → -⅔
+      - c) ¾ : (-⅜) → -2
+      - d) ⅖ : (-⅘) → -½
+      - e) ⅚ : (-⅔) → -1¼
+
+13. **4-1-13**: (-2⅓) : (-1⅙) = ?
+    - **Odpowiedź:** 2
+    - **Typ:** Pole tekstowe (liczba)
+    - **Difficulty_level:** 5
+    - **Order_index:** 13
+    - **Wyjaśnienie:** (-7/3) : (-7/6) = (-7/3) × (-6/7) = 42/21 = 2
+    - **Warianty:**
+      - a) (-2⅓) : (-1⅙) → 2
+      - b) (-3½) : (-1¾) → 2
+      - c) (-4⅔) : (-2⅓) → 2
+      - d) (-1⅔) : (-⅚) → 2
+      - e) (-2¾) : (-1⅜) → 2
 
 ---
 
@@ -733,16 +1711,37 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-48) : 6 = -8, potem (-8) : (-2) = 4
+   - **Warianty:**
+     - a) (-48) : 6 : (-2) → 4
+     - b) (-36) : 4 : (-3) → 3
+     - c) (-60) : 5 : (-2) → 6
+     - d) (-72) : 8 : (-3) → 3
+     - e) (-90) : 9 : (-5) → 2
+
 
 2. **4-2-2**: 60 : (-3) : (-5) = ?
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 60 : (-3) = -20, potem (-20) : (-5) = 4
+   - **Warianty:**
+     - a) 60 : (-3) : (-5) → 4
+     - b) 48 : (-4) : (-3) → 4
+     - c) 75 : (-5) : (-3) → 5
+     - d) 84 : (-6) : (-2) → 7
+     - e) 96 : (-8) : (-4) → 3
+
 
 3. **4-2-3**: (-64) : (-8) : 2 = ?
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-64) : (-8) = 8, potem 8 : 2 = 4
+   - **Warianty:**
+     - a) (-64) : (-8) : 2 → 4
+     - b) (-72) : (-9) : 2 → 4
+     - c) (-81) : (-9) : 3 → 3
+     - d) (-54) : (-6) : 3 → 3
+     - e) (-96) : (-12) : 4 → 2
+
 
 ---
 
@@ -763,51 +1762,121 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** -3
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 4 - 7 = 4 + (-7) = -3
+   - **Warianty:**
+     - a) 4 - 7 → -3
+     - b) 6 - 9 → -3
+     - c) 10 - 13 → -3
+     - d) 2 - 5 → -3
+     - e) 8 - 11 → -3
+
 
 2. **5-1-2**: 11 - 23 = ?
    - **Odpowiedź:** -12
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 11 - 23 = 11 + (-23) = -12
+   - **Warianty:**
+     - a) 11 - 23 → -12
+     - b) 15 - 27 → -12
+     - c) 9 - 21 → -12
+     - d) 5 - 17 → -12
+     - e) 18 - 30 → -12
+
 
 3. **5-1-3**: 3 - 7 = ?
    - **Odpowiedź:** -4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 3 - 7 = 3 + (-7) = -4
+   - **Warianty:**
+     - a) 3 - 7 → -4
+     - b) 6 - 10 → -4
+     - c) 15 - 19 → -4
+     - d) 1 - 5 → -4
+     - e) 12 - 16 → -4
+
 
 4. **5-1-4**: (-3) - 7 = ?
    - **Odpowiedź:** -10
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-3) - 7 = (-3) + (-7) = -10
+   - **Warianty:**
+     - a) (-3) - 7 → -10
+     - b) (-5) - 4 → -9
+     - c) (-2) - 9 → -11
+     - d) (-8) - 7 → -15
+     - e) (-6) - 11 → -17
+
 
 5. **5-1-5**: (-1) - 12 = ?
    - **Odpowiedź:** -13
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-1) - 12 = (-1) + (-12) = -13
+   - **Warianty:**
+     - a) (-1) - 12 → -13
+     - b) (-3) - 10 → -13
+     - c) 2 - 15 → -13
+     - d) (-7) - 6 → -13
+     - e) 5 - 18 → -13
+
 
 6. **5-1-6**: (-5) - (-3) = ?
    - **Odpowiedź:** -2
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-5) - (-3) = (-5) + 3 = -2
+   - **Warianty:**
+     - a) (-5) - (-3) → -2
+     - b) (-9) - (-4) → -5
+     - c) (-12) - (-7) → -5
+     - d) (-6) - (-1) → -5
+     - e) (-8) - (-2) → -6
+
 
 7. **5-1-7**: (-1) - (-15) = ?
    - **Odpowiedź:** 14
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** (-1) - (-15) = (-1) + 15 = 14
+   - **Warianty:**
+     - a) (-1) - (-15) → 14
+     - b) (-4) - (-9) → 5
+     - c) (-7) - (-20) → 13
+     - d) (-3) - (-12) → 9
+     - e) (-10) - (-25) → 15
+
 
 8. **5-1-8**: -15 - (-8) = ?
    - **Odpowiedź:** -7
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** -15 - (-8) = -15 + 8 = -7
+   - **Warianty:**
+     - a) -15 - (-8) → -7
+     - b) -12 - (-5) → -7
+     - c) -20 - (-13) → -7
+     - d) -9 - (-2) → -7
+     - e) -25 - (-18) → -7
+
 
 9. **5-1-9**: 5 - 17 = ?
    - **Odpowiedź:** -12
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 5 - 17 = 5 + (-17) = -12
+   - **Warianty:**
+     - a) 5 - 17 → -12
+     - b) 8 - 20 → -12
+     - c) 14 - 26 → -12
+     - d) 3 - 15 → -12
+     - e) 11 - 23 → -12
+
 
 10. **5-1-10**: 6 - (-11) = ?
     - **Odpowiedź:** 17
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** 6 - (-11) = 6 + 11 = 17
+   - **Warianty:**
+     - a) 6 - (-11) → 17
+     - b) 4 - (-9) → 13
+     - c) 2 - (-5) → 7
+     - d) 10 - (-3) → 13
+     - e) 7 - (-12) → 19
+
 
 ---
 
@@ -821,26 +1890,61 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** -70
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** -150 - (-80) = -150 + 80 = -70
+   - **Warianty:**
+     - a) -150 - (-80) → -70
+     - b) -220 - (-140) → -80
+     - c) -300 - (-120) → -180
+     - d) -180 - (-60) → -120
+     - e) -95 - (-15) → -80
+
 
 2. **5-2-2**: 140 - 500 = ?
    - **Odpowiedź:** -360
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 140 - 500 = 140 + (-500) = -360
+   - **Warianty:**
+     - a) 140 - 500 → -360
+     - b) 220 - 580 → -360
+     - c) 90 - 450 → -360
+     - d) 310 - 670 → -360
+     - e) 400 - 760 → -360
+
 
 3. **5-2-3**: -100 - (-770) = ?
    - **Odpowiedź:** 670
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** -100 - (-770) = -100 + 770 = 670
+   - **Warianty:**
+     - a) -100 - (-770) → 670
+     - b) -250 - (-900) → 650
+     - c) -320 - (-800) → 480
+     - d) -150 - (-600) → 450
+     - e) -420 - (-900) → 480
+
 
 4. **5-2-4**: 150 - (-110) = ?
    - **Odpowiedź:** 260
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 150 - (-110) = 150 + 110 = 260
+   - **Warianty:**
+     - a) 150 - (-110) → 260
+     - b) 90 - (-70) → 160
+     - c) 45 - (-95) → 140
+     - d) 200 - (-80) → 280
+     - e) 360 - (-120) → 480
+
 
 5. **5-2-5**: -300 - (-210) = ?
    - **Odpowiedź:** -90
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** -300 - (-210) = -300 + 210 = -90
+   - **Warianty:**
+     - a) -300 - (-210) → -90
+     - b) -420 - (-315) → -105
+     - c) -240 - (-150) → -90
+     - d) -500 - (-320) → -180
+     - e) -150 - (-90) → -60
+
 
 ---
 
@@ -856,6 +1960,13 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 7°C
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 2 - (-5) = 7 stopni różnicy
+   - **Warianty:**
+     - a) spadek z 2°C do -5°C → 7°C
+     - b) spadek z 4°C do -3°C → 7°C
+     - c) spadek z 1°C do -6°C → 7°C
+     - d) spadek z 3°C do -2°C → 5°C
+     - e) spadek z 5°C do -4°C → 9°C
+
 
 2. **5-3-2**:
    - **Treść:** Od południa do wieczora temperatura obniżyła się o 5°C. W południe było 7°C.
@@ -863,6 +1974,13 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 2°C
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 7 - 5 = 2
+   - **Warianty:**
+     - a) 7°C minus spadek 5°C → 2°C
+     - b) 10°C minus spadek 6°C → 4°C
+     - c) 5°C minus spadek 7°C → -2°C
+     - d) 12°C minus spadek 8°C → 4°C
+     - e) 3°C minus spadek 5°C → -2°C
+
 
 3. **5-3-3**:
    - **Treść:** Stan konta pana Mariana wynosił 0 zł. Wypłacił z bankomatu 200 zł.
@@ -870,6 +1988,13 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** -200 zł
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 0 - 200 = -200
+   - **Warianty:**
+     - a) 0 zł - 200 zł wypłaty → -200 zł
+     - b) 50 zł - 120 zł wypłaty → -70 zł
+     - c) 20 zł - 150 zł wypłaty → -130 zł
+     - d) 100 zł - 180 zł wypłaty → -80 zł
+     - e) 0 zł - 350 zł wypłaty → -350 zł
+
 
 4. **5-3-4**:
    - **Treść:** Samolot leciał na wysokości 10000 m i zniżył się o 2500 m.
@@ -877,6 +2002,13 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 7500 m
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 10000 - 2500 = 7500
+   - **Warianty:**
+     - a) 10000 m - 2500 m zniżenia → 7500 m
+     - b) 8000 m - 1500 m zniżenia → 6500 m
+     - c) 12000 m - 3000 m zniżenia → 9000 m
+     - d) 9500 m - 2000 m zniżenia → 7500 m
+     - e) 7000 m - 1000 m zniżenia → 6000 m
+
 
 ---
 
@@ -898,51 +2030,121 @@ Poniżej znajduje się kompletny zestaw zadań do aplikacji MATMA dla klasy 6, o
    - **Odpowiedź:** 14
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Najpierw mnożenie: 3 · 4 = 12, potem 2 + 12 = 14
+   - **Warianty:**
+     - a) 2 + 3 · 4 → 14
+     - b) 5 + 2 · 6 → 17
+     - c) 1 + 4 · 5 → 21
+     - d) 3 + 7 · 2 → 17
+     - e) 6 + 2 · 8 → 22
+
 
 2. **6-1-2**: 10 - 2 · 3 = ?
    - **Odpowiedź:** 4
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Najpierw mnożenie: 2 · 3 = 6, potem 10 - 6 = 4
+   - **Warianty:**
+     - a) 10 - 2 · 3 → 4
+     - b) 15 - 4 · 2 → 7
+     - c) 20 - 5 · 3 → 5
+     - d) 18 - 6 · 2 → 6
+     - e) 12 - 3 · 4 → 0
+
 
 3. **6-1-3**: (2 + 3) · 4 = ?
    - **Odpowiedź:** 20
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Najpierw nawias: 2 + 3 = 5, potem 5 · 4 = 20
+   - **Warianty:**
+     - a) (2 + 3) · 4 → 20
+     - b) (1 + 5) · 3 → 18
+     - c) (4 + 2) · 6 → 36
+     - d) (3 + 7) · 2 → 20
+     - e) (5 + 4) · 3 → 27
+
 
 4. **6-1-4**: 12 : 3 + 2 = ?
    - **Odpowiedź:** 6
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Najpierw dzielenie: 12 : 3 = 4, potem 4 + 2 = 6
+   - **Warianty:**
+     - a) 12 : 3 + 2 → 6
+     - b) 18 : 6 + 5 → 8
+     - c) 24 : 4 + 3 → 9
+     - d) 30 : 5 + 1 → 7
+     - e) 16 : 2 + 4 → 12
+
 
 5. **6-1-5**: 5 · 2 - 3 · 3 = ?
    - **Odpowiedź:** 1
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 5 · 2 = 10, 3 · 3 = 9, potem 10 - 9 = 1
+   - **Warianty:**
+     - a) 5 · 2 - 3 · 3 → 1
+     - b) 6 · 3 - 4 · 2 → 10
+     - c) 4 · 5 - 6 · 2 → 8
+     - d) 7 · 3 - 5 · 2 → 11
+     - e) 8 · 4 - 3 · 6 → 14
+
 
 6. **6-1-6**: -2 · (3 + 5) = ?
    - **Odpowiedź:** -16
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Najpierw nawias: 3 + 5 = 8, potem -2 · 8 = -16
+   - **Warianty:**
+     - a) -2 · (3 + 5) → -16
+     - b) -3 · (4 + 2) → -18
+     - c) -4 · (2 + 3) → -20
+     - d) -5 · (1 + 4) → -25
+     - e) -6 · (3 + 1) → -24
+
 
 7. **6-1-7**: (-3 + 7) · (-2) = ?
    - **Odpowiedź:** -8
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** Najpierw nawias: -3 + 7 = 4, potem 4 · (-2) = -8
+   - **Warianty:**
+     - a) (-3 + 7) · (-2) → -8
+     - b) (-5 + 9) · (-3) → -12
+     - c) (-2 + 6) · (-4) → -16
+     - d) (-4 + 10) · (-2) → -12
+     - e) (-6 + 12) · (-3) → -18
+
 
 8. **6-1-8**: 20 : (-5) + 3 · 2 = ?
    - **Odpowiedź:** 2
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 20 : (-5) = -4, 3 · 2 = 6, potem -4 + 6 = 2
+   - **Warianty:**
+     - a) 20 : (-5) + 3 · 2 → 2
+     - b) 18 : (-6) + 3 · 3 → 6
+     - c) 24 : (-8) + 4 · 3 → 9
+     - d) 16 : (-4) + 2 · 4 → 4
+     - e) 28 : (-7) + 5 · 3 → 11
+
 
 9. **6-1-9**: 3 · (-4) - (-2) · 5 = ?
    - **Odpowiedź:** -2
    - **Typ:** Pole tekstowe
    - **Wyjaśnienie:** 3 · (-4) = -12, (-2) · 5 = -10, potem -12 - (-10) = -12 + 10 = -2
+   - **Warianty:**
+     - a) 3 · (-4) - (-2) · 5 → -2
+     - b) 4 · (-3) - (-1) · 6 → -6
+     - c) 5 · (-2) - (-3) · 4 → 2
+     - d) 6 · (-5) - (-4) · 3 → -18
+     - e) 7 · (-3) - (-2) · 5 → -11
+
 
 10. **6-1-10**: 2 + 3 · 4 - 5 : 5 = ?
     - **Odpowiedź:** 13
     - **Typ:** Pole tekstowe
     - **Wyjaśnienie:** 3 · 4 = 12, 5 : 5 = 1, potem 2 + 12 - 1 = 13
+   - **Warianty:**
+     - a) 2 + 3 · 4 - 5 : 5 → 13
+     - b) 5 + 4 · 2 - 8 : 2 → 9
+     - c) 6 + 3 · 3 - 12 : 4 → 12
+     - d) 8 + 4 · 5 - 20 : 5 → 24
+     - e) 10 + 5 · 4 - 15 : 3 → 25
+
 
 ---
 
