@@ -122,10 +122,25 @@ export function FeedbackSystem({
                 </>
               )
             ) : (
-              <Button onClick={onReset} className="flex-1 gap-2" style={{ cursor: 'pointer' }}>
-                <RefreshCw className="h-4 w-4" />
-                Rozpocznij od nowa
-              </Button>
+              <>
+                <Button 
+                  onClick={onReset} 
+                  variant="outline"
+                  className="gap-2"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Powtórz zadanie
+                </Button>
+                <Button 
+                  onClick={() => router.push('/dashboard/chapters/chapter-1/sections/1-1')} 
+                  className="flex-1 gap-2"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Rozpocznij od nowa
+                </Button>
+              </>
             )}
           </>
         )}
