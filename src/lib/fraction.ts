@@ -207,9 +207,23 @@ export class Fraction {
     // Better whitespace handling: normalize multiple spaces and spaces around /
     str = str.replace(/\s+/g, ' ').replace(/\s*\/\s*/g, '/');
     
-    // Strip common units for comparison (°C, m, km, zł, PLN, etc.)
+    // Strip common units FIRST for comparison (°C, m, km, zł, PLN, etc.)
     // This allows comparing "-15" with "-15°C" as equal
-    str = str.replace(/\s*(°C|°F|°K|m|km|cm|mm|zł|PLN|USD|EUR|kg|g|mg|l|ml|s|min|h)$/i, '');
+    // Also strips currency in the middle: "50 tys. zł" → "50 tys."
+    // Handle both "zł" and "zl" (without Polish ł)
+    str = str.replace(/\s*(°C|°F|°K|m|km|cm|mm|zł|zl|złoty|zloty|złotych|zlotych|PLN|USD|EUR|kg|g|mg|l|ml|s|min|h)(\s|$)/gi, '$2');
+    
+    // Normalize Polish abbreviations for thousands and millions AFTER stripping units
+    // "50 tys." → "50000", "-50 tys." → "-50000", "1 mln" → "1000000"
+    str = str.replace(/(-?\d+(?:\.\d+)?)\s*tys\.?(\s|$)/gi, (match, num, space) => {
+      return String(parseFloat(num) * 1000) + space;
+    });
+    str = str.replace(/(-?\d+(?:\.\d+)?)\s*mln\.?(\s|$)/gi, (match, num, space) => {
+      return String(parseFloat(num) * 1000000) + space;
+    });
+    str = str.replace(/(-?\d+(?:\.\d+)?)\s*mld\.?(\s|$)/gi, (match, num, space) => {
+      return String(parseFloat(num) * 1000000000) + space;
+    });
 
     // Handle Unicode fractions
     const unicodeMap: Record<string, string> = {

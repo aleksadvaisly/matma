@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, compareIds } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
@@ -10,13 +10,13 @@ export async function GET(request: Request) {
       SELECT id, title, description, icon, order_index
       FROM chapters
       ORDER BY order_index
-    `).all();
+    `).all() as any[];
     
     const sections = db.prepare(`
       SELECT id, chapter_id, title, description, order_index
       FROM sections
-      ORDER BY chapter_id, order_index
-    `).all();
+      ORDER BY order_index
+    `).all() as any[];
 
     // Get progress for all sections for this user
     const progress = db.prepare(`
@@ -31,15 +31,15 @@ export async function GET(request: Request) {
 
     // Create progress lookup map
     const progressMap = new Map(
-      progress.map(p => [p.section_id, p])
+      (progress as any[]).map((p: any) => [p.section_id, p])
     );
     
-    const chaptersWithSections = chapters.map(chapter => {
+    const chaptersWithSections = chapters.map((chapter: any) => {
       const chapterSections = sections
-        .filter(section => section.chapter_id === chapter.id)
+        .filter((section: any) => section.chapter_id === chapter.id)
       
       const processedSections = chapterSections
-        .map(section => {
+        .map((section: any) => {
           const sectionProgress = progressMap.get(section.id);
           // Check if section is completed either by completed_at timestamp OR by having all exercises completed
           const completed = sectionProgress?.completed_at ? true : 
@@ -48,9 +48,10 @@ export async function GET(request: Request) {
             ? Math.round((sectionProgress.exercises_completed / sectionProgress.total_exercises) * 100)
             : 0;
 
-          // Add section numbering based on chapter and section order
-          const chapterNumber = chapter.order_index;
-          const sectionNumber = section.order_index;
+          // Add section numbering based on IDs
+          const chapterNumber = parseInt(chapter.id.split('-')[1]);
+          const sectionParts = section.id.split('-');
+          const sectionNumber = parseInt(sectionParts[1]);
           const formattedTitle = `${chapterNumber}.${sectionNumber} ${section.title}`;
 
           return {
@@ -70,7 +71,8 @@ export async function GET(request: Request) {
         : 0;
 
       // Format chapter title with numbering
-      const formattedChapterTitle = `${chapter.order_index}. ${chapter.title}`;
+      const chapterNumber = parseInt(chapter.id.split('-')[1]);
+      const formattedChapterTitle = `${chapterNumber}. ${chapter.title}`;
 
       return {
         ...chapter,

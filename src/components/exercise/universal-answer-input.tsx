@@ -120,18 +120,34 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
       );
       const maxLength = Math.max(...allTexts.map((text) => text.length));
       
-      // Base size classes with padding instead of fixed width
-      const sizeClass = props.buttonSize === 'lg' 
+      // Check if any option contains newlines (multi-line text)
+      const hasMultilineText = allTexts.some(text => text.includes('\n'));
+      
+      // Calculate maximum number of lines in any option
+      const maxLines = Math.max(...allTexts.map(text => text.split('\n').length));
+      
+      // Base size classes with padding - increase padding for multi-line
+      const sizeClass = hasMultilineText 
+        ? 'px-4 py-3 text-sm'  // More padding for multi-line
+        : props.buttonSize === 'lg' 
         ? 'px-4 py-3 text-lg'
         : props.buttonSize === 'sm'
         ? 'px-3 py-2 text-sm'
         : 'px-3 py-2.5 text-base';
       
-      // Dynamic width class based on longest text
-      const widthClass = maxLength > 10 ? 'min-w-[10rem]' :
-                        maxLength > 8 ? 'min-w-[8rem]' :
-                        maxLength > 6 ? 'min-w-[6rem]' : 
-                        'min-w-[4rem]';
+      // Calculate height class based on number of lines
+      const heightClass = maxLines === 2 ? 'min-h-[4rem]' :
+                         maxLines === 3 ? 'min-h-[5.5rem]' :
+                         maxLines === 4 ? 'min-h-[7rem]' :
+                         maxLines >= 5 ? 'min-h-[8.5rem]' : '';
+      
+      // For multi-line text, use wider buttons and left-align
+      // All buttons should have the same width (the width of the widest)
+      const widthClass = hasMultilineText ? 'w-full max-w-[30rem] text-left' :
+                        maxLength > 10 ? 'w-[12rem]' :
+                        maxLength > 8 ? 'w-[10rem]' :
+                        maxLength > 6 ? 'w-[8rem]' : 
+                        'w-[6rem]';
 
       return (
         <div className={`flex ${layoutClass} gap-4 items-center justify-center`}>
@@ -158,7 +174,7 @@ export function UniversalAnswerInput(props: UniversalAnswerInputProps) {
                   revealCorrect={props.showFeedback}
                   isCorrectChoice={isCorrectChoice}
                   onClick={() => !props.disabled && props.onChange(optionValue)}
-                  className={`${sizeClass} ${widthClass}`}
+                  className={`${sizeClass} ${widthClass} ${heightClass} ${hasMultilineText ? 'whitespace-pre-line' : ''}`}
                 >
                   {optionText}
                 </ChoiceButton>

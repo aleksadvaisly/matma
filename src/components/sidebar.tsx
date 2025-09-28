@@ -15,7 +15,6 @@ interface Section {
   chapter_id: string;
   title: string;
   description: string;
-  order_index: number;
   completed?: boolean;
   progress?: number;
 }
@@ -25,7 +24,6 @@ interface Chapter {
   title: string;
   description: string;
   icon: string;
-  order_index: number;
   sections: Section[];
   totalProgress?: number;
 }

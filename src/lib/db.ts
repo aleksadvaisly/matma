@@ -18,7 +18,7 @@ export { db };
  * Example: "7-1-2" → [7, 1, 2]
  * Example: "7-1-2-a" → [7, 1, 2, 'a']
  */
-export function parseExerciseId(id: string): (number | string)[] {
+export function parseId(id: string): (number | string)[] {
   return id.split('-').map(part => {
     const num = parseInt(part);
     return isNaN(num) ? part : num;
@@ -26,12 +26,12 @@ export function parseExerciseId(id: string): (number | string)[] {
 }
 
 /**
- * Compare two exercise IDs for sorting
+ * Compare two IDs for sorting
  * Returns negative if a < b, positive if a > b, 0 if equal
  */
-export function compareExerciseIds(idA: string, idB: string): number {
-  const partsA = parseExerciseId(idA);
-  const partsB = parseExerciseId(idB);
+export function compareIds(idA: string, idB: string): number {
+  const partsA = parseId(idA);
+  const partsB = parseId(idB);
   
   for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
     const partA = partsA[i] ?? 0;
@@ -143,14 +143,12 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
   if (hasVariants.count > 0) {
     // Use variant system for sections that have it
     const baseExercises = db.prepare(`
-      SELECT DISTINCT exercise_base_id
+      SELECT DISTINCT exercise_base_id, MIN(order_index) as min_order
       FROM exercises
       WHERE section_id = ? AND exercise_base_id IS NOT NULL
       GROUP BY exercise_base_id
-    `).all(sectionId) as { exercise_base_id: string }[];
-    
-    // Sort by parsed exercise IDs instead of order_index
-    baseExercises.sort((a, b) => compareExerciseIds(a.exercise_base_id, b.exercise_base_id));
+      ORDER BY min_order
+    `).all(sectionId) as { exercise_base_id: string; min_order: string }[];
 
     // For each base exercise, select appropriate variant
     for (const base of baseExercises) {
@@ -202,10 +200,8 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
       FROM exercises e
       JOIN input_types it ON e.input_type_id = it.id
       WHERE e.section_id = ?
+      ORDER BY e.order_index
     `).all(sectionId) as Exercise[];
-    
-    // Sort by parsed exercise IDs instead of order_index
-    exercises.sort((a, b) => compareExerciseIds(a.id, b.id));
   }
   
   // Get options for each exercise
