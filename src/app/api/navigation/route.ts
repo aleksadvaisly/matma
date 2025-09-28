@@ -37,6 +37,8 @@ export async function GET(request: Request) {
     const chaptersWithSections = chapters.map(chapter => {
       const chapterSections = sections
         .filter(section => section.chapter_id === chapter.id)
+      
+      const processedSections = chapterSections
         .map(section => {
           const sectionProgress = progressMap.get(section.id);
           // Check if section is completed either by completed_at timestamp OR by having all exercises completed
@@ -60,10 +62,10 @@ export async function GET(request: Request) {
         });
 
       // Calculate chapter total progress
-      const totalProgress = chapterSections.length > 0
+      const totalProgress = processedSections.length > 0
         ? Math.round(
-            chapterSections.reduce((sum, section) => sum + (section.progress || 0), 0) / 
-            chapterSections.length
+            processedSections.reduce((sum, section) => sum + (section.progress || 0), 0) / 
+            processedSections.length
           )
         : 0;
 
@@ -73,7 +75,7 @@ export async function GET(request: Request) {
       return {
         ...chapter,
         title: formattedChapterTitle,
-        sections: chapterSections,
+        sections: processedSections,
         totalProgress
       };
     });

@@ -184,6 +184,14 @@ export class Fraction {
   static parse(str: string): Fraction | null {
     str = str.trim();
     
+    // Handle equation format: extract value after equals sign
+    // Examples: "A = 3" → "3", "1 + 1 = 2" → "2", "= 5" → "5"
+    if (str.includes('=')) {
+      const parts = str.split('=');
+      // Take the last part after equals sign
+      str = parts[parts.length - 1].trim();
+    }
+    
     // Normalize minus characters: convert mathematical minus sign (−) to hyphen-minus (-)
     str = str.replace(/−/g, '-');
 
@@ -339,12 +347,34 @@ export class Fraction {
 
   /**
    * Check if a value is mathematically equivalent
-   * Handles fractions, decimals, and mixed formats
+   * Handles fractions, decimals, mixed formats, and multi-value answers
    */
   static areEquivalent(a: string | number, b: string | number): boolean {
     try {
-      const fa = typeof a === 'number' ? new Fraction(a, 1) : Fraction.parse(String(a));
-      const fb = typeof b === 'number' ? new Fraction(b, 1) : Fraction.parse(String(b));
+      // Convert to strings for processing
+      const strA = String(a).trim();
+      const strB = String(b).trim();
+      
+      // Check if these are multi-value answers (comma-separated)
+      if (strA.includes(',') || strB.includes(',')) {
+        const partsA = strA.split(',').map(s => s.trim());
+        const partsB = strB.split(',').map(s => s.trim());
+        
+        // Must have same number of parts
+        if (partsA.length !== partsB.length) {
+          return false;
+        }
+        
+        // Each part must be equivalent
+        return partsA.every((partA, i) => {
+          const partB = partsB[i];
+          return Fraction.areEquivalent(partA, partB);
+        });
+      }
+      
+      // Single value comparison
+      const fa = typeof a === 'number' ? new Fraction(a, 1) : Fraction.parse(strA);
+      const fb = typeof b === 'number' ? new Fraction(b, 1) : Fraction.parse(strB);
       
       // If both are valid fractions, compare them
       if (fa && fb) {
@@ -353,7 +383,7 @@ export class Fraction {
       
       // If neither could be parsed as fractions, use string comparison
       if (!fa && !fb) {
-        return String(a).trim() === String(b).trim();
+        return strA === strB;
       }
       
       // If one is a fraction and one isn't, they're not equivalent

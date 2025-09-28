@@ -198,6 +198,20 @@ describe('Fraction', () => {
       expect(Fraction.areEquivalent('1 1/3', '4/3')).toBe(true);
       expect(Fraction.areEquivalent('½', 0.5)).toBe(true);
     });
+
+    test('handles equation format', () => {
+      expect(Fraction.areEquivalent('A = 3', '3')).toBe(true);
+      expect(Fraction.areEquivalent('x = -5', '-5')).toBe(true);
+      expect(Fraction.areEquivalent('= 7', '7')).toBe(true);
+      expect(Fraction.areEquivalent('1 + 1 = 2', '2')).toBe(true);
+    });
+
+    test('handles multi-value answers', () => {
+      expect(Fraction.areEquivalent('3, 1, -1, -2', 'A = 3, B = 1, C = -1, D = -2')).toBe(true);
+      expect(Fraction.areEquivalent('5, -3', 'x = 5, y = -3')).toBe(true);
+      expect(Fraction.areEquivalent('1, 2, 3', '1, 2, 3')).toBe(true);
+      expect(Fraction.areEquivalent('1, 2', '1, 2, 3')).toBe(false);
+    });
   });
 
   describe('Conversion Functions', () => {
