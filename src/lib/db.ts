@@ -14,6 +14,50 @@ db.pragma('temp_store = memory');
 export { db };
 
 /**
+ * Parse exercise ID into sortable numeric components
+ * Example: "7-1-2" → [7, 1, 2]
+ * Example: "7-1-2-a" → [7, 1, 2, 'a']
+ */
+export function parseExerciseId(id: string): (number | string)[] {
+  return id.split('-').map(part => {
+    const num = parseInt(part);
+    return isNaN(num) ? part : num;
+  });
+}
+
+/**
+ * Compare two exercise IDs for sorting
+ * Returns negative if a < b, positive if a > b, 0 if equal
+ */
+export function compareExerciseIds(idA: string, idB: string): number {
+  const partsA = parseExerciseId(idA);
+  const partsB = parseExerciseId(idB);
+  
+  for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+    const partA = partsA[i] ?? 0;
+    const partB = partsB[i] ?? 0;
+    
+    // Both are numbers
+    if (typeof partA === 'number' && typeof partB === 'number') {
+      if (partA !== partB) return partA - partB;
+    }
+    // Both are strings
+    else if (typeof partA === 'string' && typeof partB === 'string') {
+      const comp = partA.localeCompare(partB);
+      if (comp !== 0) return comp;
+    }
+    // Mixed types - numbers come before strings
+    else if (typeof partA === 'number') {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+  
+  return 0;
+}
+
+/**
  * Calculate optimal number line range based on the correct answer
  * Prevents the recurring issue of manually configured incorrect ranges
  */
@@ -99,12 +143,14 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
   if (hasVariants.count > 0) {
     // Use variant system for sections that have it
     const baseExercises = db.prepare(`
-      SELECT DISTINCT exercise_base_id, MIN(order_index) as min_order
+      SELECT DISTINCT exercise_base_id
       FROM exercises
       WHERE section_id = ? AND exercise_base_id IS NOT NULL
       GROUP BY exercise_base_id
-      ORDER BY min_order
-    `).all(sectionId) as { exercise_base_id: string; min_order: number }[];
+    `).all(sectionId) as { exercise_base_id: string }[];
+    
+    // Sort by parsed exercise IDs instead of order_index
+    baseExercises.sort((a, b) => compareExerciseIds(a.exercise_base_id, b.exercise_base_id));
 
     // For each base exercise, select appropriate variant
     for (const base of baseExercises) {
@@ -156,8 +202,10 @@ export function getExercisesBySection(sectionId: string, specificExerciseId?: st
       FROM exercises e
       JOIN input_types it ON e.input_type_id = it.id
       WHERE e.section_id = ?
-      ORDER BY e.order_index
     `).all(sectionId) as Exercise[];
+    
+    // Sort by parsed exercise IDs instead of order_index
+    exercises.sort((a, b) => compareExerciseIds(a.id, b.id));
   }
   
   // Get options for each exercise
